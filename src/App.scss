@@ -1,0 +1,28 @@
+$mainColor: #333333;
+$accentColor: red;
+
+.App {
+  text-align: center;
+  color: $mainColor;
+
+  &__title {
+    width: 10rem;
+    margin: 5rem auto;
+    color: $accentColor;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &__title {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
