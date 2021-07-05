@@ -2,14 +2,16 @@ import React from 'react';
 // import { Provider } from 'react-redux';
 // import { store } from './app/store';
 // import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import './App.scss';
+import styles from './App.module.scss';
 // import Counter from './pages/Counter';
 // import Movies from './pages/Movies';
 
+console.log(styles);
+
 function App(): JSX.Element {
   return (
-    <div className="App">
-      <h1 className="App__title">Hello, World!</h1>
+    <div className={styles.App}>
+      <h1 className={styles.App__title}>Hello, World!</h1>
       <p>.env.KEY = {process.env.KEY}</p>
       {/* <Provider store={store}>
         <Router forceRefresh={true}>
