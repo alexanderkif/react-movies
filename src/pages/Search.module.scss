@@ -1,0 +1,61 @@
+@import '../colors.scss';
+
+.Search {
+
+  &__controls {
+    min-height: 16.5rem;
+    padding: 0.75rem 6.2rem;
+    background: url('./../assets/netflix-bg.jpg') no-repeat center center;
+    background-size: cover;
+    color: $secondary;
+  }
+
+  @media screen and (max-width: 767px) {
+    &__controls {
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  &__sort {
+    display: flex;
+    align-items: center;
+    min-height: 3.5rem;
+    background-color: $secondary;
+  }
+
+  &__label {
+    margin-top: 3.2rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    margin-top: 1.7rem;
+    outline: none;
+    background-color: $inputBackground;
+    border: 0;
+    border-bottom: 0.1rem solid $primary;
+    color: inherit;
+    font-size: 1.1rem;
+  }
+
+  &__buttonsPanel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  &__params {
+    display: flex;
+    column-gap: 1rem;
+  }
+}

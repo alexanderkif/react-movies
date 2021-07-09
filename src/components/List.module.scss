@@ -1,0 +1,11 @@
+@import '../colors.scss';
+
+.List {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.8rem 3.5rem;
+  padding: 4.3rem 3rem;
+  min-height: 35.5rem;
+  background-color: $light;
+  color: $text;
+}

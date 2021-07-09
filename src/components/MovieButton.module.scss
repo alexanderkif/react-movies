@@ -1,0 +1,25 @@
+@import '../colors.scss';
+
+.MovieButton {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  padding: 0.6rem 4.2rem;
+  border: 0;
+  border-radius: 0.1rem;
+  background-color: $darkFooter;
+  color: $secondary;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &_active {
+    background-color: $primary;
+  }
+
+  &_small {
+    padding: 0.2rem 1.1rem;
+    font-size: 0.9rem;
+  }
+}

@@ -26,6 +26,13 @@ module.exports = {
         },
         exclude: /build/,
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[hash][ext][query]'
+        }
+      }
     ],
   },
   plugins: [
