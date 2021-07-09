@@ -1,9 +1,8 @@
-import path from "path";
-import { DefinePlugin } from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
-// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const { DefinePlugin } = require("webpack");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
 module.exports = {
@@ -28,10 +27,12 @@ module.exports = {
         exclude: /build/,
       },
       {
-        test: /\.s?css$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
-        // use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],   // сделает main.css отдельно
-      },
+        test: /\.(png|jpg|gif)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'img/[hash][ext][query]'
+        }
+      }
     ],
   },
   plugins: [
@@ -50,6 +51,5 @@ module.exports = {
         files: "./src/**/*.{ts,tsx,js,jsx}",
       },
     }),
-    // new MiniCssExtractPlugin(),
   ],
 };

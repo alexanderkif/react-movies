@@ -1,0 +1,37 @@
+@import '../../styles/colors.scss';
+
+.Movie {
+  color: $text;
+  cursor: pointer;
+}
+
+.picture {
+  width: 17rem;
+  height: 24rem;
+}
+
+.nameYear {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.3rem;
+}
+
+.name {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.year {
+  padding: 0 0.5rem;
+  border: 0.1rem solid $text;
+  border-radius: 0.2rem;
+  line-height: 0.9rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.genre {
+  font-size: 0.9rem;
+  margin: 0 0.3rem;
+}

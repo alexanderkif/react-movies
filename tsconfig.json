@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "downlevelIteration": true,
+    "strict": true,
     "paths": {
       "*": [
         "src/*"
@@ -29,7 +30,17 @@
     "build"
   ],
   "include": [
-    "./src",
-    "webpack.config.ts"
-  ]
+    "./src"
+  ],
+  "typeRoots": [
+    "./node_modules/@types"
+  ] /* List of folders to include type definitions from. */,
+  "types": [
+    "jest",
+    "node",
+    "react",
+    "react-dom",
+    "webpack-env"
+  ], /* Type declaration files to be included in compilation. */
+  "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
 }

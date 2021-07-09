@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import styles from './Search.module.scss';
-import List from '../components/List';
-import CompanyLabel from '../components/CompanyLabel';
-import MovieButton from '../components/MovieButton';
+import React, { FunctionComponent, useState } from 'react';
+import styles from './Search.scss';
+import ListMovies from '../../components/ListMovies';
+import CompanyLabel from '../../components/CompanyLabel';
+import MovieButton from '../../components/MovieButton';
 
-function Search(): JSX.Element {
+export const Search: FunctionComponent = () => {
   const [searchInput, setSearchInput] = useState('Quentin Tarantino');
   const searchInputHandler = (e) => {
     setSearchInput(e.target.value);
@@ -31,9 +31,7 @@ function Search(): JSX.Element {
         </div>
       </div>
       <div className={styles.Search__sort}>7 movies found</div>
-      <List />
+      <ListMovies />
     </div>
   );
-}
-
-export default Search;
+};

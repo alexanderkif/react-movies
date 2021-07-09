@@ -1,7 +1,8 @@
-import React from 'react';
-import styles from './Movie.module.scss';
+import React, { FunctionComponent } from 'react';
+import styles from './ListMovies.scss';
+import Movie from '../Movie';
 
-function Movie(): JSX.Element {
+export const ListMovies: FunctionComponent = () => {
   const card = {
     id: 337167,
     title: 'Fifty Shades Freed',
@@ -19,17 +20,14 @@ function Movie(): JSX.Element {
   };
 
   return (
-    <div className={styles.Movie}>
-      <img className={styles.Movie__picture} src={card.poster_path} />
-      <div className={styles.Movie__nameYear}>
-        <div className={styles.Movie__name}>{card.title}</div>
-        <div className={styles.Movie__year}>
-          {card.release_date.split('-')[0]}
-        </div>
-      </div>
-      <div className={styles.Movie__genre}>{card.genres[0]}</div>
+    <div className={styles.ListMovies}>
+      <Movie item={card} />
+      <Movie item={card} />
+      <Movie item={card} />
+      <Movie item={card} />
+      <Movie item={card} />
+      <Movie item={card} />
+      <Movie item={card} />
     </div>
   );
-}
-
-export default Movie;
+};

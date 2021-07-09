@@ -1,11 +1,11 @@
-@import '../colors.scss';
+@import '../../styles/colors.scss';
 
 .Search {
 
   &__controls {
     min-height: 16.5rem;
     padding: 0.75rem 6.2rem;
-    background: url('./../assets/netflix-bg.jpg') no-repeat center center;
+    background: url('./../../assets/netflix-bg.jpg') no-repeat center center;
     background-size: cover;
     color: $secondary;
   }
