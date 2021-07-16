@@ -3,17 +3,20 @@
 .Movie {
   color: $text;
   cursor: pointer;
+  max-width: 17rem;
 }
 
 .picture {
   width: 17rem;
   height: 24rem;
+  // background: url('./../../assets/noImage.png') no-repeat center center;
+  // background-size: cover;
 }
 
 .nameYear {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin: 0.3rem;
 }
 
@@ -24,6 +27,7 @@
 
 .year {
   padding: 0 0.5rem;
+  margin-top: 0.2rem;
   border: 0.1rem solid $text;
   border-radius: 0.2rem;
   line-height: 0.9rem;

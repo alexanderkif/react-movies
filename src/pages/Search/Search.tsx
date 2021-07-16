@@ -1,14 +1,14 @@
-import React, { FunctionComponent, useState } from 'react';
-import styles from './Search.scss';
-import ListMovies from '../../components/ListMovies';
-import CompanyLabel from '../../components/CompanyLabel';
-import MovieButton from '../../components/MovieButton';
+import React, { FunctionComponent, useState } from 'react'
+import styles from './Search.scss'
+import ListMoviesComponent from '../../components/ListMovies'
+import CompanyLabel from '../../components/CompanyLabel'
+import MovieButton from '../../components/MovieButton'
 
 export const Search: FunctionComponent = () => {
-  const [searchInput, setSearchInput] = useState('Quentin Tarantino');
-  const searchInputHandler = (e) => {
-    setSearchInput(e.target.value);
-  };
+  const [searchInput, setSearchInput] = useState('Quentin Tarantino')
+  const searchInputHandler = e => {
+    setSearchInput(e.target.value)
+  }
 
   return (
     <div className={styles.Search}>
@@ -31,7 +31,7 @@ export const Search: FunctionComponent = () => {
         </div>
       </div>
       <div className={styles.Search__sort}>7 movies found</div>
-      <ListMovies />
+      <ListMoviesComponent />
     </div>
-  );
-};
+  )
+}
