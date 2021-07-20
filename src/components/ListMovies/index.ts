@@ -1,3 +1,3 @@
-import { ListMoviesComponent } from './ListMovies'
+import { ListMovies } from "./ListMovies";
 
-export default ListMoviesComponent
+export default ListMovies;

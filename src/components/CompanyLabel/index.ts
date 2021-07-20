@@ -1,3 +1,3 @@
-import { CompanyLabel } from './CompanyLabel'
+import { CompanyLabel } from "./CompanyLabel";
 
-export default CompanyLabel
+export default CompanyLabel;

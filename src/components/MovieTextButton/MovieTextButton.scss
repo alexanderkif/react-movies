@@ -1,0 +1,19 @@
+@import '../../styles/colors.scss';
+
+.MovieTextButton {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  margin: 0 1.3rem;
+  margin-top: 0.37rem;
+  border: 0;
+  background-color: transparent;
+  color: inherit;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+
+  &_active {
+    color: $primary;
+  }
+}

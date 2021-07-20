@@ -1,6 +1,12 @@
-import React, { FunctionComponent } from 'react'
-import styles from './CompanyLabel.scss'
+import React, { FunctionComponent } from "react";
+import styles from "./CompanyLabel.scss";
+import { Link } from "react-router-dom";
 
 export const CompanyLabel: FunctionComponent = () => {
-  return <div className={styles.CompanyLabel}>netflixroulette</div>
-}
+
+  return (
+    <Link to="/" className={styles.CompanyLabel}>
+      netflixroulette
+    </Link>
+  );
+};

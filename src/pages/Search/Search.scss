@@ -18,9 +18,25 @@
 
   &__sort {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     min-height: 3.5rem;
     background-color: $secondary;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  &__moviesFound {
+    margin-left: 6rem;
+  }
+
+  &__sortBy {
+    display: flex;
+    align-items: center;
+    margin: 0 2.8rem;
+    min-height: 3.5rem;
+    background-color: inherit;
   }
 
   &__label {
