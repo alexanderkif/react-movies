@@ -4,6 +4,7 @@ import {
   SET_SEARCH_BY,
   SET_SEARCH,
   SET_SORT_BY,
+  SET_SORT_ORDER,
 } from './types';
 import axios from 'axios';
 
@@ -67,4 +68,9 @@ export const setSearchInput = searchInput => ({
 export const setSortBy = sortBy => ({
   type: SET_SORT_BY,
   sortBy: sortBy,
+});
+
+export const setSortOrder = sortOrder => ({
+  type: SET_SORT_ORDER,
+  sortOrder: sortOrder,
 });

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getMovies, setSearchBy, setSearchInput, setSortBy } from "../../redux/actions";
+import { getMovies, setSearchBy, setSearchInput, setSortBy, setSortOrder } from "../../redux/actions";
 import styles from "./Search.scss";
 import CompanyLabel from "../../components/CompanyLabel";
 import MovieButton from "../../components/MovieButton";
@@ -26,6 +26,7 @@ export const Search: FunctionComponent = () => {
   const { searchBy }: { searchBy: string } = moviesReducer;
   const { searchInput }: { searchInput: string } = moviesReducer;
   const { sortBy }: { sortBy: string } = moviesReducer;
+  const { sortOrder }: { sortOrder: string } = moviesReducer;
 
   const searchInputHandler = (e) => {
     dispatch(setSearchInput(e.target.value));
@@ -37,7 +38,7 @@ export const Search: FunctionComponent = () => {
 
   useEffect(() => {
     fetchMovies();
-  }, [sortBy, searchBy]);
+  }, [sortBy, searchBy, sortOrder]);
 
   const fetchMovies = () => {
     dispatch(
@@ -45,14 +46,24 @@ export const Search: FunctionComponent = () => {
         search: searchInput,
         sortBy: sorts.filter((s) => s.name === sortBy)[0].key,
         searchBy: searches.filter((s) => s.name === searchBy)[0].key,
+        sortOrder: sortOrder,
       })
     );
   };
 
   const sortHandler = (e) => {
-    if (sorts.map((s) => s.name).includes(e.target.innerText))
-      dispatch(setSortBy(e.target.innerText));
+    if (sorts.map((s) => s.name).includes(e.target.innerText)) {
+      if (e.target.innerText === sortBy) {
+        toggleSortOrder();
+      } else {
+        dispatch(setSortBy(e.target.innerText));
+      }
+    }
   };
+
+  const toggleSortOrder = () => {
+    dispatch(setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'));
+  }
 
   const searchByHandler = (e) => {
     if (

@@ -4,6 +4,7 @@ import {
   SET_SEARCH_BY,
   SET_SEARCH,
   SET_SORT_BY,
+  SET_SORT_ORDER,
 } from './types';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
   searchBy: 'title',
   sortBy: 'rating',
   searchInput: 'adventure',
+  sortOrder: 'asc',
 };
 
 export default function moviesReducer(state = initialState, action) {
@@ -40,6 +42,11 @@ export default function moviesReducer(state = initialState, action) {
       return {
         ...state,
         sortBy: action.sortBy,
+      };
+    case SET_SORT_ORDER:
+      return {
+        ...state,
+        sortOrder: action.sortOrder,
       };
     default:
       return state;
