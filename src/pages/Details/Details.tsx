@@ -1,26 +1,38 @@
 import React, { FunctionComponent, SyntheticEvent, useEffect } from "react";
 import styles from "./Details.scss";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import CompanyLabel from "../../components/CompanyLabel";
-import { IMovieItem } from "../../types";
+import { IListMoviesProps, IMovieItem } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovieById } from "../../redux/actions";
+import { getMovieById, getMoviesByGenre } from "../../redux/actions";
 import noImage from "../../assets/noImage.png";
+import ListMovies from "../../components/ListMovies";
 
 export const Details: FunctionComponent = () => {
 
   const { id } = useParams();
 
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const moviesReducer = useSelector(state => state.moviesReducer);
   const { movie }: { movie: IMovieItem } = moviesReducer;
+  const { moviesByGenre }: { moviesByGenre: IListMoviesProps } = moviesReducer;
 
   useEffect(() => {
     dispatch(
       getMovieById({ id: id })
     );
-  }, []);
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  useEffect(() => {
+    dispatch(
+      getMoviesByGenre({
+        search: movie?.genres[0]
+      })
+    );
+  }, [movie]);
 
   const handleImgOnError = (
     e: SyntheticEvent<EventTarget & HTMLImageElement>
@@ -81,7 +93,8 @@ export const Details: FunctionComponent = () => {
           Films by {movie?.genres.join(' & ')} {movie?.genres.length > 1 ? 'genres' : 'genre'}
         </div>
       </div>
-      {/* <ListMovies movies={movies} /> */}
+      <ListMovies movies={moviesByGenre} />
     </div>
   );
 };
+

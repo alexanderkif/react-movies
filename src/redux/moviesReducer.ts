@@ -5,6 +5,7 @@ import {
   SET_SEARCH,
   SET_SORT_BY,
   SET_SORT_ORDER,
+  SET_MOVIES_BY_GENRE,
 } from './types';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   sortBy: 'rating',
   searchInput: 'adventure',
   sortOrder: 'asc',
+  moviesByGenre: [],
 };
 
 export default function moviesReducer(state = initialState, action) {
@@ -47,6 +49,11 @@ export default function moviesReducer(state = initialState, action) {
       return {
         ...state,
         sortOrder: action.sortOrder,
+      };
+    case SET_MOVIES_BY_GENRE:
+      return {
+        ...state,
+        moviesByGenre: action.moviesByGenre,
       };
     default:
       return state;
