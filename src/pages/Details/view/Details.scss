@@ -1,9 +1,9 @@
-@import '../../styles/colors.scss';
+@import '../../../styles/colors.scss';
 
 .Details {
   &__backgrounded {
     min-height: 16.5rem;
-    background: url('./../../assets/netflix-bg.jpg') no-repeat center center;
+    background: url('../../../assets/netflix-bg.jpg') no-repeat center center;
     background-size: cover;
     color: $secondary;
   }

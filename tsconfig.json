@@ -4,7 +4,7 @@
     "moduleResolution": "node",
     "target": "ESNext",
     "removeComments": true,
-    "allowSyntheticDefaultImports": true,
+    // "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "allowJs": true,
     "baseUrl": "src",
@@ -42,5 +42,5 @@
     "react-dom",
     "webpack-env"
   ], /* Type declaration files to be included in compilation. */
-  "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+  // "allowSyntheticDefaultImports": true /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
 }

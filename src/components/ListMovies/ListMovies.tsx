@@ -6,11 +6,11 @@ import { IListMoviesProps } from "../../types";
 export const ListMovies: FunctionComponent<IListMoviesProps> = (
   props: IListMoviesProps
 ) => {
-  const { movies = [] } = props;
+  const { movies } = props;
 
   return (
     <div className={styles.ListMovies}>
-      {movies.map((movie) => (
+      {movies?.map((movie) => (
         <Movie key={movie.id} item={movie} />
       ))}
     </div>

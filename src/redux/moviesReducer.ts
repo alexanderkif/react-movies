@@ -1,3 +1,4 @@
+import { IMovieState, IMovieActions } from '../types';
 import {
   ADD_MOVIES_TO_STORE,
   GET_MOVIE_BY_ID,
@@ -6,19 +7,19 @@ import {
   SET_SORT_BY,
   SET_SORT_ORDER,
   SET_MOVIES_BY_GENRE,
-} from './types';
+} from './actions';
 
-const initialState = {
+const initialState: IMovieState = {
   movies: [],
   movie: null,
   searchBy: 'title',
-  sortBy: 'rating',
+  sortBy: { key: 'vote_average', name: 'rating' },
   searchInput: 'adventure',
   sortOrder: 'asc',
   moviesByGenre: [],
 };
 
-export default function moviesReducer(state = initialState, action) {
+export default function moviesReducer(state = initialState, action: IMovieActions): IMovieState {
   switch (action.type) {
     case ADD_MOVIES_TO_STORE:
       return {

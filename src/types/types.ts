@@ -1,3 +1,6 @@
+import { Action } from "@reduxjs/toolkit";
+import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from "react";
+
 export interface IMovieItem {
   id: number;
   title: string;
@@ -17,34 +20,58 @@ export interface IMovieButtonProps {
   text: string;
   active?: boolean;
   small?: boolean;
-  clickHandler?(e: any): any;
+  clickHandler?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface IListMoviesProps {
-  movies?: Array<IMovieItem>;
-  getMoviesProps?: any;
+  movies?: IMovieItem[];
 }
 
-// export interface BaseSyntheticEvent<E = Event, C = any, T = any> {
-//   nativeEvent: E
-//   currentTarget: C
-//   target: T
-//   bubbles: boolean
-//   cancelable: boolean
-//   defaultPrevented: boolean
-//   eventPhase: number
-//   isTrusted: boolean
-//   preventDefault(): void
-//   isDefaultPrevented(): boolean
-//   stopPropagation(): void
-//   isPropagationStopped(): boolean
-//   persist(): void
-//   timeStamp: number
-//   type: string
-// }
+export interface IMovieActions extends Action, IMovieState { }
 
-// export type SyntheticEvent<T = Element, E = Event> = BaseSyntheticEvent<
-//   E,
-//   EventTarget & T,
-//   EventTarget
-// >
+export interface IMovieState {
+  movies?: IMovieItem[],
+  movie?: IMovieItem | null,
+  searchBy?: SearchByType,
+  sortBy?: SortByType,
+  searchInput?: string,
+  sortOrder?: SortOrderType,
+  moviesByGenre?: IMovieItem[],
+}
+
+export interface IMovieRequestParams {
+  searchBy?: SearchByType,
+  sortBy?: SortByType,
+  searchInput?: string,
+  sortOrder?: SortOrderType,
+  limit?: number,
+  offset?: number,
+}
+
+export interface ISearchProps {
+  searchViewProps?: ISearchViewProps
+}
+export interface ISearchViewProps {
+  movies: IMovieItem[] | undefined;
+  searchBy?: SearchByType,
+  sortBy?: SortByType,
+  searchInput?: string,
+  searchInputHandler?: ChangeEventHandler<HTMLInputElement>;
+  searchEnterHandler?: KeyboardEventHandler<HTMLInputElement>;
+  sortHandler?: MouseEventHandler<HTMLDivElement>;
+  searchByHandler?: MouseEventHandler<HTMLButtonElement>;
+  sorts?: SortByType[];
+  searches?: SearchByType[];
+  fetchMovies?: MouseEventHandler<HTMLButtonElement>;
+}
+
+export interface IDetailViewParams {
+  movie?: IMovieItem | null,
+  moviesByGenre: IMovieItem[] | undefined;
+}
+
+export type SearchByType = 'title' | 'genres';
+export type SortByType =
+  { key: 'vote_average', name: 'rating' }
+  | { key: 'release_date', name: 'release date' };
+export type SortOrderType = 'asc' | 'desc';
