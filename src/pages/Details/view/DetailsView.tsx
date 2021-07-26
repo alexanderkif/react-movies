@@ -5,11 +5,12 @@ import CompanyLabel from "../../../components/CompanyLabel";
 import noImage from "../../../assets/noImage.png";
 import ListMovies from "../../../components/ListMovies";
 import { IDetailViewParams } from "../../../types";
+import MovieTextButton from "../../../components/MovieTextButton";
 
 export const DetailsView: FunctionComponent<IDetailViewParams> = (
   props: IDetailViewParams
 ) => {
-  const { movie, moviesByGenre } = props;
+  const { movie, moviesByGenre, activeGenre, setActiveMovieHandler } = props;
 
   const getColors = (vote) => {
     const red = Math.round(200 - vote * 12);
@@ -66,8 +67,16 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
         </div>
       </div>
       <div className={styles.Details__bottomBar}>
-        <div className={styles.Details__filmsBy}>
-          Films by {movie?.genres.join(' & ')} {movie && movie.genres.length > 1 ? 'genres' : 'genre'}
+        <div className={styles.Details__filmsBy} onClick={setActiveMovieHandler}>
+          Films by {movie?.genres.map((g) => (
+            <div key={g} className={styles.Details__filmsByBtns}>
+              <span style={movie?.genres[0] === g ? { display: 'none' } : {}}>&</span>
+              <MovieTextButton
+                text={g}
+                active={g === activeGenre}
+              />
+            </div>
+          ))} {movie && movie.genres.length > 1 ? 'genres' : 'genre'}
         </div>
       </div>
       <ListMovies movies={moviesByGenre} />

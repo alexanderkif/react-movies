@@ -7,6 +7,7 @@ import {
   SET_SORT_BY,
   SET_SORT_ORDER,
   SET_MOVIES_BY_GENRE,
+  SET_ACTIVE_GENRE,
 } from './actions';
 
 const initialState: IMovieState = {
@@ -17,6 +18,7 @@ const initialState: IMovieState = {
   searchInput: 'adventure',
   sortOrder: 'asc',
   moviesByGenre: [],
+  activeGenre: '',
 };
 
 export default function moviesReducer(state = initialState, action: IMovieActions): IMovieState {
@@ -55,6 +57,11 @@ export default function moviesReducer(state = initialState, action: IMovieAction
       return {
         ...state,
         moviesByGenre: action.moviesByGenre,
+      };
+    case SET_ACTIVE_GENRE:
+      return {
+        ...state,
+        activeGenre: action.activeGenre,
       };
     default:
       return state;

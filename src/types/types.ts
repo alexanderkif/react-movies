@@ -37,6 +37,7 @@ export interface IMovieState {
   searchInput?: string,
   sortOrder?: SortOrderType,
   moviesByGenre?: IMovieItem[],
+  activeGenre?: string
 }
 
 export interface IMovieRequestParams {
@@ -68,6 +69,8 @@ export interface ISearchViewProps {
 export interface IDetailViewParams {
   movie?: IMovieItem | null,
   moviesByGenre: IMovieItem[] | undefined;
+  activeGenre?: string;
+  setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
 }
 
 export type SearchByType = 'title' | 'genres';

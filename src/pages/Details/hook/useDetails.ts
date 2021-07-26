@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, MouseEvent } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
 import { RootState } from "../../../redux/reducers";
 import { IDetailViewParams } from "../../../types";
+import { setActiveGenre } from "../../../redux/actions";
 
 const useDetails = (id: number): IDetailViewParams => {
 
@@ -11,8 +12,7 @@ const useDetails = (id: number): IDetailViewParams => {
   const dispatch = useDispatch();
 
   const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { movie } = moviesReducer;
-  const { moviesByGenre } = moviesReducer;
+  const { movie, moviesByGenre, activeGenre } = moviesReducer;
 
   useEffect(() => {
     dispatch(
@@ -22,6 +22,7 @@ const useDetails = (id: number): IDetailViewParams => {
   }, [location]);
 
   useEffect(() => {
+    dispatch(setActiveGenre(movie?.genres[0] || ''));
     dispatch(
       getMoviesByGenre({
         searchInput: movie?.genres[0]
@@ -29,7 +30,18 @@ const useDetails = (id: number): IDetailViewParams => {
     );
   }, [movie]);
 
-  return { movie, moviesByGenre };
+  const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
+    if (target.innerText === activeGenre) return;
+    dispatch(setActiveGenre(target.innerText));
+    dispatch(
+      getMoviesByGenre({
+        searchInput: target.innerText
+      })
+    );
+  };
+
+  return { movie, moviesByGenre, activeGenre, setActiveMovieHandler };
 };
 
 export default useDetails;

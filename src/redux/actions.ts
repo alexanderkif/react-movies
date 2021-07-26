@@ -9,6 +9,7 @@ export const SET_SEARCH = 'SET_SEARCH';
 export const SET_SORT_BY = 'SET_SORT_BY';
 export const SET_SORT_ORDER = 'SET_SORT_ORDER';
 export const SET_MOVIES_BY_GENRE = 'SET_MOVIES_BY_GENRE';
+export const SET_ACTIVE_GENRE = 'SET_ACTIVE_GENRE';
 
 const MOVIES_URL = 'https://reactjs-cdp.herokuapp.com/movies';
 
@@ -37,7 +38,7 @@ export const getMovies = ({
 
 const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
   type: ADD_MOVIES_TO_STORE,
-  movies: movies,
+  movies,
 });
 
 // const getMoviesError = movies => ({
@@ -50,7 +51,7 @@ export const getMoviesByGenre = ({
   sortBy = { key: 'vote_average', name: 'rating' },
   sortOrder = 'desc',
   searchBy = 'genres',
-  limit = 50,
+  limit = 15,
   offset = 0,
 }: IMovieRequestParams) => {
   return (dispatch: Dispatch): void => {
@@ -69,7 +70,7 @@ export const getMoviesByGenre = ({
 
 const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => ({
   type: SET_MOVIES_BY_GENRE,
-  moviesByGenre: moviesByGenre,
+  moviesByGenre,
 });
 
 export const getMovieById = ({ id }: { id: number }) => {
@@ -87,25 +88,30 @@ export const getMovieById = ({ id }: { id: number }) => {
 
 const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
   type: GET_MOVIE_BY_ID,
-  movie: movie,
+  movie,
 });
 
 export const setSearchBy = (searchBy: SearchByType): IMovieActions => ({
   type: SET_SEARCH_BY,
-  searchBy: searchBy,
+  searchBy,
 });
 
 export const setSearchInput = (searchInput: string): IMovieActions => ({
   type: SET_SEARCH,
-  searchInput: searchInput,
+  searchInput,
 });
 
 export const setSortBy = (sortBy: SortByType): IMovieActions => ({
   type: SET_SORT_BY,
-  sortBy: sortBy,
+  sortBy,
 });
 
 export const setSortOrder = (sortOrder: SortOrderType): IMovieActions => ({
   type: SET_SORT_ORDER,
-  sortOrder: sortOrder,
+  sortOrder,
+});
+
+export const setActiveGenre = (activeGenre: string): IMovieActions => ({
+  type: SET_ACTIVE_GENRE,
+  activeGenre,
 });

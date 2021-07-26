@@ -111,4 +111,18 @@
     font-size: 1.1rem;
     font-weight: bold;
   }
+
+  &__filmsBy {
+    display: flex;
+    align-items: center;
+  }
+
+  &__filmsByBtns {
+    display: flex;
+    align-items: center;
+    button {
+      margin: 0 0.3rem;
+      margin-top: 0.37rem;
+    }
+  }
 }
