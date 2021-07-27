@@ -1,7 +1,7 @@
 @import '../../styles/colors.scss';
 
 .Movie {
-  color: $text;
+  color: $light;
   cursor: pointer;
   max-width: 17rem;
 }
@@ -20,14 +20,14 @@
 }
 
 .name {
-  font-weight: bold;
+  // font-weight: bold;
   text-transform: uppercase;
 }
 
 .year {
   padding: 0 0.5rem;
   margin-top: 0.2rem;
-  border: 0.1rem solid $text;
+  border: 0.1rem solid $light;
   border-radius: 0.2rem;
   line-height: 0.9rem;
   font-size: 0.7rem;

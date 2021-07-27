@@ -11,7 +11,7 @@ export const SET_SORT_ORDER = 'SET_SORT_ORDER';
 export const SET_MOVIES_BY_GENRE = 'SET_MOVIES_BY_GENRE';
 export const SET_ACTIVE_GENRE = 'SET_ACTIVE_GENRE';
 
-const MOVIES_URL = 'https://reactjs-cdp.herokuapp.com/movies';
+const MOVIES_URL = 'http://localhost:4000/movies';
 
 export const getMovies = ({
   searchInput = '',

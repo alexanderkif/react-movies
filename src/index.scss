@@ -1,3 +1,5 @@
+@import './styles/colors.scss';
+
 html {
   // font-size: 10px;
 }
@@ -9,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $gray;
 }
 
 code {
