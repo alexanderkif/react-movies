@@ -2,9 +2,10 @@ import React, { FunctionComponent } from "react";
 import styles from "./Search.scss";
 import CompanyLabel from "../../../components/CompanyLabel";
 import MovieButton from "../../../components/MovieButton";
-import MovieTextButton from "../../../components/MovieTextButton";
 import ListMovies from "../../../components/ListMovies";
 import { ISearchViewProps } from "../../../types";
+import GenresPanel from "../../../components/GenresPanel";
+import SortBySelector from "../../../components/SortBySelector";
 
 export const SearchView: FunctionComponent<ISearchViewProps> = (
   props: ISearchViewProps
@@ -12,15 +13,14 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
   const {
     movies,
     searchBy,
-    sortBy,
     searchInput,
     searchInputHandler,
     searchEnterHandler,
     searchByHandler,
-    sortHandler,
-    sorts,
     searches,
-    fetchMovies
+    fetchMovies,
+    setActiveMovieHandler,
+    filter
   } = props;
 
   return (
@@ -28,42 +28,47 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
       <div className={styles.Search__controls}>
         <CompanyLabel />
         <div className={styles.Search__label}>Find your movie</div>
-        <input
-          className={styles.Search__input}
-          type="text"
-          value={searchInput}
-          onChange={searchInputHandler}
-          onKeyPress={searchEnterHandler}
-        />
         <div className={styles.Search__buttonsPanel}>
-          <div className={styles.Search__params}>
-            search by
-            {searches?.map((s) => (
-              <MovieButton
-                key={s}
-                text={s}
-                active={s === searchBy}
-                small={true}
-                clickHandler={searchByHandler}
-              />
-            ))}
-          </div>
+          <input
+            className={styles.Search__input}
+            type="text"
+            placeholder="What do you want to watch?"
+            value={searchInput}
+            onChange={searchInputHandler}
+            onKeyPress={searchEnterHandler}
+          />
           <MovieButton text="Search" active={true} clickHandler={fetchMovies} />
+        </div>
+        <div className={styles.Search__params}>
+          search by
+          {searches?.map((s) => (
+            <MovieButton
+              key={s}
+              text={s}
+              active={s === searchBy}
+              small={true}
+              clickHandler={searchByHandler}
+            />
+          ))}
+        </div>
+      </div>
+      <div className={styles.Search__sort}>
+        <div className={styles.Search__border_bottom}>
+          <GenresPanel
+            genres={['all', 'documentary', 'comedy', 'horror', 'crime']}
+            setActiveMovieHandler={setActiveMovieHandler}
+            activeGenre={filter}
+          />
+          <SortBySelector
+          // sorts={sorts}
+          // sortBy={sortBy}
+          // sortHandler={sortHandler}
+          />
         </div>
       </div>
       <div className={styles.Search__sort}>
         <div className={styles.Search__moviesFound}>
-          {movies && movies.length > 49 ? '50 or more' : movies?.length} movies found
-        </div>
-        <div className={styles.Search__sortBy} onClick={sortHandler}>
-          <div className={styles.Search__sortLabel}>Sort by</div>
-          {sorts?.map((s) => (
-            <MovieTextButton
-              key={s.key}
-              text={s.name}
-              active={s.key === sortBy?.key}
-            />
-          ))}
+          <span>{movies && movies.length > 49 ? '50 or more' : movies?.length}</span> movies found
         </div>
       </div>
       <ListMovies movies={movies} />

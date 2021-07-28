@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
 import { RootState } from "../../../redux/reducers";
 import { IDetailViewParams } from "../../../types";
-import { setActiveGenre } from "../../../redux/actions";
+import { setActiveGenreDetails } from "../../../redux/actions";
 
 const useDetails = (id: number): IDetailViewParams => {
 
@@ -12,7 +12,7 @@ const useDetails = (id: number): IDetailViewParams => {
   const dispatch = useDispatch();
 
   const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { movie, moviesByGenre, activeGenre } = moviesReducer;
+  const { movie, moviesByGenre, activeGenreDetails, sortBy, sortOrder, filter } = moviesReducer;
 
   useEffect(() => {
     dispatch(
@@ -22,26 +22,39 @@ const useDetails = (id: number): IDetailViewParams => {
   }, [location]);
 
   useEffect(() => {
-    dispatch(setActiveGenre(movie?.genres[0] || ''));
+    dispatch(setActiveGenreDetails(movie?.genres[0] || ''));
+  }, [movie]);
+
+  useEffect(() => {
     dispatch(
       getMoviesByGenre({
-        searchInput: movie?.genres[0]
+        searchInput: movie?.genres[0],
+        sortOrder,
+        sortBy,
+        filter
       })
     );
-  }, [movie]);
+  }, [movie, sortBy, sortOrder]);
 
   const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    if (target.innerText === activeGenre) return;
-    dispatch(setActiveGenre(target.innerText));
+    if (target.innerText.toLowerCase() === activeGenreDetails?.toLowerCase()) return;
+    dispatch(setActiveGenreDetails(target.innerText.toLowerCase()));
     dispatch(
       getMoviesByGenre({
-        searchInput: target.innerText
+        searchInput: target.innerText.toLocaleLowerCase(),
+        filter: ''
       })
     );
   };
 
-  return { movie, moviesByGenre, activeGenre, setActiveMovieHandler };
+  return {
+    movie,
+    moviesByGenre,
+    activeGenreDetails,
+    setActiveMovieHandler,
+    sortBy
+  };
 };
 
 export default useDetails;

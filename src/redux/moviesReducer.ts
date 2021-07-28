@@ -7,18 +7,20 @@ import {
   SET_SORT_BY,
   SET_SORT_ORDER,
   SET_MOVIES_BY_GENRE,
-  SET_ACTIVE_GENRE,
+  SET_FILTER,
+  SET_ACTIVE_GENRE_DETAILS,
 } from './actions';
 
 const initialState: IMovieState = {
   movies: [],
   movie: null,
   searchBy: 'title',
-  sortBy: { key: 'vote_average', name: 'rating' },
-  searchInput: 'adventure',
-  sortOrder: 'asc',
+  sortBy: { key: 'release_date', name: 'release date' },
+  searchInput: '',
+  sortOrder: 'desc',
   moviesByGenre: [],
-  activeGenre: '',
+  activeGenreDetails: '',
+  filter: 'all',
 };
 
 export default function moviesReducer(state = initialState, action: IMovieActions): IMovieState {
@@ -58,10 +60,15 @@ export default function moviesReducer(state = initialState, action: IMovieAction
         ...state,
         moviesByGenre: action.moviesByGenre,
       };
-    case SET_ACTIVE_GENRE:
+    case SET_FILTER:
       return {
         ...state,
-        activeGenre: action.activeGenre,
+        filter: action.filter,
+      };
+    case SET_ACTIVE_GENRE_DETAILS:
+      return {
+        ...state,
+        activeGenreDetails: action.activeGenreDetails,
       };
     default:
       return state;

@@ -1,0 +1,13 @@
+@import '../../styles/colors.scss';
+
+.GenresPanel {
+  &__filmsBy {
+    display: flex;
+    align-items: center;
+  }
+
+  &__filmsByBtns {
+    display: flex;
+    align-items: center;
+  }
+}
