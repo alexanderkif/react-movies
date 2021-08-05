@@ -11,6 +11,7 @@ export const SET_SORT_ORDER = 'SET_SORT_ORDER';
 export const SET_MOVIES_BY_GENRE = 'SET_MOVIES_BY_GENRE';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_ACTIVE_GENRE_DETAILS = 'SET_ACTIVE_GENRE_DETAILS';
+export const SET_DIALOG_OPEN = 'SET_DIALOG_OPEN';
 
 const MOVIES_URL = 'http://localhost:4000/movies';
 
@@ -122,4 +123,10 @@ export const setFilter = (filter: string): IMovieActions => ({
 export const setActiveGenreDetails = (activeGenreDetails: string): IMovieActions => ({
   type: SET_ACTIVE_GENRE_DETAILS,
   activeGenreDetails,
+});
+
+export const setDialogOpened = (dialogOpened: boolean, editMovie?: IMovieItem): IMovieActions => ({
+  type: SET_DIALOG_OPEN,
+  dialogOpened,
+  editMovie,
 });

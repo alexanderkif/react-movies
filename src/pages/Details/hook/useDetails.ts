@@ -1,4 +1,4 @@
-import { useEffect, MouseEvent } from "react";
+import { useEffect, MouseEvent, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
@@ -12,20 +12,21 @@ const useDetails = (id: number): IDetailViewParams => {
   const dispatch = useDispatch();
 
   const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { movie, moviesByGenre, activeGenreDetails, sortBy, sortOrder, filter } = moviesReducer;
+  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, sortBy, sortOrder, filter } = moviesReducer;
 
   useEffect(() => {
-    dispatch(
-      getMovieById({ id: id })
-    );
+    console.log('useDetails getMovieById');
+    dispatch(getMovieById({ id: id }));
     window.scrollTo(0, 0);
   }, [location]);
 
   useEffect(() => {
+    console.log('useDetails setActiveGenreDetails');
     dispatch(setActiveGenreDetails(movie?.genres[0] || ''));
   }, [movie]);
 
   useEffect(() => {
+    console.log('useDetails getMoviesByGenre');
     dispatch(
       getMoviesByGenre({
         searchInput: movie?.genres[0],
@@ -36,7 +37,7 @@ const useDetails = (id: number): IDetailViewParams => {
     );
   }, [movie, sortBy, sortOrder]);
 
-  const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
+  const setActiveMovieHandler = useCallback((e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     if (target.innerText.toLowerCase() === activeGenreDetails?.toLowerCase()) return;
     dispatch(setActiveGenreDetails(target.innerText.toLowerCase()));
@@ -46,9 +47,10 @@ const useDetails = (id: number): IDetailViewParams => {
         filter: ''
       })
     );
-  };
+  }, []);
 
   return {
+    dialogOpened,
     movie,
     moviesByGenre,
     activeGenreDetails,

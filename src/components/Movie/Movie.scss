@@ -1,6 +1,7 @@
 @import '../../styles/colors.scss';
 
 .Movie {
+  position: relative;
   color: $text;
   cursor: pointer;
   max-width: 17rem;
@@ -20,8 +21,18 @@
   gap: 0.3rem;
 }
 
-.name {
-  // text-transform: uppercase;
+.edit {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 50%;
+  background-color: $dark;
 }
 
 .year {

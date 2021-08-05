@@ -2,6 +2,7 @@ import { useEffect, ChangeEvent, KeyboardEvent, MouseEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getMovies,
+  setDialogOpened,
   setFilter,
   setSearchBy,
   setSearchInput
@@ -21,7 +22,25 @@ const useSearch = (): ISearchViewProps => {
     searchInput,
     sortBy,
     sortOrder,
-    filter }: IMovieState = moviesReducer;
+    filter,
+    dialogOpened }: IMovieState = moviesReducer;
+
+  const openFormHandle = (e: MouseEvent) => {
+    if (dialogOpened) e.stopPropagation();
+    dispatch(setDialogOpened(true, {
+      title: '',
+      tagline: '',
+      vote_average: 0,
+      vote_count: 0,
+      release_date: '2021-08-01',
+      poster_path: '',
+      overview: '',
+      budget: 0,
+      revenue: 0,
+      genres: [],
+      runtime: 0,
+    }));
+  };
 
   const searchInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchInput(e.target.value));
@@ -32,6 +51,7 @@ const useSearch = (): ISearchViewProps => {
   };
 
   useEffect(() => {
+    console.log('useSearch fetchMovies');
     fetchMovies();
   }, [sortBy, searchBy, sortOrder, filter]);
 
@@ -73,7 +93,9 @@ const useSearch = (): ISearchViewProps => {
     searches,
     fetchMovies,
     setActiveMovieHandler,
-    filter
+    filter,
+    dialogOpened,
+    openFormHandle,
   };
 };
 

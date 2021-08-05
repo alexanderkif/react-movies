@@ -9,6 +9,7 @@ import {
   SET_MOVIES_BY_GENRE,
   SET_FILTER,
   SET_ACTIVE_GENRE_DETAILS,
+  SET_DIALOG_OPEN,
 } from './actions';
 
 const initialState: IMovieState = {
@@ -69,6 +70,12 @@ export default function moviesReducer(state = initialState, action: IMovieAction
       return {
         ...state,
         activeGenreDetails: action.activeGenreDetails,
+      };
+    case SET_DIALOG_OPEN:
+      return {
+        ...state,
+        dialogOpened: action.dialogOpened,
+        editMovie: action.editMovie,
       };
     default:
       return state;

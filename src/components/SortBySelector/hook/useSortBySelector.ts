@@ -21,8 +21,8 @@ const useSortBySelector = (): ISortBySelectorParams => {
   const sortHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     const index = sorts
-      .map((s) => s.name.toLocaleLowerCase())
-      .indexOf(target.innerText.toLocaleLowerCase());
+      .map((s) => s.name.toLowerCase())
+      .indexOf(target.innerText.toLowerCase());
     if (index === -1) return;
     if (target.innerText.toLowerCase() === sortBy?.name.toLowerCase()) {
       toggleSortOrder();

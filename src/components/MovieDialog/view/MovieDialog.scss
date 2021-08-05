@@ -1,0 +1,135 @@
+@import '../../../styles/colors.scss';
+
+.MovieDialog {
+  &__darkWrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+  }
+
+  &__formWrapper {
+    position: relative;
+    min-width: 30rem;
+    padding: 3rem;
+    border-radius: 0.5rem;
+    background-color: $dark;
+    color: $text;
+  }
+
+  &__closeIcon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem !important;
+    cursor: pointer;
+  }
+
+  &__label {
+    // margin-bottom: 1rem;
+    font-size: 2rem;
+    text-transform: uppercase;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    color: $text;
+  }
+
+  &__row {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: $primary;
+      text-transform: uppercase;
+    }
+
+    input {
+      max-height: 2.7rem;
+      margin-top: 0.5rem;
+      background-color: $secondary;
+      padding: 0.8rem;
+      border: 0;
+      border-radius: 0.2rem;
+      font-size: 1rem;
+      color: $text;
+      outline: none;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      filter: invert(69%) sepia(43%) saturate(7229%) hue-rotate(319deg) brightness(92%) contrast(111%);
+    }
+  }
+
+  &__error {
+    position: absolute;
+    font-size: 0.8rem;
+    color: yellowgreen;
+    bottom: -1rem;
+  }
+
+  &__calendar {
+    color: $text;
+  }
+
+  &__selector {
+    max-height: 2.7rem;
+    margin-top: 0.5rem;
+    background-color: $secondary;
+    padding: 0.7rem 0;
+    border: 0;
+    border-radius: 0.2rem;
+    font-size: 1rem;
+    color: $text;
+    outline: none;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  &__resetBtn, &__submitBtn {
+    box-sizing: border-box;
+    width: 10rem;
+    padding: 0.7rem;
+    margin-top: 3rem;
+    border-width: 0.1rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+  }
+
+  &__resetBtn {
+    border-color: $primary;
+    background-color: transparent;
+    color: $primary;
+  }
+
+  &__submitBtn {
+    margin-left: 1rem;
+    border-color: $primary;
+    background-color: $primary;
+    color: $light;
+  }
+
+  &__id {
+    margin-top: 0.5rem;
+  }
+}

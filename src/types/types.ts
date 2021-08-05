@@ -2,7 +2,7 @@ import { Action } from "@reduxjs/toolkit";
 import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from "react";
 
 export interface IMovieItem {
-  id: number;
+  id?: number;
   title: string;
   tagline: string;
   vote_average: number;
@@ -32,6 +32,7 @@ export interface IMovieActions extends Action, IMovieState { }
 export interface IMovieState {
   movies?: IMovieItem[];
   movie?: IMovieItem | null;
+  editMovie?: IMovieItem | null;
   searchBy?: SearchByType;
   sortBy?: SortByType;
   searchInput?: string;
@@ -39,6 +40,7 @@ export interface IMovieState {
   moviesByGenre?: IMovieItem[];
   activeGenreDetails?: string;
   filter?: string;
+  dialogOpened?: boolean;
 }
 
 export interface IMovieRequestParams {
@@ -68,28 +70,57 @@ export interface ISearchViewProps {
   fetchMovies?: MouseEventHandler<HTMLButtonElement>;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   filter?: string;
+  dialogOpened?: boolean;
+  openFormHandle: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface IDetailViewParams {
-  movie?: IMovieItem | null,
+  movie?: IMovieItem | null;
   moviesByGenre: IMovieItem[] | undefined;
   activeGenreDetails?: string;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   sorts?: SortByType[];
   sortHandler?: MouseEventHandler<HTMLDivElement>;
-  sortBy?: SortByType,
+  sortBy?: SortByType;
+  dialogOpened?: boolean;
 }
 
 export interface IGenresPanelParams {
-  genres?: string[],
+  genres?: string[];
   activeGenre?: string;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
 }
 
+export interface IMovieDialogParams {
+  editMovie?: IMovieItem | null;
+  genres?: string[];
+  selectorHandler?: MouseEventHandler<HTMLDivElement>;
+  setDialogOpenedHandler: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface IMovieDialogError {
+  title?: string;
+  release_date?: string;
+  poster_path?: string;
+  genres?: string;
+  overview?: string;
+  runtime?: string;
+}
+
 export interface ISortBySelectorParams {
-  sorts?: SortByType[],
+  sorts?: SortByType[];
   sortBy?: SortByType;
   sortHandler?: MouseEventHandler<HTMLDivElement>;
+}
+
+export interface ISelectorParams {
+  options?: string[];
+  value?: string;
+  selectorHandler?: MouseEventHandler<HTMLDivElement>;
+  id?: string;
+  name?: string;
+  position?: { [key: string]: string };
+  closeSelector?: boolean;
 }
 
 export type SearchByType = 'title' | 'genres';

@@ -8,11 +8,12 @@ import { IDetailViewParams } from "../../../types";
 import GenresPanel from "../../../components/GenresPanel";
 import SearchIcon from '@material-ui/icons/Search';
 import SortBySelector from "../../../components/SortBySelector";
+import MovieDialog from "../../../components/MovieDialog";
 
 export const DetailsView: FunctionComponent<IDetailViewParams> = (
   props: IDetailViewParams
 ) => {
-  const { movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler } = props;
+  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler } = props;
 
   const getColors = (vote) => {
     const red = Math.round(200 - vote * 12);
@@ -86,10 +87,11 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
       </div>
       <div className={styles.Details__bottomBar}>
         <div className={styles.Details__moviesFound}>
-          <span>{moviesByGenre && moviesByGenre.length > 24 ? '25 or more' : moviesByGenre?.length}</span> movies found
+          <span>{moviesByGenre && moviesByGenre.length > 24 ? '25 or more' : moviesByGenre?.length}</span>&nbsp;movies found
         </div>
       </div>
       <ListMovies movies={moviesByGenre} />
+      {dialogOpened && <MovieDialog />}
     </div>
   );
 };
