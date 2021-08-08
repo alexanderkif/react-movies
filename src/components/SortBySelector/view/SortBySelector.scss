@@ -1,0 +1,18 @@
+@import '../../../styles/colors.scss';
+
+.SortBySelector {
+  &__sortBy {
+    display: flex;
+    align-items: center;
+    background-color: inherit;
+    text-transform: uppercase;
+  }
+
+  &__selector {
+    width: 12rem;
+    margin-left: 1rem;
+    border: 0;
+    color: $light;
+    outline: none;
+  }
+}

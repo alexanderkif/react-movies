@@ -4,13 +4,14 @@
   display: flex;
   align-items: center;
   justify-items: center;
-  padding: 0.6rem 4.2rem;
+  padding: 0.9rem 3.2rem;
   border: 0;
-  border-radius: 0.1rem;
-  background-color: $dark;
-  color: $secondary;
+  border-radius: 0.2rem;
+  background-color: $secondary;
+  color: $light;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
   text-transform: uppercase;
   cursor: pointer;
 

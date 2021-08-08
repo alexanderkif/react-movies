@@ -9,7 +9,9 @@ export const SET_SEARCH = 'SET_SEARCH';
 export const SET_SORT_BY = 'SET_SORT_BY';
 export const SET_SORT_ORDER = 'SET_SORT_ORDER';
 export const SET_MOVIES_BY_GENRE = 'SET_MOVIES_BY_GENRE';
-export const SET_ACTIVE_GENRE = 'SET_ACTIVE_GENRE';
+export const SET_FILTER = 'SET_FILTER';
+export const SET_ACTIVE_GENRE_DETAILS = 'SET_ACTIVE_GENRE_DETAILS';
+export const SET_DIALOG_OPEN = 'SET_DIALOG_OPEN';
 
 const MOVIES_URL = 'http://localhost:4000/movies';
 
@@ -18,13 +20,15 @@ export const getMovies = ({
   sortBy = { key: 'vote_average', name: 'rating' },
   sortOrder = 'asc',
   searchBy = 'title',
+  filter = '',
   limit = 50,
   offset = 0,
 }: IMovieRequestParams) => {
   return (dispatch: Dispatch): void => {
+    filter = filter.toLowerCase() === 'all' ? '' : filter;
     axios
       .get(
-        `${MOVIES_URL}?sortBy=${sortBy.key}&sortOrder=${sortOrder}&search=${searchInput}&searchBy=${searchBy}&limit=${limit}&&offset=${offset}`
+        `${MOVIES_URL}?sortBy=${sortBy.key}&sortOrder=${sortOrder}&search=${searchInput}&searchBy=${searchBy}&filter=${filter}&limit=${limit}&&offset=${offset}`
       )
       .then(res => {
         dispatch(getMoviesSuccess(res.data.data));
@@ -48,10 +52,10 @@ const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
 
 export const getMoviesByGenre = ({
   searchInput = '',
-  sortBy = { key: 'vote_average', name: 'rating' },
+  sortBy = { key: 'release_date', name: 'release date' },
   sortOrder = 'desc',
   searchBy = 'genres',
-  limit = 15,
+  limit = 25,
   offset = 0,
 }: IMovieRequestParams) => {
   return (dispatch: Dispatch): void => {
@@ -111,7 +115,18 @@ export const setSortOrder = (sortOrder: SortOrderType): IMovieActions => ({
   sortOrder,
 });
 
-export const setActiveGenre = (activeGenre: string): IMovieActions => ({
-  type: SET_ACTIVE_GENRE,
-  activeGenre,
+export const setFilter = (filter: string): IMovieActions => ({
+  type: SET_FILTER,
+  filter,
+});
+
+export const setActiveGenreDetails = (activeGenreDetails: string): IMovieActions => ({
+  type: SET_ACTIVE_GENRE_DETAILS,
+  activeGenreDetails,
+});
+
+export const setDialogOpened = (dialogOpened: boolean, editMovie?: IMovieItem): IMovieActions => ({
+  type: SET_DIALOG_OPEN,
+  dialogOpened,
+  editMovie,
 });

@@ -9,4 +9,3 @@ export const Details: FunctionComponent = () => {
 
   return <DetailsView {...useDetails(id as number)} />;
 };
-
