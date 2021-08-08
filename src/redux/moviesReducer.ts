@@ -76,6 +76,7 @@ export default function moviesReducer(state = initialState, action: IMovieAction
         ...state,
         dialogOpened: action.dialogOpened,
         editMovie: action.editMovie,
+        deleteMovie: action.deleteMovie,
       };
     default:
       return state;

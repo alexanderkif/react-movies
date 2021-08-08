@@ -16,7 +16,7 @@ const useDetails = (id: number): IDetailViewParams => {
 
   useEffect(() => {
     console.log('useDetails getMovieById');
-    dispatch(getMovieById({ id: id }));
+    dispatch(getMovieById(id));
     window.scrollTo(0, 0);
   }, [location]);
 

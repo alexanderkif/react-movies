@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, MouseEvent } from "react";
-import { IMovieDialogError, IMovieDialogParams } from "../../../types";
+import { IMovieDialogError, IMovieDialogParams, IMovieItem } from "../../../types";
 import styles from "./MovieDialog.scss";
 import CloseIcon from '@material-ui/icons/Close';
 import { useFormik } from "formik";
@@ -7,7 +7,7 @@ import Selector from "../../Selector";
 import { ALL_GENRES } from "../../../pages/Search/view/SearchView";
 
 export const MovieDialogView: FunctionComponent<IMovieDialogParams> = (props: IMovieDialogParams) => {
-  const { editMovie, selectorHandler, genres, setDialogOpenedHandler } = props;
+  const { editMovie, selectorHandler, genres, setDialogOpenedHandler, deleteMovie = false, deleteMovieHandler, saveMovieHandler } = props;
 
   const [closeSelector, setCloseSelector] = useState<boolean>(false);
 
@@ -36,8 +36,6 @@ export const MovieDialogView: FunctionComponent<IMovieDialogParams> = (props: IM
 
     if (!values.runtime) {
       errors.runtime = 'Required';
-    } else if (values.runtime !== (+values.runtime).toString()) {
-      errors.runtime = 'Must be number'
     }
 
     return errors;
@@ -53,7 +51,10 @@ export const MovieDialogView: FunctionComponent<IMovieDialogParams> = (props: IM
       runtime: editMovie?.runtime || 0,
     },
     validate,
-    onSubmit: values => { console.log('onSubmit', values) },
+    onSubmit: values => {
+      const modifiedMovie = { ...editMovie, ...values, genres } as IMovieItem;
+      saveMovieHandler(modifiedMovie);
+    },
   })
 
   const clickFormHandler = (e: MouseEvent) => {
@@ -61,6 +62,27 @@ export const MovieDialogView: FunctionComponent<IMovieDialogParams> = (props: IM
     e.stopPropagation();
     setCloseSelector(!closeSelector);
   };
+
+  const deleteMovieSubmit = () => {
+    if (editMovie?.id) deleteMovieHandler(editMovie?.id);
+  };
+
+  if (deleteMovie) {
+    return (
+      <div className={styles.MovieDialog__darkWrapper} onClick={() => setDialogOpenedHandler(false)}>
+        <div className={styles.MovieDialog__formWrapper} onClick={clickFormHandler}>
+          <CloseIcon className={styles.MovieDialog__closeIcon} onClick={() => setDialogOpenedHandler(false)} />
+          <div className={styles.MovieDialog__label}>delete movie</div>
+          <div className={styles.MovieDialog__deleteText}>
+            Are you sure you want to delete this movie?
+          </div>
+          <div className={styles.MovieDialog__buttons}>
+            <button className={styles.MovieDialog__submitBtn} type='submit' onClick={deleteMovieSubmit}>confirm</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.MovieDialog__darkWrapper} onClick={() => setDialogOpenedHandler(false)}>
@@ -109,13 +131,16 @@ export const MovieDialogView: FunctionComponent<IMovieDialogParams> = (props: IM
 
           <div className={styles.MovieDialog__row}>
             <label className={styles.MovieDialog__inputLabel} htmlFor="runtime">runtime</label>
-            <input onChange={formik.handleChange} value={formik.values.runtime} type="text" id='runtime' name='runtime' />
+            <input onChange={formik.handleChange} value={formik.values.runtime} type="number" id='runtime' name='runtime' />
             {formik.errors.runtime ? <div className={styles.MovieDialog__error}>{formik.errors.runtime}</div> : null}
           </div>
 
           <div className={styles.MovieDialog__buttons}>
-            <button className={styles.MovieDialog__resetBtn} type='reset'>reset</button>
-            <button className={styles.MovieDialog__submitBtn} type='submit'>submit</button>
+            <button className={styles.MovieDialog__resetBtn} type='reset' onClick={() => setDialogOpenedHandler(false)}>reset</button>
+            <button
+              className={styles.MovieDialog__submitBtn}
+              type='submit'
+            >submit</button>
           </div>
         </form>
       </div>

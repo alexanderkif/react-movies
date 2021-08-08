@@ -77,7 +77,7 @@ const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => 
   moviesByGenre,
 });
 
-export const getMovieById = ({ id }: { id: number }) => {
+export const getMovieById = (id: number) => {
   return (dispatch: Dispatch): void => {
     axios
       .get(`${MOVIES_URL}/${id}`)
@@ -94,6 +94,48 @@ const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
   type: GET_MOVIE_BY_ID,
   movie,
 });
+
+export const createMovie = (movie: IMovieItem) => {
+  return (dispatch: Dispatch): void => {
+    if (!movie.tagline) movie.tagline = movie.title;
+    axios
+      .post(`${MOVIES_URL}`, movie)
+      .then(res => {
+        dispatch(getMovieByIdSuccess(res.data));
+        console.log('createMovie', res.data);
+      })
+      .catch(err => {
+        console.log('axios err', err, err.message);
+      });
+  };
+};
+
+export const updateMovie = (movie: IMovieItem) => {
+  return (dispatch: Dispatch): void => {
+    axios
+      .put(`${MOVIES_URL}`, movie)
+      .then(res => {
+        dispatch(getMovieByIdSuccess(res.data));
+        console.log('updateMovie', res.data);
+      })
+      .catch(err => {
+        console.log('axios err', err, err.message);
+      });
+  };
+};
+
+export const deleteMovieById = (id: number) => {
+  return (): void => {
+    axios
+      .delete(`${MOVIES_URL}/${id}`)
+      .then(res => {
+        console.log('deleteMovieById', res.data);
+      })
+      .catch(err => {
+        console.log('axios err', err, err.message);
+      });
+  };
+};
 
 export const setSearchBy = (searchBy: SearchByType): IMovieActions => ({
   type: SET_SEARCH_BY,
@@ -125,8 +167,9 @@ export const setActiveGenreDetails = (activeGenreDetails: string): IMovieActions
   activeGenreDetails,
 });
 
-export const setDialogOpened = (dialogOpened: boolean, editMovie?: IMovieItem): IMovieActions => ({
+export const setDialogOpened = (dialogOpened: boolean, editMovie?: IMovieItem, deleteMovie?: boolean): IMovieActions => ({
   type: SET_DIALOG_OPEN,
   dialogOpened,
   editMovie,
+  deleteMovie,
 });

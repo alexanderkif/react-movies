@@ -21,9 +21,8 @@
   gap: 0.3rem;
 }
 
-.edit {
+.edit, .delete {
   position: absolute;
-  top: 1rem;
   right: 1rem;
   display: flex;
   align-items: center;
@@ -33,6 +32,14 @@
   border: 0;
   border-radius: 50%;
   background-color: $dark;
+}
+
+.edit {
+  top: 1rem;
+}
+
+.delete {
+  top: 3.5rem;
 }
 
 .year {

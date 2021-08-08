@@ -1,11 +1,11 @@
-import React, { FunctionComponent, SyntheticEvent, MouseEvent } from "react";
-import { IMovieItem, IMovieState } from "../../types";
+import React, { FunctionComponent, SyntheticEvent } from "react";
+import { IMovieItem } from "../../types";
 import styles from "./Movie.scss";
 import noImage from "../../assets/noImage.png";
 import { useHistory } from "react-router-dom";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/reducers";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useDispatch } from "react-redux";
 import { setDialogOpened } from "../../redux/actions";
 
 export interface IMovieProps {
@@ -21,9 +21,6 @@ export const Movie: FunctionComponent<IMovieProps> = ({
 
   const dispatch = useDispatch();
 
-  const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { dialogOpened }: IMovieState = moviesReducer;
-
   function handleMovieClick() {
     history.push(`/movies/${id}`);
   }
@@ -36,26 +33,33 @@ export const Movie: FunctionComponent<IMovieProps> = ({
     return undefined;
   };
 
-  const editMovieHandle = (e: MouseEvent) => {
-    if (!dialogOpened) e.stopPropagation();
-    dispatch(setDialogOpened(true, item));
+  const editMovieHandle = () => {
+    dispatch(setDialogOpened(true, item, false));
+  };
+
+  const deleteMovieHandle = () => {
+    dispatch(setDialogOpened(true, item, true));
   };
 
   return (
-    <div className={styles.Movie} onClick={handleMovieClick}>
+    <div className={styles.Movie}>
       <img
         className={styles.picture}
         src={poster_path}
         onError={handleImgOnError}
+        onClick={handleMovieClick}
       />
       <div className={styles.edit} onClick={editMovieHandle}>
         <MoreVertIcon />
       </div>
-      <div className={styles.nameYear}>
+      <div className={styles.delete} onClick={deleteMovieHandle}>
+        <DeleteIcon />
+      </div>
+      <div className={styles.nameYear} onClick={handleMovieClick}>
         <div className={styles.name}>{title}</div>
         <div className={styles.year}>{release_date?.split("-")[0]}</div>
       </div>
-      <div className={styles.genre}>{genres.join(" & ")}</div>
+      <div className={styles.genre} onClick={handleMovieClick}>{genres.join(" & ")}</div>
     </div>
   );
 };

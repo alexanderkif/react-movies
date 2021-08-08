@@ -1,9 +1,9 @@
 import { MouseEvent, useEffect } from "react";
-import { IMovieDialogParams } from "../../../types";
+import { IMovieDialogParams, IMovieItem } from "../../../types";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/reducers";
-import { setDialogOpened } from "../../../redux/actions";
+import { createMovie, deleteMovieById, setDialogOpened, updateMovie } from "../../../redux/actions";
 
 const useMovieDialog = (): IMovieDialogParams => {
 
@@ -12,7 +12,7 @@ const useMovieDialog = (): IMovieDialogParams => {
   const [genres, setGenres] = useState<string[]>([]);
 
   const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { editMovie } = moviesReducer;
+  const { editMovie, deleteMovie } = moviesReducer;
 
   useEffect(() => {
     console.log('useMovieDialog setGenres');
@@ -33,7 +33,23 @@ const useMovieDialog = (): IMovieDialogParams => {
     dispatch(setDialogOpened(false));
   }
 
-  return { editMovie, selectorHandler, genres, setDialogOpenedHandler };
+  const deleteMovieHandler = (id: number) => {
+    dispatch(deleteMovieById(id));
+    dispatch(setDialogOpened(false));
+    setTimeout(() => history.go(0), 0);
+  };
+
+  const saveMovieHandler = (movie: IMovieItem) => {
+    if (movie.id) {
+      dispatch(updateMovie(movie));
+    } else {
+      dispatch(createMovie(movie));
+    }
+    dispatch(setDialogOpened(false));
+    setTimeout(() => history.go(0), 0);
+  };
+
+  return { editMovie, selectorHandler, genres, setDialogOpenedHandler, deleteMovie, deleteMovieHandler, saveMovieHandler };
 }
 
 export default useMovieDialog;
