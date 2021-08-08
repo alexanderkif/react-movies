@@ -32,9 +32,12 @@
   }
 
   &__label {
-    // margin-bottom: 1rem;
     font-size: 2rem;
     text-transform: uppercase;
+  }
+
+  &__deleteText {
+    margin-top: 1rem;
   }
 
   &__form {
@@ -109,6 +112,9 @@
     margin-top: 3rem;
     border-width: 0.1rem;
     border-radius: 0.3rem;
+    box-shadow: none;
+    border: 0.1rem solid $primary;
+    outline:0;
     font-size: 1rem;
     font-weight: 300;
     text-transform: uppercase;

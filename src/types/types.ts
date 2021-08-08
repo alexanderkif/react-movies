@@ -41,6 +41,7 @@ export interface IMovieState {
   activeGenreDetails?: string;
   filter?: string;
   dialogOpened?: boolean;
+  deleteMovie?: boolean;
 }
 
 export interface IMovieRequestParams {
@@ -92,10 +93,13 @@ export interface IGenresPanelParams {
 }
 
 export interface IMovieDialogParams {
-  editMovie?: IMovieItem | null;
+  editMovie?: IMovieItem | null | undefined;
   genres?: string[];
   selectorHandler?: MouseEventHandler<HTMLDivElement>;
   setDialogOpenedHandler: React.Dispatch<React.SetStateAction<boolean>>;
+  deleteMovie?: boolean;
+  deleteMovieHandler(id: number): void;
+  saveMovieHandler(movie: IMovieItem): void;
 }
 
 export interface IMovieDialogError {
