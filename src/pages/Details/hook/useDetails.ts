@@ -5,6 +5,7 @@ import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
 import { RootState } from "../../../redux/reducers";
 import { IDetailViewParams } from "../../../types";
 import { setActiveGenreDetails } from "../../../redux/actions";
+import { ALL_GENRES } from "../../Search/view/SearchView";
 
 const useDetails = (id: number): IDetailViewParams => {
 
@@ -43,7 +44,7 @@ const useDetails = (id: number): IDetailViewParams => {
     dispatch(setActiveGenreDetails(target.innerText.toLowerCase()));
     dispatch(
       getMoviesByGenre({
-        searchInput: target.innerText.toLocaleLowerCase(),
+        searchInput: ALL_GENRES.filter(g => g.toLowerCase() === target.innerText.toLowerCase())[0],
         filter: ''
       })
     );

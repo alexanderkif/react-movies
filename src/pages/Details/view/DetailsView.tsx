@@ -78,11 +78,7 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
             setActiveMovieHandler={setActiveMovieHandler}
             activeGenre={activeGenreDetails}
           />
-          <SortBySelector
-          // sorts={sorts}
-          // sortBy={sortBy}
-          // sortHandler={sortHandler}
-          />
+          <SortBySelector />
         </div>
       </div>
       <div className={styles.Details__bottomBar}>
