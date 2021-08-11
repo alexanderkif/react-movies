@@ -13,16 +13,7 @@ import MovieDialog from "../../../components/MovieDialog";
 export const DetailsView: FunctionComponent<IDetailViewParams> = (
   props: IDetailViewParams
 ) => {
-  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler } = props;
-
-  const getColors = (vote) => {
-    const red = Math.round(200 - vote * 12);
-    const green = Math.round(vote * 12 + 80);
-    return {
-      color: `rgba(${red},${green},0,1)`,
-      borderColor: `rgba(${red},${green},0,1)`
-    }
-  }
+  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler, getColors } = props;
 
   const handleImgOnError = (
     e: SyntheticEvent<EventTarget & HTMLImageElement>
@@ -53,7 +44,7 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
                 {movie?.title}
                 <div
                   className={styles.Details__average}
-                  style={getColors(movie?.vote_average)}
+                  style={getColors(movie?.vote_average as number)}
                 >
                   {movie?.vote_average}
                 </div>

@@ -51,7 +51,7 @@ const useSearch = (): ISearchViewProps => {
   };
 
   useEffect(() => {
-    console.log('useSearch fetchMovies');
+    // console.log('useSearch fetchMovies');
     fetchMovies();
   }, [sortBy, searchBy, sortOrder, filter]);
 
@@ -77,7 +77,7 @@ const useSearch = (): ISearchViewProps => {
 
   const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    console.log('setActiveMovieHandler', target.innerText, filter);
+    // console.log('setActiveMovieHandler', target.innerText, filter);
     if (target.innerText.toLowerCase() === filter?.toLowerCase()) return;
     dispatch(setFilter(target.innerText.toLowerCase()));
   };

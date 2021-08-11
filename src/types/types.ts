@@ -82,8 +82,12 @@ export interface IDetailViewParams {
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   sorts?: SortByType[];
   sortHandler?: MouseEventHandler<HTMLDivElement>;
-  sortBy?: SortByType;
+  // sortBy?: SortByType;
   dialogOpened?: boolean;
+  getColors: (vote: number) => {
+    color: string;
+    borderColor: string;
+  };
 }
 
 export interface IGenresPanelParams {

@@ -1,5 +1,4 @@
 import { useEffect, MouseEvent, useCallback } from "react";
-import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
 import { RootState } from "../../../redux/reducers";
@@ -9,25 +8,36 @@ import { ALL_GENRES } from "../../Search/view/SearchView";
 
 const useDetails = (id: number): IDetailViewParams => {
 
-  const location = useLocation();
   const dispatch = useDispatch();
 
   const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
   const { dialogOpened, movie, moviesByGenre, activeGenreDetails, sortBy, sortOrder, filter } = moviesReducer;
 
-  useEffect(() => {
-    console.log('useDetails getMovieById');
-    dispatch(getMovieById(id));
-    window.scrollTo(0, 0);
-  }, [location]);
+  const getColors = (vote) => {
+    const red = Math.round(200 - vote * 12);
+    const green = Math.round(vote * 12 + 80);
+    return {
+      color: `rgba(${red},${green},0,1)`,
+      borderColor: `rgba(${red},${green},0,1)`
+    }
+  }
 
   useEffect(() => {
-    console.log('useDetails setActiveGenreDetails');
+    // console.log('useDetails getMovieById');
+    dispatch(getMovieById(id));
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, [id]);
+
+  useEffect(() => {
+    // console.log('useDetails setActiveGenreDetails');
     dispatch(setActiveGenreDetails(movie?.genres[0] || ''));
   }, [movie]);
 
   useEffect(() => {
-    console.log('useDetails getMoviesByGenre');
+    // console.log('useDetails getMoviesByGenre');
     dispatch(
       getMoviesByGenre({
         searchInput: movie?.genres[0],
@@ -56,7 +66,7 @@ const useDetails = (id: number): IDetailViewParams => {
     moviesByGenre,
     activeGenreDetails,
     setActiveMovieHandler,
-    sortBy
+    getColors
   };
 };
 

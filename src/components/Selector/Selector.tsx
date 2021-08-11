@@ -15,7 +15,7 @@ export const Selector: FunctionComponent<ISelectorParams> = (props: ISelectorPar
   };
 
   useEffect(() => {
-    console.log('Selector setIsOpen');
+    // console.log('Selector setIsOpen');
     setIsOpen(false);
   }, [closeSelector]);
 
@@ -24,7 +24,7 @@ export const Selector: FunctionComponent<ISelectorParams> = (props: ISelectorPar
   }, []);
 
   useEffect(() => {
-    console.log('Selector addEventListener');
+    // console.log('Selector addEventListener');
     document.addEventListener('click', setIsOpenFalse);
     return () => document.removeEventListener('click', setIsOpenFalse);
   }, []);
