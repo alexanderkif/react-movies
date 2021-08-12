@@ -29,8 +29,8 @@ describe('MovieButton test', () => {
     render(<MovieButton {...props} />);
     // screen.debug();
     const btn = screen.getByText(BTN_TEXT);
-    expect(btn.classList.contains('MovieButton_small')).toBe(true);
-    expect(btn.classList.contains('MovieButton_active')).not.toBe(true);
+    expect(btn.classList.contains('small')).toBe(true);
+    expect(btn.classList.contains('active')).not.toBe(true);
   });
 
   it('active MovieButton', () => {
@@ -39,7 +39,7 @@ describe('MovieButton test', () => {
     render(<MovieButton {...props} />);
     // screen.debug();
     const btn = screen.getByText(BTN_TEXT);
-    expect(btn.classList.contains('MovieButton_small')).not.toBe(true);
-    expect(btn.classList.contains('MovieButton_active')).toBe(true);
+    expect(btn.classList.contains('small')).not.toBe(true);
+    expect(btn.classList.contains('active')).toBe(true);
   });
 });

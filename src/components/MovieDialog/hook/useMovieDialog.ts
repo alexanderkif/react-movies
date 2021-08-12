@@ -15,11 +15,10 @@ const useMovieDialog = (): IMovieDialogParams => {
   const { editMovie, deleteMovie } = moviesReducer;
 
   useEffect(() => {
-    console.log('useMovieDialog setGenres');
     setGenres(editMovie?.genres.map(g => g.toLowerCase()) || []);
   }, []);
 
-  const selectorHandler = (e: MouseEvent<HTMLDivElement>) => {
+  const dropdownHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     const genre = target.innerText.toLowerCase() as string;
     if (genres.includes(genre)) {
@@ -49,7 +48,7 @@ const useMovieDialog = (): IMovieDialogParams => {
     setTimeout(() => history.go(0), 0);
   };
 
-  return { editMovie, selectorHandler, genres, setDialogOpenedHandler, deleteMovie, deleteMovieHandler, saveMovieHandler };
+  return { editMovie, dropdownHandler, genres, setDialogOpenedHandler, deleteMovie, deleteMovieHandler, saveMovieHandler };
 }
 
 export default useMovieDialog;

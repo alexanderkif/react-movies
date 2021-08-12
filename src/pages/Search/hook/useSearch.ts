@@ -27,7 +27,7 @@ const useSearch = (): ISearchViewProps => {
 
   const openFormHandle = (e: MouseEvent) => {
     if (dialogOpened) e.stopPropagation();
-    dispatch(setDialogOpened(true, {
+    const newMovie = {
       title: '',
       tagline: '',
       vote_average: 0,
@@ -39,7 +39,8 @@ const useSearch = (): ISearchViewProps => {
       revenue: 0,
       genres: [],
       runtime: 0,
-    }));
+    };
+    dispatch(setDialogOpened(true, newMovie));
   };
 
   const searchInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +52,6 @@ const useSearch = (): ISearchViewProps => {
   };
 
   useEffect(() => {
-    // console.log('useSearch fetchMovies');
     fetchMovies();
   }, [sortBy, searchBy, sortOrder, filter]);
 
@@ -69,15 +69,14 @@ const useSearch = (): ISearchViewProps => {
 
   const searchByHandler = (e: MouseEvent<HTMLButtonElement>) => {
     const index = searches
-      .map((s) => s.toLocaleLowerCase())
-      .indexOf(e.currentTarget.innerText.toLocaleLowerCase())
+      .map((s) => s.toLowerCase())
+      .indexOf(e.currentTarget.innerText.toLowerCase())
     if (index === -1) return;
     dispatch(setSearchBy(searches[index]));
   };
 
   const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    // console.log('setActiveMovieHandler', target.innerText, filter);
     if (target.innerText.toLowerCase() === filter?.toLowerCase()) return;
     dispatch(setFilter(target.innerText.toLowerCase()));
   };

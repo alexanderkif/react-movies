@@ -1,3 +1,3 @@
-import { SortBySelector } from "./SortBySelector";
+import { SortByDropdown } from "./SortByDropdown";
 
-export default SortBySelector;
+export default SortByDropdown;

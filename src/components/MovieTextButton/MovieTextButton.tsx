@@ -7,8 +7,8 @@ export const MovieTextButton: FunctionComponent<IMovieButtonProps> = (
 ) => {
   const { text, active }: IMovieButtonProps = props;
   const buttonStyles = [
-    styles.MovieTextButton,
-    active ? styles.MovieTextButton_active : "",
+    styles.button,
+    active ? styles.button_active : "",
   ].join(" ");
 
   return <button className={buttonStyles}> {text} </button>;

@@ -42,7 +42,7 @@ export const Movie: FunctionComponent<IMovieProps> = ({
   };
 
   return (
-    <div className={styles.Movie}>
+    <div className={styles.card}>
       <img
         className={styles.picture}
         src={poster_path}

@@ -9,7 +9,7 @@ export const ListMovies: FunctionComponent<IListMoviesProps> = (
   const { movies } = props;
 
   return (
-    <div className={styles.ListMovies}>
+    <div className={styles.wrapper}>
       {movies?.map((movie) => (
         <Movie key={movie.id} item={movie} />
       ))}

@@ -9,11 +9,13 @@ import GenresPanel from "../../../components/GenresPanel";
 import SearchIcon from '@material-ui/icons/Search';
 import SortBySelector from "../../../components/SortBySelector";
 import MovieDialog from "../../../components/MovieDialog";
+import getColors from "../../../utils/getColors";
+import { LIMIT_MOVIES_IN_DETAILS } from "../../../utils/constants";
 
 export const DetailsView: FunctionComponent<IDetailViewParams> = (
   props: IDetailViewParams
 ) => {
-  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler, getColors } = props;
+  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler } = props;
 
   const handleImgOnError = (
     e: SyntheticEvent<EventTarget & HTMLImageElement>
@@ -25,45 +27,45 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
 
   return (
     <div className={styles.Details}>
-      <div className={styles.Details__backgrounded}>
-        <div className={styles.Details__bgDark}>
-          <div className={styles.Details__topBar}>
+      <div className={styles.backgrounded}>
+        <div className={styles.bgDark}>
+          <div className={styles.topBar}>
             <CompanyLabel />
-            <Link className={styles.Details__linkToSearch} to="/">
+            <Link className={styles.linkToSearch} to="/">
               <SearchIcon />
             </Link>
           </div>
-          <div className={styles.Details__movie}>
+          <div className={styles.movie}>
             <img
               src={movie?.poster_path}
-              className={styles.Details__picture}
+              className={styles.picture}
               onError={handleImgOnError}
             />
-            <div className={styles.Details__texts}>
-              <div className={styles.Details__title}>
+            <div className={styles.texts}>
+              <div className={styles.title}>
                 {movie?.title}
                 <div
-                  className={styles.Details__average}
+                  className={styles.average}
                   style={getColors(movie?.vote_average as number)}
                 >
                   {movie?.vote_average}
                 </div>
               </div>
-              <div className={styles.Details__tagline}>
+              <div className={styles.tagline}>
                 {movie?.tagline}
               </div>
-              <div className={styles.Details__yearLength}>
+              <div className={styles.yearLength}>
                 {movie?.release_date.split('-')[0]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{movie?.runtime} min
               </div>
-              <div className={styles.Details__description}>
+              <div className={styles.description}>
                 {movie?.overview}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className={styles.Details__bottomBar}>
-        <div className={styles.Details__border_bottom}>
+      <div className={styles.bottomBar}>
+        <div className={styles.border_bottom}>
           <GenresPanel
             genres={movie?.genres}
             setActiveMovieHandler={setActiveMovieHandler}
@@ -72,9 +74,10 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
           <SortBySelector />
         </div>
       </div>
-      <div className={styles.Details__bottomBar}>
-        <div className={styles.Details__moviesFound}>
-          <span>{moviesByGenre && moviesByGenre.length > 24 ? '25 or more' : moviesByGenre?.length}</span>&nbsp;movies found
+      <div className={styles.bottomBar}>
+        <div className={styles.moviesFound}>
+          <span>{moviesByGenre && moviesByGenre.length > LIMIT_MOVIES_IN_DETAILS - 1
+            ? `${LIMIT_MOVIES_IN_DETAILS} or more` : moviesByGenre?.length}</span>&nbsp;movies found
         </div>
       </div>
       <ListMovies movies={moviesByGenre} />

@@ -1,12 +1,10 @@
 @import '../../styles/colors.scss';
 
-.GenresPanel {
-  &__filmsBy {
-    display: flex;
-    align-items: center;
-  }
+.filmsBy {
+  display: flex;
+  align-items: center;
 
-  &__filmsByBtns {
+  .filmsByBtns {
     display: flex;
     align-items: center;
   }

@@ -23,7 +23,7 @@ export const store = createStore(
 
 export const App: FunctionComponent = () => {
   return (
-    <div className={styles.App}>
+    <div className={styles.container}>
       <Provider store={store}>
         <Router>
           <Switch>

@@ -84,10 +84,6 @@ export interface IDetailViewParams {
   sortHandler?: MouseEventHandler<HTMLDivElement>;
   // sortBy?: SortByType;
   dialogOpened?: boolean;
-  getColors: (vote: number) => {
-    color: string;
-    borderColor: string;
-  };
 }
 
 export interface IGenresPanelParams {
@@ -99,7 +95,7 @@ export interface IGenresPanelParams {
 export interface IMovieDialogParams {
   editMovie?: IMovieItem | null | undefined;
   genres?: string[];
-  selectorHandler?: MouseEventHandler<HTMLDivElement>;
+  dropdownHandler?: MouseEventHandler<HTMLDivElement>;
   setDialogOpenedHandler: React.Dispatch<React.SetStateAction<boolean>>;
   deleteMovie?: boolean;
   deleteMovieHandler(id: number): void;
@@ -115,20 +111,19 @@ export interface IMovieDialogError {
   runtime?: string;
 }
 
-export interface ISortBySelectorParams {
-  sorts?: SortByType[];
+export interface ISortByDropdownParams {
   sortBy?: SortByType;
   sortHandler?: MouseEventHandler<HTMLDivElement>;
 }
 
-export interface ISelectorParams {
+export interface IDropdownParams {
   options?: string[];
   value?: string;
-  selectorHandler?: MouseEventHandler<HTMLDivElement>;
+  dropdownHandler?: MouseEventHandler<HTMLDivElement>;
   id?: string;
   name?: string;
   position?: { [key: string]: string };
-  closeSelector?: boolean;
+  closeDropdown?: boolean;
 }
 
 export type SearchByType = 'title' | 'genres';

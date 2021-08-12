@@ -2,16 +2,11 @@ import { MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortBy, setSortOrder } from "../../../redux/actions";
 import { RootState } from "../../../redux/reducers";
-import { ISortBySelectorParams, SortByType } from "../../../types";
+import { ISortByDropdownParams } from "../../../types";
+import { SORTS_BY } from "../../../utils/constants";
 
-export const sorts: SortByType[] = [
-  { key: 'release_date', name: 'release date' },
-  { key: 'vote_average', name: 'rating' },
-  { key: 'budget', name: 'budget' },
-  { key: 'revenue', name: 'revenue' },
-];
 
-const useSortBySelector = (): ISortBySelectorParams => {
+const useSortByDropdown = (): ISortByDropdownParams => {
 
   const dispatch = useDispatch();
 
@@ -20,14 +15,14 @@ const useSortBySelector = (): ISortBySelectorParams => {
 
   const sortHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    const index = sorts
+    const index = SORTS_BY
       .map((s) => s.name.toLowerCase())
       .indexOf(target.innerText.toLowerCase());
     if (index === -1) return;
     if (target.innerText.toLowerCase() === sortBy?.name.toLowerCase()) {
       toggleSortOrder();
     } else {
-      dispatch(setSortBy(sorts[index]));
+      dispatch(setSortBy(SORTS_BY[index]));
     }
   };
 
@@ -35,7 +30,7 @@ const useSortBySelector = (): ISortBySelectorParams => {
     dispatch(setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'));
   }
 
-  return { sortHandler, sortBy, sorts };
+  return { sortHandler, sortBy };
 }
 
-export default useSortBySelector;
+export default useSortByDropdown;
