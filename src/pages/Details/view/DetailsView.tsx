@@ -11,6 +11,7 @@ import SortBySelector from "../../../components/SortBySelector";
 import MovieDialog from "../../../components/MovieDialog";
 import getColors from "../../../utils/getColors";
 import { LIMIT_MOVIES_IN_DETAILS } from "../../../utils/constants";
+import getYearFromReleaseDate from "../../../utils/getYearFromReleaseDate";
 
 export const DetailsView: FunctionComponent<IDetailViewParams> = (
   props: IDetailViewParams
@@ -55,7 +56,7 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
                 {movie?.tagline}
               </div>
               <div className={styles.yearLength}>
-                {movie?.release_date.split('-')[0]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{movie?.runtime} min
+                {movie && getYearFromReleaseDate(movie.release_date)}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{movie?.runtime} min
               </div>
               <div className={styles.description}>
                 {movie?.overview}

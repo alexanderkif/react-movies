@@ -58,7 +58,7 @@ export interface ISearchProps {
   searchViewProps?: ISearchViewProps
 }
 export interface ISearchViewProps {
-  movies: IMovieItem[] | undefined;
+  movies?: IMovieItem[];
   searchBy?: SearchByType;
   sortBy?: SortByType;
   searchInput?: string;
@@ -68,22 +68,53 @@ export interface ISearchViewProps {
   searchByHandler?: MouseEventHandler<HTMLButtonElement>;
   sorts?: SortByType[];
   searches?: SearchByType[];
-  fetchMovies?: MouseEventHandler<HTMLButtonElement>;
+  dispatchGetMovies?: MouseEventHandler<HTMLButtonElement>;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   filter?: string;
   dialogOpened?: boolean;
   openFormHandle: MouseEventHandler<HTMLButtonElement>;
 }
 
+export interface IUseSearchProps {
+  movies?: IMovieItem[];
+  searchBy?: SearchByType;
+  sortBy?: SortByType;
+  searchInput?: string;
+  sortOrder?: SortOrderType;
+  filter?: string;
+  dialogOpened?: boolean;
+  dispatchGetMovies: () => void;
+  dispatchSetDialogOpened: (opened: boolean, newMovie: IMovieItem) => void;
+  dispatchSetSearchInput: (value: string) => void;
+  dispatchSetSearchBy: (value: SearchByType) => void;
+  dispatchSetFilter: (value: string) => void;
+}
+
 export interface IDetailViewParams {
   movie?: IMovieItem | null;
-  moviesByGenre: IMovieItem[] | undefined;
+  moviesByGenre?: IMovieItem[];
   activeGenreDetails?: string;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   sorts?: SortByType[];
   sortHandler?: MouseEventHandler<HTMLDivElement>;
   // sortBy?: SortByType;
   dialogOpened?: boolean;
+}
+
+export interface IUseDetailsParams {
+  id: number;
+  movie?: IMovieItem | null;
+  moviesByGenre?: IMovieItem[];
+  activeGenreDetails?: string;
+  dialogOpened?: boolean;
+  sortBy?: SortByType;
+  sortOrder?: SortOrderType;
+  dispatchGetMovieById: (id: number) => void;
+  dispatchSetActiveGenreDetails: (genre: string) => void;
+  dispatchGetMoviesByGenre: (
+    searchInput: string,
+    filter?: string
+  ) => void;
 }
 
 export interface IGenresPanelParams {
@@ -93,13 +124,24 @@ export interface IGenresPanelParams {
 }
 
 export interface IMovieDialogParams {
-  editMovie?: IMovieItem | null | undefined;
+  editMovie?: IMovieItem | null;
   genres?: string[];
   dropdownHandler?: MouseEventHandler<HTMLDivElement>;
-  setDialogOpenedHandler: React.Dispatch<React.SetStateAction<boolean>>;
+  setDialogOpenedHandler: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void;
   deleteMovie?: boolean;
   deleteMovieHandler(id: number): void;
   saveMovieHandler(movie: IMovieItem): void;
+}
+
+export interface IUseMovieDialogParams {
+  movie?: IMovieItem | null;
+  editMovie?: IMovieItem | null;
+  deleteMovie?: boolean;
+  dispatchSetDialogOpened: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void;
+  dispatchDeleteMovieById: (id: number) => void;
+  dispatchUpdateMovie: (movie: IMovieItem) => void;
+  dispatchCreateMovie: (movie: IMovieItem) => void;
+
 }
 
 export interface IMovieDialogError {
@@ -114,6 +156,13 @@ export interface IMovieDialogError {
 export interface ISortByDropdownParams {
   sortBy?: SortByType;
   sortHandler?: MouseEventHandler<HTMLDivElement>;
+}
+
+export interface IUseSortByDropdownParams {
+  sortBy?: SortByType;
+  sortOrder?: SortOrderType;
+  dispatchSetSortBy: (sort: SortByType) => void;
+  dispatchSetSortOrder: (sortOrder: SortOrderType) => void;
 }
 
 export interface IDropdownParams {

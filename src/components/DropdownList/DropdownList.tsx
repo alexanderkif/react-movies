@@ -3,6 +3,7 @@ import { useState } from "react";
 import { IDropdownParams } from "../../types";
 import styles from "./DropdownList.scss";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import cn from 'classnames';
 
 export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdownParams) => {
   const { options, value, dropdownHandler, position, closeDropdown } = props;
@@ -34,17 +35,17 @@ export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdow
       <div className={styles.main}>
         <div className={styles.input}>
           {value}
-          <ArrowDropDownIcon
-            className={isOpen ? styles.arrow_up : styles.arrow_down}
-          />
+          <div className={cn(styles.arrow_down, { [styles.arrow_up]: isOpen })} >
+            <ArrowDropDownIcon />
+          </div>
         </div>
-        <div className={isOpen ? styles.popup : styles.closed} style={position} onClick={dropdownHandler}>
+        <div className={styles.popup} style={position} onClick={dropdownHandler}>
           {options?.map((option) => (
             <div
               key={option}
-              className={isOpen ? styles.genre_opened : styles.closed}
+              className={cn(styles.genre_opened, { [styles.genre_closed]: !isOpen })}
             >
-              <div className={isOptionInValue(option) ? styles.genre_active : styles.genre}>
+              <div className={cn(styles.genre, { [styles.genre_active]: isOptionInValue(option) })}>
                 {option}
               </div>
             </div>

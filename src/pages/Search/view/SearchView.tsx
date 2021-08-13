@@ -20,7 +20,7 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
     searchEnterHandler,
     searchByHandler,
     searches,
-    fetchMovies,
+    dispatchGetMovies,
     setActiveMovieHandler,
     filter,
     dialogOpened,
@@ -44,7 +44,7 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
             onChange={searchInputHandler}
             onKeyPress={searchEnterHandler}
           />
-          <MovieButton text="Search" active={true} clickHandler={fetchMovies} />
+          <MovieButton text="Search" active={true} clickHandler={dispatchGetMovies} />
         </div>
         <div className={styles.params}>
           search by

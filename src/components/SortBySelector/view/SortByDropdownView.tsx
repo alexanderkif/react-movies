@@ -11,7 +11,12 @@ export const SortByDropdownView: FunctionComponent<ISortByDropdownParams> = (pro
     <div className={styles.sortBy}>
       <div className={styles.sortLabel}>Sort by</div>
       <div className={styles.dropdown}>
-        <DropdownList options={SORTS_BY.map((s) => s.name)} value={sortBy?.name} position={{ top: '2rem' }} dropdownHandler={sortHandler} />
+        <DropdownList
+          options={SORTS_BY.map((s) => s.name)}
+          value={sortBy?.name}
+          position={{ top: '2rem' }}
+          dropdownHandler={sortHandler}
+        />
       </div>
     </div>
   );

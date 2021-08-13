@@ -1,21 +1,10 @@
 import { useEffect, ChangeEvent, KeyboardEvent, MouseEvent } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getMovies,
-  setDialogOpened,
-  setFilter,
-  setSearchBy,
-  setSearchInput
-} from "../../../redux/actions";
-import { IMovieState, ISearchViewProps, SearchByType } from "../../../types";
-import { RootState } from "../../../redux/reducers";
+import { ISearchViewProps, IUseSearchProps, SearchByType } from "../../../types";
 
 const searches: SearchByType[] = ["title", "genres"];
 
-const useSearch = (): ISearchViewProps => {
+const useSearch = (props: IUseSearchProps): ISearchViewProps => {
 
-  const dispatch = useDispatch();
-  const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
   const {
     movies,
     searchBy,
@@ -23,7 +12,13 @@ const useSearch = (): ISearchViewProps => {
     sortBy,
     sortOrder,
     filter,
-    dialogOpened }: IMovieState = moviesReducer;
+    dialogOpened,
+    dispatchGetMovies,
+    dispatchSetDialogOpened,
+    dispatchSetSearchInput,
+    dispatchSetSearchBy,
+    dispatchSetFilter
+  } = props;
 
   const openFormHandle = (e: MouseEvent) => {
     if (dialogOpened) e.stopPropagation();
@@ -40,45 +35,33 @@ const useSearch = (): ISearchViewProps => {
       genres: [],
       runtime: 0,
     };
-    dispatch(setDialogOpened(true, newMovie));
+    dispatchSetDialogOpened(true, newMovie);
   };
 
   const searchInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchInput(e.target.value));
+    dispatchSetSearchInput(e.target.value);
   };
 
   const searchEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") fetchMovies();
+    if (e.key === "Enter") dispatchGetMovies();
   };
 
   useEffect(() => {
-    fetchMovies();
+    dispatchGetMovies();
   }, [sortBy, searchBy, sortOrder, filter]);
-
-  const fetchMovies = () => {
-    dispatch(
-      getMovies({
-        searchInput: searchInput,
-        sortBy: sortBy,
-        searchBy: searchBy,
-        sortOrder: sortOrder,
-        filter: filter
-      })
-    );
-  };
 
   const searchByHandler = (e: MouseEvent<HTMLButtonElement>) => {
     const index = searches
       .map((s) => s.toLowerCase())
       .indexOf(e.currentTarget.innerText.toLowerCase())
     if (index === -1) return;
-    dispatch(setSearchBy(searches[index]));
+    dispatchSetSearchBy(searches[index]);
   };
 
   const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     if (target.innerText.toLowerCase() === filter?.toLowerCase()) return;
-    dispatch(setFilter(target.innerText.toLowerCase()));
+    dispatchSetFilter(target.innerText.toLowerCase());
   };
 
   return {
@@ -90,7 +73,7 @@ const useSearch = (): ISearchViewProps => {
     searchEnterHandler,
     searchByHandler,
     searches,
-    fetchMovies,
+    dispatchGetMovies,
     setActiveMovieHandler,
     filter,
     dialogOpened,

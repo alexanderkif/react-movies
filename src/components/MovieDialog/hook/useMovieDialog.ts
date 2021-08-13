@@ -1,18 +1,22 @@
 import { MouseEvent, useEffect } from "react";
-import { IMovieDialogParams, IMovieItem } from "../../../types";
+import { IMovieDialogParams, IMovieItem, IUseMovieDialogParams } from "../../../types";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/reducers";
-import { createMovie, deleteMovieById, setDialogOpened, updateMovie } from "../../../redux/actions";
+import { useHistory } from "react-router-dom";
 
-const useMovieDialog = (): IMovieDialogParams => {
+const useMovieDialog = (props: IUseMovieDialogParams): IMovieDialogParams => {
+  const {
+    movie,
+    editMovie,
+    deleteMovie,
+    dispatchSetDialogOpened,
+    dispatchDeleteMovieById,
+    dispatchUpdateMovie,
+    dispatchCreateMovie
+  } = props;
 
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const [genres, setGenres] = useState<string[]>([]);
-
-  const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { editMovie, deleteMovie } = moviesReducer;
 
   useEffect(() => {
     setGenres(editMovie?.genres.map(g => g.toLowerCase()) || []);
@@ -28,23 +32,24 @@ const useMovieDialog = (): IMovieDialogParams => {
     )
   };
 
-  const setDialogOpenedHandler = () => {
-    dispatch(setDialogOpened(false));
+  const setDialogOpenedHandler = (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => {
+    dispatchSetDialogOpened(isOpen, movie, isDelete);
   }
 
   const deleteMovieHandler = (id: number) => {
-    dispatch(deleteMovieById(id));
-    dispatch(setDialogOpened(false));
-    setTimeout(() => history.go(0), 0);
+    dispatchDeleteMovieById(id);
+    dispatchSetDialogOpened(false);
+    if (movie?.id === id) setTimeout(() => history.push('/'), 0);
+    else setTimeout(() => history.go(0), 0);
   };
 
   const saveMovieHandler = (movie: IMovieItem) => {
     if (movie.id) {
-      dispatch(updateMovie(movie));
+      dispatchUpdateMovie(movie);
     } else {
-      dispatch(createMovie(movie));
+      dispatchCreateMovie(movie);
     }
-    dispatch(setDialogOpened(false));
+    dispatchSetDialogOpened(false);
     setTimeout(() => history.go(0), 0);
   };
 

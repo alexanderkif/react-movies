@@ -1,17 +1,14 @@
 import { MouseEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setSortBy, setSortOrder } from "../../../redux/actions";
-import { RootState } from "../../../redux/reducers";
-import { ISortByDropdownParams } from "../../../types";
+import { ISortByDropdownParams, IUseSortByDropdownParams } from "../../../types";
 import { SORTS_BY } from "../../../utils/constants";
 
 
-const useSortByDropdown = (): ISortByDropdownParams => {
-
-  const dispatch = useDispatch();
-
-  const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { sortBy, sortOrder } = moviesReducer;
+const useSortByDropdown = ({
+  sortBy,
+  sortOrder,
+  dispatchSetSortBy,
+  dispatchSetSortOrder
+}: IUseSortByDropdownParams): ISortByDropdownParams => {
 
   const sortHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -22,12 +19,12 @@ const useSortByDropdown = (): ISortByDropdownParams => {
     if (target.innerText.toLowerCase() === sortBy?.name.toLowerCase()) {
       toggleSortOrder();
     } else {
-      dispatch(setSortBy(SORTS_BY[index]));
+      dispatchSetSortBy(SORTS_BY[index]);
     }
   };
 
   const toggleSortOrder = () => {
-    dispatch(setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'));
+    dispatchSetSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   }
 
   return { sortHandler, sortBy };

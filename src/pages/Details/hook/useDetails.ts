@@ -1,20 +1,24 @@
 import { useEffect, MouseEvent, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
-import { RootState } from "../../../redux/reducers";
-import { IDetailViewParams } from "../../../types";
-import { setActiveGenreDetails } from "../../../redux/actions";
+import { IDetailViewParams, IUseDetailsParams } from "../../../types";
 import { ALL_GENRES } from "../../../utils/constants";
 
-const useDetails = (id: number): IDetailViewParams => {
+const useDetails = (props: IUseDetailsParams): IDetailViewParams => {
 
-  const dispatch = useDispatch();
-
-  const moviesReducer = useSelector((state: RootState) => state.moviesReducer);
-  const { dialogOpened, movie, moviesByGenre, activeGenreDetails, sortBy, sortOrder, filter } = moviesReducer;
+  const {
+    id,
+    dialogOpened,
+    movie,
+    moviesByGenre,
+    activeGenreDetails,
+    sortBy,
+    sortOrder,
+    dispatchGetMovieById,
+    dispatchSetActiveGenreDetails,
+    dispatchGetMoviesByGenre
+  } = props;
 
   useEffect(() => {
-    dispatch(getMovieById(id));
+    dispatchGetMovieById(id);
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -22,29 +26,20 @@ const useDetails = (id: number): IDetailViewParams => {
   }, [id]);
 
   useEffect(() => {
-    if (movie?.genres[0]) dispatch(setActiveGenreDetails(movie.genres[0]));
+    if (movie?.genres[0]) dispatchSetActiveGenreDetails(movie.genres[0]);
   }, [movie]);
 
   useEffect(() => {
-    if (movie?.genres[0]) dispatch(
-      getMoviesByGenre({
-        searchInput: movie.genres[0],
-        sortOrder,
-        sortBy,
-        filter
-      })
-    );
+    if (movie?.genres[0]) dispatchGetMoviesByGenre(movie.genres[0]);
   }, [movie, sortBy, sortOrder]);
 
   const setActiveMovieHandler = useCallback((e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     if (target.innerText.toLowerCase() === activeGenreDetails?.toLowerCase()) return;
-    dispatch(setActiveGenreDetails(target.innerText.toLowerCase()));
-    dispatch(
-      getMoviesByGenre({
-        searchInput: ALL_GENRES.filter(g => g.toLowerCase() === target.innerText.toLowerCase())[0],
-        filter: ''
-      })
+    dispatchSetActiveGenreDetails(target.innerText.toLowerCase());
+    dispatchGetMoviesByGenre(
+      ALL_GENRES.filter(g => g.toLowerCase() === target.innerText.toLowerCase())[0],
+      ''
     );
   }, [activeGenreDetails]);
 

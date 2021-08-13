@@ -5,8 +5,8 @@ import noImage from "../../assets/noImage.png";
 import { useHistory } from "react-router-dom";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { useDispatch } from "react-redux";
-import { setDialogOpened } from "../../redux/actions";
+import getYearFromReleaseDate from "../../utils/getYearFromReleaseDate";
+import { useMovieDialogOpen } from "../MovieDialog/MovieDialog";
 
 export interface IMovieProps {
   item: IMovieItem;
@@ -19,7 +19,15 @@ export const Movie: FunctionComponent<IMovieProps> = ({
 
   const history = useHistory();
 
-  const dispatch = useDispatch();
+  const openMovieDialog = useMovieDialogOpen();
+
+  const editMovieHandle = () => {
+    openMovieDialog(true, item, false);
+  };
+
+  const deleteMovieHandle = () => {
+    openMovieDialog(true, item, true);
+  };
 
   function handleMovieClick() {
     history.push(`/movies/${id}`);
@@ -31,14 +39,6 @@ export const Movie: FunctionComponent<IMovieProps> = ({
     const imgElement: HTMLImageElement = e.currentTarget;
     imgElement.src = `${noImage}`;
     return undefined;
-  };
-
-  const editMovieHandle = () => {
-    dispatch(setDialogOpened(true, item, false));
-  };
-
-  const deleteMovieHandle = () => {
-    dispatch(setDialogOpened(true, item, true));
   };
 
   return (
@@ -57,7 +57,7 @@ export const Movie: FunctionComponent<IMovieProps> = ({
       </div>
       <div className={styles.nameYear} onClick={handleMovieClick}>
         <div className={styles.name}>{title}</div>
-        <div className={styles.year}>{release_date?.split("-")[0]}</div>
+        <div className={styles.year}>{getYearFromReleaseDate(release_date)}</div>
       </div>
       <div className={styles.genre} onClick={handleMovieClick}>{genres.join(" & ")}</div>
     </div>
