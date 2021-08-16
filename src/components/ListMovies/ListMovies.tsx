@@ -11,7 +11,7 @@ export const ListMovies: FunctionComponent<IListMoviesProps> = (
   return (
     <div className={styles.wrapper}>
       {movies?.map((movie) => (
-        <Movie key={movie.id} item={movie} />
+        <Movie key={movie.id} movie={movie} />
       ))}
     </div>
   );

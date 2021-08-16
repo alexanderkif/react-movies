@@ -4,6 +4,7 @@ import { IDropdownParams } from "../../types";
 import styles from "./DropdownList.scss";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import cn from 'classnames';
+import { isOptionInOptionsString } from "../../utils/isOptionInOptionsString";
 
 export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdownParams) => {
   const { options, value, dropdownHandler, position, closeDropdown } = props;
@@ -28,8 +29,6 @@ export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdow
     return () => document.removeEventListener('click', setIsOpenFalse);
   }, []);
 
-  const isOptionInValue = (option: string) => value?.toLowerCase().split(', ').includes(option.toLowerCase());
-
   return (
     <div className={styles.dropdown} onClick={popupHandler}>
       <div className={styles.main}>
@@ -45,7 +44,7 @@ export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdow
               key={option}
               className={cn(styles.genre_opened, { [styles.genre_closed]: !isOpen })}
             >
-              <div className={cn(styles.genre, { [styles.genre_active]: isOptionInValue(option) })}>
+              <div className={cn(styles.genre, { [styles.genre_active]: isOptionInOptionsString(option, value || '') })}>
                 {option}
               </div>
             </div>

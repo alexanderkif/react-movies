@@ -1,5 +1,5 @@
 import { Action } from "@reduxjs/toolkit";
-import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from "react";
+import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler, SyntheticEvent } from "react";
 
 export interface IMovieItem {
   id?: number;
@@ -99,6 +99,17 @@ export interface IDetailViewParams {
   sortHandler?: MouseEventHandler<HTMLDivElement>;
   // sortBy?: SortByType;
   dialogOpened?: boolean;
+}
+
+export interface IUseMovie {
+  editMovieHandle: (item: IMovieItem) => void;
+  deleteMovieHandle: (item: IMovieItem) => void;
+  handleImgOnError: (e: SyntheticEvent<EventTarget & HTMLImageElement>) => void;
+}
+
+export interface IUseMovieProps extends IUseMovie {
+  movie: IMovieItem,
+  handleMovieClick: (id?: number) => void;
 }
 
 export interface IUseDetailsParams {
