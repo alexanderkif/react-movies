@@ -112,6 +112,7 @@ export const createMovie = (movie: IMovieItem) => {
 
 export const updateMovie = (movie: IMovieItem) => {
   return (dispatch: Dispatch): void => {
+    if (!movie.tagline) movie.tagline = movie.title;
     axios
       .put(`${MOVIES_URL}`, movie)
       .then(res => {

@@ -12,6 +12,7 @@ export interface IMovieProps {
 export const MovieView: FunctionComponent<IUseMovieProps> = (props: IUseMovieProps) => {
   const { id, poster_path, title, release_date, genres }: IMovieItem = props.movie;
   const {
+    handleMovieClick,
     editMovieHandle,
     deleteMovieHandle,
     handleImgOnError
@@ -23,7 +24,7 @@ export const MovieView: FunctionComponent<IUseMovieProps> = (props: IUseMoviePro
         className={styles.picture}
         src={poster_path}
         onError={handleImgOnError}
-        onClick={() => props.handleMovieClick(id)}
+        onClick={() => handleMovieClick(id)}
       />
       <div className={styles.edit} onClick={() => editMovieHandle(props.movie)}>
         <MoreVertIcon />
@@ -31,11 +32,11 @@ export const MovieView: FunctionComponent<IUseMovieProps> = (props: IUseMoviePro
       <div className={styles.delete} onClick={() => deleteMovieHandle(props.movie)}>
         <DeleteIcon />
       </div>
-      <div className={styles.nameYear} onClick={() => props.handleMovieClick(id)}>
+      <div className={styles.nameYear} onClick={() => handleMovieClick(id)}>
         <div className={styles.name}>{title}</div>
         <div className={styles.year}>{getYearFromReleaseDate(release_date)}</div>
       </div>
-      <div className={styles.genre} onClick={() => props.handleMovieClick(id)}>{genres.join(" & ")}</div>
+      <div className={styles.genre} onClick={() => handleMovieClick(id)}>{genres.join(" & ")}</div>
     </div>
   );
 };

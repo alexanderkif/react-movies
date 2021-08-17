@@ -1,17 +1,23 @@
 import { SyntheticEvent } from "react";
-import { IMovieActions, IMovieItem, IUseMovie } from "../../../types";
+import { IMovieItem, IUseMovie } from "../../../types";
 import noImage from "../../../assets/noImage.png";
 
 const useMovie = (
-  openMovieDialog: (isOpen: boolean, movie: IMovieItem, isDelete?: boolean) => IMovieActions
+  setDialogOpenedHandler: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void,
+  // eslint-disable-next-line
+  history
 ): IUseMovie => {
 
+  function handleMovieClick(id?: number) {
+    history.push(`/movies/${id}`);
+  }
+
   const editMovieHandle = (item: IMovieItem) => {
-    openMovieDialog(true, item, false);
+    setDialogOpenedHandler(true, item, false);
   };
 
   const deleteMovieHandle = (item: IMovieItem) => {
-    openMovieDialog(true, item, true);
+    setDialogOpenedHandler(true, item, true);
   };
 
   const handleImgOnError = (
@@ -23,6 +29,7 @@ const useMovie = (
   };
 
   return {
+    handleMovieClick,
     editMovieHandle,
     deleteMovieHandle,
     handleImgOnError

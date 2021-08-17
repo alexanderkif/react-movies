@@ -1,5 +1,6 @@
 import { Action } from "@reduxjs/toolkit";
-import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler, SyntheticEvent } from "react";
+import { FormikProps } from "formik";
+import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler, SyntheticEvent, Dispatch } from "react";
 
 export interface IMovieItem {
   id?: number;
@@ -102,30 +103,24 @@ export interface IDetailViewParams {
 }
 
 export interface IUseMovie {
+  handleMovieClick: (id?: number) => void;
   editMovieHandle: (item: IMovieItem) => void;
   deleteMovieHandle: (item: IMovieItem) => void;
   handleImgOnError: (e: SyntheticEvent<EventTarget & HTMLImageElement>) => void;
 }
 
 export interface IUseMovieProps extends IUseMovie {
-  movie: IMovieItem,
-  handleMovieClick: (id?: number) => void;
+  movie: IMovieItem;
 }
 
-export interface IUseDetailsParams {
+export interface IUseDetailsParams extends IMovieDispatch {
   id: number;
-  movie?: IMovieItem | null;
-  moviesByGenre?: IMovieItem[];
-  activeGenreDetails?: string;
-  dialogOpened?: boolean;
-  sortBy?: SortByType;
-  sortOrder?: SortOrderType;
-  dispatchGetMovieById: (id: number) => void;
-  dispatchSetActiveGenreDetails: (genre: string) => void;
-  dispatchGetMoviesByGenre: (
-    searchInput: string,
-    filter?: string
-  ) => void;
+  moviesState: IMovieState;
+}
+
+export interface IMovieDispatch {
+  // eslint-disable-next-line
+  dispatch: Dispatch<any>;
 }
 
 export interface IGenresPanelParams {
@@ -140,19 +135,23 @@ export interface IMovieDialogParams {
   dropdownHandler?: MouseEventHandler<HTMLDivElement>;
   setDialogOpenedHandler: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void;
   deleteMovie?: boolean;
-  deleteMovieHandler(id: number): void;
-  saveMovieHandler(movie: IMovieItem): void;
+  closeDropdown: boolean;
+  formik: FormikProps<IMovieFormikProps>;
+  clickFormHandler: MouseEventHandler<HTMLDivElement>;
+  deleteMovieSubmit: () => void;
 }
 
-export interface IUseMovieDialogParams {
-  movie?: IMovieItem | null;
-  editMovie?: IMovieItem | null;
-  deleteMovie?: boolean;
-  dispatchSetDialogOpened: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void;
-  dispatchDeleteMovieById: (id: number) => void;
-  dispatchUpdateMovie: (movie: IMovieItem) => void;
-  dispatchCreateMovie: (movie: IMovieItem) => void;
+export interface IMovieFormikProps {
+  title: string;
+  release_date: string;
+  poster_path: string;
+  genres?: string[];
+  overview: string;
+  runtime: number;
+}
 
+export interface IUseMovieStateWithDispatchParams extends IMovieDispatch {
+  moviesState: IMovieState;
 }
 
 export interface IMovieDialogError {

@@ -5,8 +5,8 @@ import MovieButton from "../../../components/MovieButton";
 import ListMovies from "../../../components/ListMovies";
 import { ISearchViewProps } from "../../../types";
 import GenresPanel from "../../../components/GenresPanel";
-import SortBySelector from "../../../components/SortBySelector";
-import MovieDialog from "../../../components/MovieDialog";
+import SortBySelector from "../../SortBySelector";
+import MovieDialog from "../../MovieDialog";
 import { LIMIT_MOVIES_IN_SEARCH } from "../../../utils/constants";
 
 export const SearchView: FunctionComponent<ISearchViewProps> = (

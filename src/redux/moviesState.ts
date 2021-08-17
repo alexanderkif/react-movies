@@ -24,7 +24,7 @@ const initialState: IMovieState = {
   filter: 'all',
 };
 
-export default function moviesReducer(state = initialState, action: IMovieActions): IMovieState {
+export default function moviesState(state = initialState, action: IMovieActions): IMovieState {
   switch (action.type) {
     case ADD_MOVIES_TO_STORE:
       return {

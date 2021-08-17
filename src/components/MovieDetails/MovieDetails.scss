@@ -1,0 +1,67 @@
+@import '../../styles/colors.scss';
+
+
+
+.movie {
+  display: flex;
+  margin-top: 3rem;
+  margin-bottom: 2.2rem;
+}
+
+.picture {
+  width: 18rem;
+  height: 25rem;
+  margin-left: -3rem;
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  margin-left: 4.5rem;
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 767px) {
+  .movie {
+    flex-direction: column;
+  }
+  .picture {
+    margin: 0 auto;
+  }
+  .texts {
+    margin: 1rem 3rem;
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-top: 0.9rem;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: $primary;
+}
+
+.average {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 1rem;
+  border: 0.1rem solid $primary;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $primary;
+}
+
+.yearLength {
+  margin-top: 0.7rem;
+  font-weight: 600;
+}
+
+.description {
+  margin-top: 2rem;
+}

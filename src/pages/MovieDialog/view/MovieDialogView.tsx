@@ -1,72 +1,22 @@
-import React, { FunctionComponent, useState, MouseEvent } from "react";
-import { IMovieDialogError, IMovieDialogParams, IMovieItem } from "../../../types";
+import React, { FunctionComponent } from "react";
+import { IMovieDialogParams } from "../../../types";
 import styles from "./MovieDialog.scss";
 import CloseIcon from '@material-ui/icons/Close';
-import { useFormik } from "formik";
-import DropdownList from "../../DropdownList";
+import DropdownList from "../../../components/DropdownList";
 import { ALL_GENRES } from "../../../utils/constants";
 
 export const MovieDialogView: FunctionComponent<IMovieDialogParams> = (props: IMovieDialogParams) => {
-  const { editMovie, dropdownHandler, genres, setDialogOpenedHandler, deleteMovie = false, deleteMovieHandler, saveMovieHandler } = props;
-
-  const [closeDropdown, setCloseDropdown] = useState<boolean>(false);
-
-  const validate = values => {
-    const errors: IMovieDialogError = {}
-
-    if (!values.title) {
-      errors.title = 'Required';
-    } else if (values.title.length < 3) {
-      errors.title = 'Must be 3 characters or more'
-    }
-
-    if (!values.poster_path) {
-      errors.poster_path = 'Required';
-    }
-
-    if (!genres?.length) {
-      errors.genres = 'Required';
-    }
-
-    if (!values.overview) {
-      errors.overview = 'Required';
-    } else if (values.overview.length < 5) {
-      errors.overview = 'Must be 5 characters or more'
-    }
-
-    if (!values.runtime) {
-      errors.runtime = 'Required';
-    } else if (values.runtime < 0) {
-      errors.runtime = 'Must be positive'
-    }
-
-    return errors;
-  }
-
-  const formik = useFormik({
-    initialValues: {
-      title: editMovie?.title || '',
-      release_date: editMovie?.release_date || '2021-08-01',
-      poster_path: editMovie?.poster_path || '',
-      genres: editMovie?.genres,
-      overview: editMovie?.overview || '',
-      runtime: editMovie?.runtime || 0,
-    },
-    validate,
-    onSubmit: values => {
-      const modifiedMovie = { ...editMovie, ...values, genres } as IMovieItem;
-      saveMovieHandler(modifiedMovie);
-    },
-  })
-
-  const clickFormHandler = (e: MouseEvent) => {
-    e.stopPropagation();
-    setCloseDropdown(!closeDropdown);
-  };
-
-  const deleteMovieSubmit = () => {
-    if (editMovie?.id) deleteMovieHandler(editMovie?.id);
-  };
+  const {
+    editMovie,
+    dropdownHandler,
+    genres,
+    setDialogOpenedHandler,
+    deleteMovie = false,
+    closeDropdown,
+    formik,
+    clickFormHandler,
+    deleteMovieSubmit
+  } = props;
 
   if (deleteMovie) {
     return (

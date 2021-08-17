@@ -22,8 +22,8 @@ const movie = {
 describe('Movie card test', () => {
 
   const openMovieDialog = jest.fn();
-  const handleMovieClick = jest.fn();
-  const setUp = () => shallow(<MovieView {...useMovie(openMovieDialog)} handleMovieClick={handleMovieClick} movie={movie} />);
+  const history = jest.fn();
+  const setUp = () => shallow(<MovieView {...useMovie(openMovieDialog, history)} movie={movie} />);
 
   it('render Movie image', () => {
     const component = setUp();

@@ -1,9 +1,16 @@
 import { useEffect, ChangeEvent, KeyboardEvent, MouseEvent } from "react";
-import { ISearchViewProps, IUseSearchProps, SearchByType } from "../../../types";
+import { ISearchViewProps, IMovieState, SearchByType, IUseMovieStateWithDispatchParams } from "../../../types";
+import {
+  getMovies,
+  setDialogOpened,
+  setFilter,
+  setSearchBy,
+  setSearchInput
+} from "../../../redux/actions";
 
 const searches: SearchByType[] = ["title", "genres"];
 
-const useSearch = (props: IUseSearchProps): ISearchViewProps => {
+const useSearch = ({ dispatch, moviesState }: IUseMovieStateWithDispatchParams): ISearchViewProps => {
 
   const {
     movies,
@@ -12,13 +19,19 @@ const useSearch = (props: IUseSearchProps): ISearchViewProps => {
     sortBy,
     sortOrder,
     filter,
-    dialogOpened,
-    dispatchGetMovies,
-    dispatchSetDialogOpened,
-    dispatchSetSearchInput,
-    dispatchSetSearchBy,
-    dispatchSetFilter
-  } = props;
+    dialogOpened }: IMovieState = moviesState;
+
+  const dispatchGetMovies = () => {
+    dispatch(
+      getMovies({
+        searchInput: searchInput,
+        sortBy: sortBy,
+        searchBy: searchBy,
+        sortOrder: sortOrder,
+        filter: filter
+      })
+    );
+  };
 
   const openFormHandle = (e: MouseEvent) => {
     if (dialogOpened) e.stopPropagation();
@@ -35,11 +48,11 @@ const useSearch = (props: IUseSearchProps): ISearchViewProps => {
       genres: [],
       runtime: 0,
     };
-    dispatchSetDialogOpened(true, newMovie);
+    dispatch(setDialogOpened(true, newMovie));
   };
 
   const searchInputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatchSetSearchInput(e.target.value);
+    dispatch(setSearchInput(e.target.value));
   };
 
   const searchEnterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -55,13 +68,13 @@ const useSearch = (props: IUseSearchProps): ISearchViewProps => {
       .map((s) => s.toLowerCase())
       .indexOf(e.currentTarget.innerText.toLowerCase())
     if (index === -1) return;
-    dispatchSetSearchBy(searches[index]);
+    dispatch(setSearchBy(searches[index]));
   };
 
   const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     if (target.innerText.toLowerCase() === filter?.toLowerCase()) return;
-    dispatchSetFilter(target.innerText.toLowerCase());
+    dispatch(setFilter(target.innerText.toLowerCase()));
   };
 
   return {
