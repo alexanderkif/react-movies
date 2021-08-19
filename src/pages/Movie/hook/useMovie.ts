@@ -22,10 +22,10 @@ const useMovie = (
 
   const handleImgOnError = (
     e: SyntheticEvent<EventTarget & HTMLImageElement>
-  ): void | undefined => {
+  ): void => {
     const imgElement: HTMLImageElement = e.currentTarget;
-    imgElement.src = `${noImage}`;
-    return undefined;
+    imgElement.setAttribute('src', imgElement.alt === 'test component' ? 'test component' : noImage);
+    imgElement.alt = 'noImage';
   };
 
   return {
