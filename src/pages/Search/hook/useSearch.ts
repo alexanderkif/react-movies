@@ -64,17 +64,18 @@ const useSearch = ({ dispatch, moviesState }: IUseMovieStateWithDispatchParams):
   }, [sortBy, searchBy, sortOrder, filter]);
 
   const searchByHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    const target = e.target as HTMLButtonElement;
     const index = searches
       .map((s) => s.toLowerCase())
-      .indexOf(e.currentTarget.innerText.toLowerCase())
+      .indexOf(target.innerHTML.toLowerCase())
     if (index === -1) return;
     dispatch(setSearchBy(searches[index]));
   };
 
   const setActiveMovieHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    if (target.innerText.toLowerCase() === filter?.toLowerCase()) return;
-    dispatch(setFilter(target.innerText.toLowerCase()));
+    if (target.innerHTML.trim().toLowerCase() === filter?.toLowerCase()) return;
+    dispatch(setFilter(target.innerHTML.trim().toLowerCase()));
   };
 
   return {
