@@ -33,7 +33,7 @@ export const movie2: IMovieItem = {
 export const moviesStateTest: IMovieState = {
   movies: [movie1, movie2],
   movie: movie1,
-  editMovie: null,
+  editMovie: movie2,
   searchBy: 'title',
   sortBy: { key: 'release_date', name: 'release date' },
   searchInput: '',

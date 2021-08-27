@@ -21,7 +21,7 @@ const useMovieDialog = (
 
   const dropdownHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    const genre = target.innerText.toLowerCase() as string;
+    const genre = target.innerHTML.toLowerCase() as string;
     if (genres.includes(genre)) {
       setGenres(genres.filter(g => g !== genre));
     } else (
