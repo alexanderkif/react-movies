@@ -2,6 +2,7 @@ import { MouseEvent } from "react";
 import { ISortByDropdownParams, IUseMovieStateWithDispatchParams } from "../../../types";
 import { SORTS_BY } from "../../../utils/constants";
 import { setSortBy, setSortOrder } from "../../../redux/actions";
+import getTextFromElement from "../../../utils/getTextFromElement";
 
 const useSortByDropdown = ({ dispatch, moviesState }: IUseMovieStateWithDispatchParams): ISortByDropdownParams => {
 
@@ -11,9 +12,9 @@ const useSortByDropdown = ({ dispatch, moviesState }: IUseMovieStateWithDispatch
     const target = e.target as HTMLDivElement;
     const index = SORTS_BY
       .map((s) => s.name.toLowerCase())
-      .indexOf(target.innerHTML.trim().toLowerCase());
+      .indexOf(getTextFromElement(target.innerHTML).trim().toLowerCase());
     if (index === -1) return;
-    if (target.innerHTML.trim().toLowerCase() === sortBy?.name.toLowerCase()) {
+    if (getTextFromElement(target.innerHTML).trim().toLowerCase() === sortBy?.name.toLowerCase()) {
       toggleSortOrder();
     } else {
       dispatch(setSortBy(SORTS_BY[index]));

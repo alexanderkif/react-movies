@@ -113,14 +113,11 @@ export interface IUseMovieProps extends IUseMovie {
   movie: IMovieItem;
 }
 
-export interface IUseDetailsParams extends IMovieDispatch {
+export interface IUseDetailsParams {
   id: number;
-  moviesState: IMovieState;
-}
-
-export interface IMovieDispatch {
   // eslint-disable-next-line
   dispatch: Dispatch<any>;
+  moviesState: IMovieState;
 }
 
 export interface IGenresPanelParams {
@@ -150,8 +147,10 @@ export interface IMovieFormikProps {
   runtime: number;
 }
 
-export interface IUseMovieStateWithDispatchParams extends IMovieDispatch {
+export interface IUseMovieStateWithDispatchParams {
   moviesState: IMovieState;
+  // eslint-disable-next-line
+  dispatch: Dispatch<any>;
 }
 
 export interface IMovieDialogError {

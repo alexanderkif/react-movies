@@ -13,5 +13,5 @@ export const Details: FunctionComponent = () => {
 
   const moviesState = useSelector((state: RootState) => state.moviesState);
 
-  return <DetailsView {...useDetails({ id, dispatch, moviesState })} />;
+  return <DetailsView {...useDetails(id, dispatch, moviesState)} />;
 };

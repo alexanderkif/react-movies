@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
 import Enzyme from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import Adapter from 'enzyme-adapter-react-16';
 
 import enableHooks from 'jest-react-hooks-shallow';
 

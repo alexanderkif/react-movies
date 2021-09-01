@@ -30,10 +30,39 @@ export const movie2: IMovieItem = {
   runtime: 103,
 }
 
+export const movieEmpty: IMovieItem = {
+  title: "",
+  tagline: "tag",
+  vote_average: 0,
+  vote_count: 0,
+  release_date: "",
+  poster_path: "",
+  overview: "",
+  budget: 0,
+  revenue: 0,
+  genres: [],
+  runtime: 0,
+}
+
 export const moviesStateTest: IMovieState = {
   movies: [movie1, movie2],
   movie: movie1,
   editMovie: movie2,
+  searchBy: 'title',
+  sortBy: { key: 'release_date', name: 'release date' },
+  searchInput: '',
+  sortOrder: 'asc',
+  moviesByGenre: [],
+  activeGenreDetails: 'Adventure',
+  filter: '',
+  dialogOpened: false,
+  deleteMovie: false
+}
+
+export const moviesStateTestEmptyEditMovie: IMovieState = {
+  movies: [],
+  movie: undefined,
+  editMovie: undefined,
   searchBy: 'title',
   sortBy: { key: 'release_date', name: 'release date' },
   searchInput: '',

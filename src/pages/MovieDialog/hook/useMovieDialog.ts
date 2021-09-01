@@ -2,6 +2,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import { IMovieDialogError, IMovieDialogParams, IMovieFormikProps, IMovieItem, IUseMovieStateWithDispatchParams } from "../../../types";
 import { useFormik } from "formik";
 import { createMovie, deleteMovieById, setDialogOpened, updateMovie } from "../../../redux/actions";
+import getTextFromElement from "../../../utils/getTextFromElement";
 
 const useMovieDialog = (
   { dispatch, moviesState }: IUseMovieStateWithDispatchParams,
@@ -21,7 +22,7 @@ const useMovieDialog = (
 
   const dropdownHandler = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
-    const genre = target.innerHTML.toLowerCase() as string;
+    const genre = getTextFromElement(target.innerHTML).toLowerCase();
     if (genres.includes(genre)) {
       setGenres(genres.filter(g => g !== genre));
     } else (

@@ -14,7 +14,7 @@ import { movie1, moviesStateTest } from '../../utils/constantsTest';
 
 window.scrollTo = jest.fn();
 const dispatch = jest.fn();
-const { result } = renderHook(() => useDetails({ id: movie1.id || 0, dispatch, moviesState: moviesStateTest }));
+const { result } = renderHook(() => useDetails(movie1.id || 0, dispatch, moviesStateTest));
 
 describe('useDetails test', () => {
   it('useDetails start test', () => {

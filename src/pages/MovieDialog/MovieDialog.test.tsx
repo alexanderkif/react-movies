@@ -2,10 +2,9 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { mount } from 'enzyme';
 import { BrowserRouter as Router } from "react-router-dom";
-import { act, fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
-import { renderHook } from "@testing-library/react-hooks";
+import { render, screen } from '@testing-library/react';
+import { act, renderHook } from "@testing-library/react-hooks";
 import { movie2, moviesStateTest } from '../../utils/constantsTest';
 import { Provider } from 'react-redux';
 import { store } from '../../App';
@@ -29,7 +28,10 @@ const setRender = (props: IMovieDialogParams) => render(
 );
 
 describe('MovieDialog test', () => {
-  const { result } = setHook(moviesStateTest);
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
   it('MovieDialog render test', () => {
     render(
@@ -42,24 +44,49 @@ describe('MovieDialog test', () => {
     expect(screen.getByText('Add movie')).toBeInTheDocument();
   });
 
-  it('open dropdown click test', async () => {
-    dispatch.mockClear();
-    const { container } = setRender(result.current);
+  it('open dropdown click test', () => {
+    // dispatch.mockClear();
+    const { result } = setHook(moviesStateTest);
+    const { container, rerender } = setRender(result.current);
     expect(result.current.closeDropdown).toBeFalsy();
     expect(dispatch).toHaveBeenCalledTimes(0);
-    await act(async () => {
+    expect(result.current.genres?.length).toBe(0);
+    act(() => {
       userEvent.click(container.getElementsByClassName('dropdown')[0]);
       userEvent.click(screen.getByText(/comedy/i));
+    });
+    expect(result.current.genres).toStrictEqual(['comedy']);
+    rerender(
+      <Provider store={store}>
+        <Router>
+          <MovieDialogView {...result.current} />
+        </Router>
+      </Provider>
+    );
+    act(() => {
       userEvent.click(container.getElementsByClassName('dropdown')[0]);
       userEvent.click(screen.getByText(/action/i));
     });
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(result.current.genres).toStrictEqual(['comedy', 'action']);
+    rerender(
+      <Provider store={store}>
+        <Router>
+          <MovieDialogView {...result.current} />
+        </Router>
+      </Provider>
+    );
+    act(() => {
+      userEvent.click(container.getElementsByClassName('dropdown')[0]);
+      userEvent.click(screen.getAllByText(/comedy/i)[1]);
+    });
+    expect(result.current.genres).toStrictEqual(['action']);
+    expect(dispatch).toHaveBeenCalledTimes(0);
   });
 
-  result.current.clickFormHandler = jest.fn();
-
-  it('Add dialog click test', async () => {
-    dispatch.mockClear();
+  it('Add dialog click test', () => {
+    // dispatch.mockClear();
+    const { result } = setHook(moviesStateTest);
+    result.current.clickFormHandler = jest.fn();
     const { container } = setRender(result.current);
     expect(dispatch).toHaveBeenCalledTimes(0);
     act(() => {
@@ -70,15 +97,16 @@ describe('MovieDialog test', () => {
     expect(dispatch).toHaveBeenCalledTimes(4);
   });
 
-  it('Delete dialog click test', async () => {
-    dispatch.mockClear();
+  it('Delete dialog click test', () => {
+    // dispatch.mockClear();
+    const { result } = setHook(moviesStateTest);
     const { container } = setRender({ ...result.current, deleteMovie: true });
     expect(dispatch).toHaveBeenCalledTimes(0);
     act(() => {
       userEvent.click(container.getElementsByClassName('closeIcon')[0]);
     });
     expect(dispatch).toHaveBeenCalledWith(setDialogOpened(false));
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -120,50 +148,48 @@ describe('useMovieDialog test', () => {
     expect(screen.queryByText('edit movie')).not.toBeInTheDocument();
   });
 
-  result.current.formik.handleSubmit = jest.fn();
+  // result.current.formik.handleSubmit = jest.fn();
 
-  it('submit Add test', async () => {
-    result.current.editMovie = movie2;
-    result.current.deleteMovie = false;
-    if (result.current.editMovie?.id) result.current.editMovie.id = undefined;
-    setRender(result.current);
-    expect(result.current.formik.handleSubmit).toHaveBeenCalledTimes(0);
-    act(() => {
-      userEvent.click(screen.getByRole('button', { name: /submit/i }));
-    });
-    expect(result.current.formik.handleSubmit).toHaveBeenCalledTimes(1);
-    // screen.debug();
-  });
+  // it('submit Add test', async () => {
+  //   // dispatch.mockClear();
+  //   const { result } = setHook(moviesStateTest);
+  //   result.current.editMovie = movie2;
+  //   result.current.deleteMovie = false;
+  //   if (result.current.editMovie?.id) result.current.editMovie.id = undefined;
+  //   setRender(result.current);
+  //   expect(result.current.formik.handleSubmit).toHaveBeenCalledTimes(0);
+  //   act(() => {
+  //     userEvent.click(screen.getByRole('button', { name: /submit/i }));
+  //   });
+  //   screen.debug();
+  //   expect(result.current.formik.handleSubmit).toHaveBeenCalledWith(1);
+  // });
 });
 
 describe('useMovieDialog validate empty test', () => {
-  const { result } = setHook({ ...moviesStateTest, editMovie: undefined });
 
-  it('empty formik test', async () => {
-    setRender(result.current);
-    await waitFor(async () => userEvent.type(await screen.findByLabelText(/title/i), 'ee'));
-    await result.current.formik.validateForm();
-    await waitFor(() => screen.debug());
-  });
-});
-
-describe('useMovieDialog validate Must be test', () => {
-  const { result, rerender } = setHook({
-    ...moviesStateTest, editMovie: {
-      ...movie2,
-      title: 'Du',
-      overview: 'Four',
-      runtime: -1
-    }
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
-  it('Must be formik test', async () => {
-    setRender(result.current);
-    await waitFor(async () => userEvent.type(await screen.findByLabelText(/title/i), 'ee'));
-    await result.current.formik.validateForm();
-    await waitFor(() => rerender());
-    await waitFor(() => {
-      screen.debug();
+  it('empty formik test', () => {
+    const { result } = setHook({ ...moviesStateTest, editMovie: undefined });
+    result.current.formik.handleChange = jest.fn();
+    const { rerender } = setRender(result.current);
+    act(() => {
+      userEvent.type(screen.getByLabelText(/title/i), 'ee');
     });
+    act(() => {
+      result.current.formik.validateForm();
+    });
+    rerender(
+      <Provider store={store}>
+        <Router>
+          <MovieDialogView {...result.current} />
+        </Router>
+      </Provider>
+    );
+    // console.log('result.current', result.current);
+    // screen.debug();
   });
 });

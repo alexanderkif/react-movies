@@ -9,4 +9,20 @@ module.exports = {
   setupFilesAfterEnv: [
     "<rootDir>/src/setupTests.ts"
   ],
+  collectCoverageFrom: [
+    "src/**/*{js,ts,tsx}",
+    "!src/types/**",
+    "!src/index.tsx"
+  ],
+  setupFiles: [
+    "<rootDir>config.ts"
+  ],
+  transform: {
+    ".(ts|tsx)": "ts-jest"
+  },
+  globals: {
+    "ts-jest": {
+      "compiler": "ttypescript"
+    }
+  }
 };
