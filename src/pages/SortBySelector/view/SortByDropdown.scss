@@ -1,0 +1,20 @@
+@import '../../../styles/colors.scss';
+
+.sortBy {
+  display: flex;
+  align-items: center;
+  background-color: inherit;
+  text-transform: uppercase;
+}
+
+.sortLabel {
+  padding: 1rem 0;
+}
+
+.dropdown {
+  width: 12rem;
+  margin-left: 1rem;
+  border: 0;
+  color: $light;
+  outline: none;
+}

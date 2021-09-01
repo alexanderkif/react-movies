@@ -6,12 +6,12 @@ import styles from "./GenresPanel.scss";
 export const GenresPanel: FunctionComponent<IGenresPanelParams> = (props: IGenresPanelParams) => {
   const { genres, setActiveMovieHandler, activeGenre } = props;
   return (
-    <div className={styles.GenresPanel__filmsBy} onClick={setActiveMovieHandler}>
-      {genres?.map((g) => (
-        <div key={g} className={styles.GenresPanel__filmsByBtns}>
+    <div className={styles.filmsBy} onClick={setActiveMovieHandler}>
+      {genres?.map((genre) => (
+        <div key={genre} className={styles.filmsByBtns}>
           <MovieTextButton
-            text={g}
-            active={g.toLowerCase() === activeGenre?.toLowerCase()}
+            text={genre}
+            active={genre.toLowerCase() === activeGenre?.toLowerCase()}
           />
         </div>
       ))}

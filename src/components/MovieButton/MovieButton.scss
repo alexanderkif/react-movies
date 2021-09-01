@@ -1,6 +1,6 @@
 @import '../../styles/colors.scss';
 
-.MovieButton {
+.button {
   display: flex;
   align-items: center;
   justify-items: center;
@@ -14,13 +14,13 @@
   letter-spacing: 0.1rem;
   text-transform: uppercase;
   cursor: pointer;
+}
 
-  &_active {
-    background-color: $primary;
-  }
+.active {
+  background-color: $primary;
+}
 
-  &_small {
-    padding: 0.2rem 1.1rem;
-    font-size: 0.9rem;
-  }
+.small {
+  padding: 0.2rem 1.1rem;
+  font-size: 0.9rem;
 }

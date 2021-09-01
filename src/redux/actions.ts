@@ -40,7 +40,7 @@ export const getMovies = ({
   };
 };
 
-const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
+export const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
   type: ADD_MOVIES_TO_STORE,
   movies,
 });
@@ -72,7 +72,7 @@ export const getMoviesByGenre = ({
   };
 };
 
-const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => ({
+export const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => ({
   type: SET_MOVIES_BY_GENRE,
   moviesByGenre,
 });
@@ -90,7 +90,7 @@ export const getMovieById = (id: number) => {
   };
 };
 
-const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
+export const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
   type: GET_MOVIE_BY_ID,
   movie,
 });
@@ -112,6 +112,7 @@ export const createMovie = (movie: IMovieItem) => {
 
 export const updateMovie = (movie: IMovieItem) => {
   return (dispatch: Dispatch): void => {
+    if (!movie.tagline) movie.tagline = movie.title;
     axios
       .put(`${MOVIES_URL}`, movie)
       .then(res => {

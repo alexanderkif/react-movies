@@ -7,9 +7,9 @@ export const MovieButton: FunctionComponent<IMovieButtonProps> = (
 ) => {
   const { text, active, small, clickHandler }: IMovieButtonProps = props;
   const buttonStyles = [
-    styles.MovieButton,
-    active ? styles.MovieButton_active : "",
-    small ? styles.MovieButton_small : "",
+    styles.button,
+    active ? styles.active : "",
+    small ? styles.small : "",
   ].join(" ");
 
   return (

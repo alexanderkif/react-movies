@@ -1,5 +1,6 @@
 import { Action } from "@reduxjs/toolkit";
-import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler } from "react";
+import { FormikProps } from "formik";
+import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler, SyntheticEvent, Dispatch } from "react";
 
 export interface IMovieItem {
   id?: number;
@@ -58,7 +59,7 @@ export interface ISearchProps {
   searchViewProps?: ISearchViewProps
 }
 export interface ISearchViewProps {
-  movies: IMovieItem[] | undefined;
+  movies?: IMovieItem[];
   searchBy?: SearchByType;
   sortBy?: SortByType;
   searchInput?: string;
@@ -68,22 +69,55 @@ export interface ISearchViewProps {
   searchByHandler?: MouseEventHandler<HTMLButtonElement>;
   sorts?: SortByType[];
   searches?: SearchByType[];
-  fetchMovies?: MouseEventHandler<HTMLButtonElement>;
+  dispatchGetMovies?: MouseEventHandler<HTMLButtonElement>;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   filter?: string;
   dialogOpened?: boolean;
   openFormHandle: MouseEventHandler<HTMLButtonElement>;
 }
 
+export interface IUseSearchProps {
+  movies?: IMovieItem[];
+  searchBy?: SearchByType;
+  sortBy?: SortByType;
+  searchInput?: string;
+  sortOrder?: SortOrderType;
+  filter?: string;
+  dialogOpened?: boolean;
+  dispatchGetMovies: () => void;
+  dispatchSetDialogOpened: (opened: boolean, newMovie: IMovieItem) => void;
+  dispatchSetSearchInput: (value: string) => void;
+  dispatchSetSearchBy: (value: SearchByType) => void;
+  dispatchSetFilter: (value: string) => void;
+}
+
 export interface IDetailViewParams {
   movie?: IMovieItem | null;
-  moviesByGenre: IMovieItem[] | undefined;
+  moviesByGenre?: IMovieItem[];
   activeGenreDetails?: string;
   setActiveMovieHandler?: MouseEventHandler<HTMLDivElement>;
   sorts?: SortByType[];
   sortHandler?: MouseEventHandler<HTMLDivElement>;
-  sortBy?: SortByType;
+  // sortBy?: SortByType;
   dialogOpened?: boolean;
+}
+
+export interface IUseMovie {
+  handleMovieClick: (id?: number) => void;
+  editMovieHandle: (item: IMovieItem) => void;
+  deleteMovieHandle: (item: IMovieItem) => void;
+  handleImgOnError: (e: SyntheticEvent<EventTarget & HTMLImageElement>) => void;
+}
+
+export interface IUseMovieProps extends IUseMovie {
+  movie: IMovieItem;
+}
+
+export interface IUseDetailsParams {
+  id: number;
+  // eslint-disable-next-line
+  dispatch: Dispatch<any>;
+  moviesState: IMovieState;
 }
 
 export interface IGenresPanelParams {
@@ -93,13 +127,30 @@ export interface IGenresPanelParams {
 }
 
 export interface IMovieDialogParams {
-  editMovie?: IMovieItem | null | undefined;
+  editMovie?: IMovieItem | null;
   genres?: string[];
-  selectorHandler?: MouseEventHandler<HTMLDivElement>;
-  setDialogOpenedHandler: React.Dispatch<React.SetStateAction<boolean>>;
+  dropdownHandler?: MouseEventHandler<HTMLDivElement>;
+  setDialogOpenedHandler: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void;
   deleteMovie?: boolean;
-  deleteMovieHandler(id: number): void;
-  saveMovieHandler(movie: IMovieItem): void;
+  closeDropdown: boolean;
+  formik: FormikProps<IMovieFormikProps>;
+  clickFormHandler: MouseEventHandler<HTMLDivElement>;
+  deleteMovieSubmit: () => void;
+}
+
+export interface IMovieFormikProps {
+  title: string;
+  release_date: string;
+  poster_path: string;
+  genres?: string[];
+  overview: string;
+  runtime: number;
+}
+
+export interface IUseMovieStateWithDispatchParams {
+  moviesState: IMovieState;
+  // eslint-disable-next-line
+  dispatch: Dispatch<any>;
 }
 
 export interface IMovieDialogError {
@@ -111,20 +162,26 @@ export interface IMovieDialogError {
   runtime?: string;
 }
 
-export interface ISortBySelectorParams {
-  sorts?: SortByType[];
+export interface ISortByDropdownParams {
   sortBy?: SortByType;
   sortHandler?: MouseEventHandler<HTMLDivElement>;
 }
 
-export interface ISelectorParams {
+export interface IUseSortByDropdownParams {
+  sortBy?: SortByType;
+  sortOrder?: SortOrderType;
+  dispatchSetSortBy: (sort: SortByType) => void;
+  dispatchSetSortOrder: (sortOrder: SortOrderType) => void;
+}
+
+export interface IDropdownParams {
   options?: string[];
   value?: string;
-  selectorHandler?: MouseEventHandler<HTMLDivElement>;
+  dropdownHandler?: MouseEventHandler<HTMLDivElement>;
   id?: string;
   name?: string;
   position?: { [key: string]: string };
-  closeSelector?: boolean;
+  closeDropdown?: boolean;
 }
 
 export type SearchByType = 'title' | 'genres';

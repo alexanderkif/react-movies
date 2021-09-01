@@ -4,7 +4,7 @@ import CompanyLabel from "../CompanyLabel";
 
 export const Footer: FunctionComponent = () => {
   return (
-    <div className={styles.Footer}>
+    <div className={styles.panel}>
       <CompanyLabel />
     </div>
   );

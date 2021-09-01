@@ -23,7 +23,13 @@
       "dom.iterable"
     ],
     "sourceMap": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
   },
   "exclude": [
     "node_modules",

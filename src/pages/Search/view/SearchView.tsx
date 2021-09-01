@@ -5,28 +5,9 @@ import MovieButton from "../../../components/MovieButton";
 import ListMovies from "../../../components/ListMovies";
 import { ISearchViewProps } from "../../../types";
 import GenresPanel from "../../../components/GenresPanel";
-import SortBySelector from "../../../components/SortBySelector";
-import MovieDialog from "../../../components/MovieDialog";
-
-export const ALL_GENRES = [
-  "Action",
-  "Adventure",
-  "Science Fiction",
-  "Fantasy",
-  "Thriller",
-  "Drama",
-  "Family",
-  "Comedy",
-  "Horror",
-  "TV Movie",
-  "Documentary",
-  "History",
-  "Mystery",
-  "Crime",
-  "Romance",
-  "Music",
-  "Animation"
-];
+import SortBySelector from "../../SortBySelector";
+import MovieDialog from "../../MovieDialog";
+import { LIMIT_MOVIES_IN_SEARCH } from "../../../utils/constants";
 
 export const SearchView: FunctionComponent<ISearchViewProps> = (
   props: ISearchViewProps
@@ -39,7 +20,7 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
     searchEnterHandler,
     searchByHandler,
     searches,
-    fetchMovies,
+    dispatchGetMovies,
     setActiveMovieHandler,
     filter,
     dialogOpened,
@@ -48,38 +29,38 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
 
   return (
     <div className={styles.Search}>
-      <div className={styles.Search__controls}>
-        <div className={styles.Search__topPanel}>
+      <div className={styles.controls}>
+        <div className={styles.topPanel}>
           <CompanyLabel />
-          <button className={styles.Search__openDialogBtn} onClick={openFormHandle}>+ ADD MOVIE</button>
+          <button className={styles.openDialogBtn} onClick={openFormHandle}>+ ADD MOVIE</button>
         </div>
-        <div className={styles.Search__label}>Find your movie</div>
-        <div className={styles.Search__buttonsPanel}>
+        <div className={styles.label}>Find your movie</div>
+        <div className={styles.buttonsPanel}>
           <input
-            className={styles.Search__input}
+            className={styles.input}
             type="text"
             placeholder="What do you want to watch?"
             value={searchInput}
             onChange={searchInputHandler}
             onKeyPress={searchEnterHandler}
           />
-          <MovieButton text="Search" active={true} clickHandler={fetchMovies} />
+          <MovieButton text="Search" active={true} clickHandler={dispatchGetMovies} />
         </div>
-        <div className={styles.Search__params}>
+        <div className={styles.params}>
           search by
-          {searches?.map((s) => (
+          {searches?.map((searchType) => (
             <MovieButton
-              key={s}
-              text={s}
-              active={s === searchBy}
+              key={searchType}
+              text={searchType}
+              active={searchType === searchBy}
               small={true}
               clickHandler={searchByHandler}
             />
           ))}
         </div>
       </div>
-      <div className={styles.Search__sort}>
-        <div className={styles.Search__border_bottom}>
+      <div className={styles.sort}>
+        <div className={styles.border_bottom}>
           <GenresPanel
             genres={['all', 'documentary', 'comedy', 'horror', 'crime']}
             setActiveMovieHandler={setActiveMovieHandler}
@@ -88,9 +69,10 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
           <SortBySelector />
         </div>
       </div>
-      <div className={styles.Search__sort}>
-        <div className={styles.Search__moviesFound}>
-          <span>{movies && movies.length > 49 ? '50 or more' : movies?.length}</span>&nbsp;movies found
+      <div className={styles.sort}>
+        <div className={styles.moviesFound}>
+          <span>{movies && movies.length > LIMIT_MOVIES_IN_SEARCH - 1
+            ? `${LIMIT_MOVIES_IN_SEARCH} or more` : movies?.length}</span>&nbsp;movies found
         </div>
       </div>
       <ListMovies movies={movies} />

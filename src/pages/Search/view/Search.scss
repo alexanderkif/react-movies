@@ -1,108 +1,105 @@
 @import '../../../styles/colors.scss';
 
-.Search {
+.controls {
+  min-height: 16.5rem;
+  padding: 0.75rem 6.2rem;
+  background: url('./../../../assets/netflix-bg.jpg') no-repeat center center;
+  background-size: cover;
+  color: $text;
+  margin-bottom: 0.5rem;
+}
 
-  &__controls {
-    min-height: 16.5rem;
-    padding: 0.75rem 6.2rem;
-    background: url('./../../../assets/netflix-bg.jpg') no-repeat center center;
-    background-size: cover;
-    color: $text;
-    margin-bottom: 0.5rem;
+@media screen and (max-width: 767px) {
+  .controls {
+    padding: 0.75rem 1rem;
   }
+}
 
-  @media screen and (max-width: 767px) {
-    &__controls {
-      padding: 0.75rem 1rem;
-    }
-  }
+.topPanel {
+  display: flex;
+  margin: 0.5rem -3rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 
-  &__topPanel {
-    display: flex;
-    margin: 0.5rem -3rem;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
+.openDialogBtn {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background-color: rgba($color: $gray, $alpha: 0.7);
+  color: $primary;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
 
-  &__openDialogBtn {
-    padding: 0.5rem 1rem;
-    border: 0;
-    border-radius: 0.3rem;
-    background-color: rgba($color: $gray, $alpha: 0.7);
-    color: $primary;
-    font-size: 1.1rem;
-    cursor: pointer;
-  }
+.label {
+  margin-top: 2.2rem;
+  font-size: 2rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: inherit;
+  letter-spacing: 0.1rem;
+}
 
-  &__label {
-    margin-top: 2.2rem;
-    font-size: 2rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    color: inherit;
-    letter-spacing: 0.1rem;
-  }
+.sort {
+  padding: 0 3rem;
+  background-color: $dark;
+}
 
-  &__sort {
-    padding: 0 3rem;
-    background-color: $dark;
-  }
+.border_bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 3.3rem;
+  border-bottom: 0.2rem solid $gray;
+  background-color: $dark;
+  font-size: 0.9rem;
+}
 
-  &__border_bottom {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    max-height: 3.3rem;
-    border-bottom: 0.2rem solid $gray;
-    background-color: $dark;
-    font-size: 0.9rem;
-  }
+.input {
+  box-sizing: border-box;
+  flex: 1;
+  padding: 0.9rem 1.5rem;
+  outline: none;
+  background-color: $dark;
+  border: 0;
+  border-radius: 0.3rem;
+  -webkit-box-shadow: 0px 0px 10px 2px $secondary inset;
+  -moz-box-shadow: 0px 0px 10px 2px $secondary inset;
+  box-shadow: 0px 0px 10px 2px $secondary inset;
+  color: inherit;
+  font-size: 1.1rem;
+}
 
-  &__input {
-    box-sizing: border-box;
-    flex: 1;
-    padding: 0.9rem 1.5rem;
-    outline: none;
-    background-color: $dark;
-    border: 0;
-    border-radius: 0.3rem;
-    -webkit-box-shadow: 0px 0px 10px 2px $secondary inset;
-    -moz-box-shadow: 0px 0px 10px 2px $secondary inset;
-    box-shadow: 0px 0px 10px 2px $secondary inset;
-    color: inherit;
-    font-size: 1.1rem;
-  }
+.buttonsPanel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 
-  &__buttonsPanel {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
+.params {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  margin-top: 1rem;
+  text-transform: uppercase;
+}
 
-  &__params {
-    display: flex;
-    align-items: center;
-    column-gap: 1rem;
-    margin-top: 1rem;
-    text-transform: uppercase;
+.moviesFound {
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  span {
+    font-weight: 600;
   }
+}
 
-  &__moviesFound {
-    display: flex;
-    align-items: center;
-    min-height: 3.5rem;
-    span {
-      font-weight: 600;
-    }
-  }
-
-  &__genres {
-    text-transform: uppercase;
-  }
+.genres {
+  text-transform: uppercase;
 }
