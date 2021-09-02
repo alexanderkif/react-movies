@@ -90,11 +90,20 @@ describe('MovieDialog test', () => {
     const { container } = setRender(result.current);
     expect(dispatch).toHaveBeenCalledTimes(0);
     act(() => {
+      userEvent.click(container.getElementsByClassName('darkWrapper')[0]);
+    });
+    expect(dispatch).toHaveBeenCalledWith(setDialogOpened(false));
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    act(() => {
       userEvent.click(container.getElementsByClassName('closeIcon')[0]);
+    });
+    expect(dispatch).toHaveBeenCalledWith(setDialogOpened(false));
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    act(() => {
       userEvent.click(screen.getByText(/reset/i));
     });
     expect(dispatch).toHaveBeenCalledWith(setDialogOpened(false));
-    expect(dispatch).toHaveBeenCalledTimes(4);
+    expect(dispatch).toHaveBeenCalledTimes(5);
   });
 
   it('Delete dialog click test', () => {
@@ -103,93 +112,14 @@ describe('MovieDialog test', () => {
     const { container } = setRender({ ...result.current, deleteMovie: true });
     expect(dispatch).toHaveBeenCalledTimes(0);
     act(() => {
-      userEvent.click(container.getElementsByClassName('closeIcon')[0]);
+      userEvent.click(container.getElementsByClassName('darkWrapper')[0]);
     });
     expect(dispatch).toHaveBeenCalledWith(setDialogOpened(false));
     expect(dispatch).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('useMovieDialog test', () => {
-  const { result } = setHook(moviesStateTest);
-
-  it('start test', () => {
-    expect(result.current.genres?.length).toBe(0);
-    expect(result.current.editMovie).toBe(movie2);
-    expect(result.current.deleteMovie).toBeFalsy();
-    expect(result.current.closeDropdown).toBeFalsy();
-    expect(typeof result.current.dropdownHandler).toBe('function');
-    expect(typeof result.current.setDialogOpenedHandler).toBe('function');
-    expect(typeof result.current.clickFormHandler).toBe('function');
-    expect(typeof result.current.deleteMovieSubmit).toBe('function');
-  });
-
-  it('open start test', () => {
-    result.current.editMovie = undefined;
-    setRender(result.current);
-    expect(screen.getByText('Add movie')).toBeInTheDocument();
-    expect(screen.queryByText('movie id')).not.toBeInTheDocument();
-    expect(screen.queryByText('delete movie')).not.toBeInTheDocument();
-  });
-
-  it('open edit test', () => {
-    result.current.editMovie = movie2;
-    setRender(result.current);
-    expect(screen.getByText('edit movie')).toBeInTheDocument();
-    expect(screen.getByText('movie id')).toBeInTheDocument();
-    expect(screen.queryByText('delete movie')).not.toBeInTheDocument();
-  });
-
-  it('open delete test', () => {
-    result.current.deleteMovie = true;
-    setRender(result.current);
-    expect(screen.getByText('delete movie')).toBeInTheDocument();
-    expect(screen.queryByText('Add movie')).not.toBeInTheDocument();
-    expect(screen.queryByText('edit movie')).not.toBeInTheDocument();
-  });
-
-  // result.current.formik.handleSubmit = jest.fn();
-
-  // it('submit Add test', async () => {
-  //   // dispatch.mockClear();
-  //   const { result } = setHook(moviesStateTest);
-  //   result.current.editMovie = movie2;
-  //   result.current.deleteMovie = false;
-  //   if (result.current.editMovie?.id) result.current.editMovie.id = undefined;
-  //   setRender(result.current);
-  //   expect(result.current.formik.handleSubmit).toHaveBeenCalledTimes(0);
-  //   act(() => {
-  //     userEvent.click(screen.getByRole('button', { name: /submit/i }));
-  //   });
-  //   screen.debug();
-  //   expect(result.current.formik.handleSubmit).toHaveBeenCalledWith(1);
-  // });
-});
-
-describe('useMovieDialog validate empty test', () => {
-
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
-  it('empty formik test', () => {
-    const { result } = setHook({ ...moviesStateTest, editMovie: undefined });
-    result.current.formik.handleChange = jest.fn();
-    const { rerender } = setRender(result.current);
     act(() => {
-      userEvent.type(screen.getByLabelText(/title/i), 'ee');
+      userEvent.click(container.getElementsByClassName('closeIcon')[0]);
     });
-    act(() => {
-      result.current.formik.validateForm();
-    });
-    rerender(
-      <Provider store={store}>
-        <Router>
-          <MovieDialogView {...result.current} />
-        </Router>
-      </Provider>
-    );
-    // console.log('result.current', result.current);
-    // screen.debug();
+    expect(dispatch).toHaveBeenCalledWith(setDialogOpened(false));
+    expect(dispatch).toHaveBeenCalledTimes(2);
   });
 });

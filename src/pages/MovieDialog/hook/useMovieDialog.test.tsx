@@ -131,7 +131,7 @@ describe('useMovieDialog test', () => {
       { dispatch: mockDispatch, moviesState: mockMovieState },
       mockHistory
     );
-    let wrapper = mount(<HookWrapper hook={currentHook} />);
+    const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { formik } = wrapper.find(MockComponent).props();
     await act(async () => {
       formik.handleSubmit();
@@ -150,7 +150,7 @@ describe('useMovieDialog test', () => {
       { dispatch: mockDispatch, moviesState: mockMovieState },
       mockHistory
     );
-    let wrapper = mount(<HookWrapper hook={currentHook} />);
+    const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { formik } = wrapper.find(MockComponent).props();
     await act(async () => {
       formik.handleSubmit();
@@ -166,11 +166,11 @@ describe('useMovieDialog test', () => {
 
   it('test movie input change', async () => {
     mockMovieState = createMock<IMovieState>(moviesStateTestEmptyEditMovie);
-    let currentHook = () => useMovieDialog(
+    const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
       mockHistory
     );
-    let wrapper = mount(<HookWrapper hook={currentHook} />);
+    const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { formik } = wrapper.find(MockComponent).props();
     await act(async () => {
       await wrapper.find('#title').simulate('change', { target: { name: 'title', value: 'ti' } });

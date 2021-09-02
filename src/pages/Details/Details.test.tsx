@@ -16,17 +16,7 @@ window.scrollTo = jest.fn();
 const dispatch = jest.fn();
 const { result } = renderHook(() => useDetails(movie1.id || 0, dispatch, moviesStateTest));
 
-describe('useDetails test', () => {
-  it('useDetails start test', () => {
-    expect(result.current.dialogOpened).toBeFalsy();
-    expect(result.current.movie).toBe(movie1);
-    expect(result.current.moviesByGenre?.length).toBeDefined();
-    expect(result.current.activeGenreDetails).toBe(moviesStateTest.activeGenreDetails);
-    expect(typeof result.current.setActiveMovieHandler).toBe('function');
-  });
-});
-
-describe('DetailsView test', () => {
+describe('Details test', () => {
   it('DetailsView mount test', () => {
     const component = mount(
       <Provider store={store}>
@@ -39,9 +29,7 @@ describe('DetailsView test', () => {
     component.find('button.button').at(1).simulate('click', { target: { innerText: 'Comedy' } });
     expect(dispatch).toBeCalledTimes(2);
   });
-});
 
-describe('Details test', () => {
   it('Details render test', () => {
     const component = mount(
       <Provider store={store}>

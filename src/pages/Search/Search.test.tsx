@@ -49,6 +49,11 @@ const setRender = () => render(
 );
 
 describe('SearchView test', () => {
+
+  beforeEach(() => {
+    dispatch.mockClear();
+  })
+
   it('openDialogBtn click', () => {
     const component = setUp();
     component.find('.openDialogBtn').simulate('click');
@@ -70,7 +75,6 @@ describe('SearchView test', () => {
   });
 
   it('searchInput change', () => {
-    dispatch.mockClear();
     const component = setUp();
     component.find('.input').at(0).simulate('change', { target: { value: 'comedy' } });
     expect(dispatch).toBeCalledWith(setSearchInput('comedy'));
@@ -78,21 +82,18 @@ describe('SearchView test', () => {
   });
 
   it('searchInput Enter', () => {
-    dispatch.mockClear();
     const component = setUp();
     component.find('.input').at(0).simulate('keypress', { key: 'Enter' });
     expect(dispatch).toHaveBeenCalledTimes(1);
   });
 
   it('searchByHandler click', async () => {
-    dispatch.mockClear();
     setRender();
     userEvent.click(screen.getByText('genres'));
     expect(dispatch).toHaveBeenCalledTimes(1);
   });
 
   it('setActiveMovieHandler click', async () => {
-    dispatch.mockClear();
     setRender();
     // screen.debug();
     userEvent.click(screen.getByText('comedy'));

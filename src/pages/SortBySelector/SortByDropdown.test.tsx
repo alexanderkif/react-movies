@@ -24,6 +24,11 @@ const setRender = () => render(
 );
 
 describe('useSortByDropdown test', () => {
+
+  beforeEach(() => {
+    dispatch.mockClear();
+  });
+
   it('start test', () => {
     expect(result.current.sortBy).toBe(moviesStateTest.sortBy);
     expect(typeof result.current.sortHandler).toBe('function');
@@ -45,6 +50,6 @@ describe('useSortByDropdown test', () => {
     setRender();
     // screen.debug();
     userEvent.click(screen.getByText('rating'));
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(1);
   });
 });
