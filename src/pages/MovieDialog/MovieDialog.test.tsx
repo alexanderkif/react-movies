@@ -5,7 +5,7 @@ import React from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { render, screen } from '@testing-library/react';
 import { act, renderHook } from "@testing-library/react-hooks";
-import { movie2, moviesStateTest } from '../../utils/constantsTest';
+import { moviesStateTest } from '../../utils/constantsTest';
 import { Provider } from 'react-redux';
 import { store } from '../../App';
 import userEvent from '@testing-library/user-event';

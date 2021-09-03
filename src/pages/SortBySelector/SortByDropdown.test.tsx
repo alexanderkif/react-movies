@@ -15,10 +15,10 @@ import { SortByDropdownView } from './view/SortByDropdownView';
 const dispatch = jest.fn();
 const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: moviesStateTest }));
 
-const setRender = () => render(
+const setRender = (hook) => render(
   <Provider store={store}>
     <Router>
-      <SortByDropdownView {...result.current} />
+      <SortByDropdownView {...hook} />
     </Router>
   </Provider>
 );
@@ -29,25 +29,43 @@ describe('useSortByDropdown test', () => {
     dispatch.mockClear();
   });
 
-  it('start test', () => {
+  it('return values test', () => {
     expect(result.current.sortBy).toBe(moviesStateTest.sortBy);
     expect(typeof result.current.sortHandler).toBe('function');
   });
 
-  it('open test', () => {
-    setRender();
+  it('dropdown open test', () => {
+    const { container } = setRender(result.current);
+    expect(container.querySelectorAll('.genre_closed').length).toBeGreaterThan(0);
     userEvent.click(screen.getAllByText('release date')[0]);
     expect(dispatch).toHaveBeenCalledTimes(0);
+    expect(container.querySelectorAll('.genre_closed').length).toBe(0);
   });
 
-  it('toggle test', () => {
-    setRender();
+  it('toggle asc test', () => {
+    setRender(result.current);
     userEvent.click(screen.getAllByText('release date')[1]);
     expect(dispatch).toHaveBeenCalledTimes(1);
   });
 
+  it('toggle desc test', () => {
+    moviesStateTest.sortOrder = 'desc';
+    const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: moviesStateTest }));
+    setRender(result.current);
+    userEvent.click(screen.getAllByText('release date')[1]);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('choose invalid sortBy test', () => {
+    setRender(result.current);
+    const el = screen.getAllByText('release date')[1];
+    el.innerHTML = 'invalid';
+    userEvent.click(el);
+    expect(dispatch).toHaveBeenCalledTimes(0);
+  });
+
   it('setSortBy test', () => {
-    setRender();
+    setRender(result.current);
     // screen.debug();
     userEvent.click(screen.getByText('rating'));
     expect(dispatch).toHaveBeenCalledTimes(1);
