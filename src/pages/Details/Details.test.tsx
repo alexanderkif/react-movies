@@ -10,11 +10,11 @@ import Details from '.';
 import useDetails from './hook/useDetails';
 import { DetailsView } from './view/DetailsView';
 import { renderHook } from '@testing-library/react-hooks'
-import { movie1, moviesStateTest } from '../../utils/constantsTest';
+import { stubMovie1, stubMoviesState } from '../../utils/stubsForTests';
 
 window.scrollTo = jest.fn();
 const dispatch = jest.fn();
-const { result } = renderHook(() => useDetails(movie1.id || 0, dispatch, moviesStateTest));
+const { result } = renderHook(() => useDetails(stubMovie1.id || 0, dispatch, stubMoviesState));
 
 describe('Details test', () => {
   it('DetailsView mount test', () => {
@@ -25,7 +25,7 @@ describe('Details test', () => {
         </Router>
       </Provider>
     );
-    expect(component.find('button.button_active').text().includes(moviesStateTest.activeGenreDetails)).toBeTruthy();
+    expect(component.find('button.button_active').text().includes(stubMoviesState.activeGenreDetails)).toBeTruthy();
     component.find('button.button').at(1).simulate('click', { target: { innerText: 'Comedy' } });
     expect(dispatch).toBeCalledTimes(2);
   });

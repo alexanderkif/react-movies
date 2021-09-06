@@ -5,7 +5,7 @@ import React from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { render, screen } from '@testing-library/react';
 import { act, renderHook } from "@testing-library/react-hooks";
-import { moviesStateTest } from '../../utils/constantsTest';
+import { stubMoviesState } from '../../utils/stubsForTests';
 import { Provider } from 'react-redux';
 import { store } from '../../App';
 import userEvent from '@testing-library/user-event';
@@ -46,7 +46,7 @@ describe('MovieDialog test', () => {
 
   it('open dropdown click test', () => {
     // dispatch.mockClear();
-    const { result } = setHook(moviesStateTest);
+    const { result } = setHook(stubMoviesState);
     const { container, rerender } = setRender(result.current);
     expect(result.current.closeDropdown).toBeFalsy();
     expect(dispatch).toHaveBeenCalledTimes(0);
@@ -85,7 +85,7 @@ describe('MovieDialog test', () => {
 
   it('Add dialog click test', () => {
     // dispatch.mockClear();
-    const { result } = setHook(moviesStateTest);
+    const { result } = setHook(stubMoviesState);
     result.current.clickFormHandler = jest.fn();
     const { container } = setRender(result.current);
     expect(dispatch).toHaveBeenCalledTimes(0);
@@ -108,7 +108,7 @@ describe('MovieDialog test', () => {
 
   it('Delete dialog click test', () => {
     // dispatch.mockClear();
-    const { result } = setHook(moviesStateTest);
+    const { result } = setHook(stubMoviesState);
     const { container } = setRender({ ...result.current, deleteMovie: true });
     expect(dispatch).toHaveBeenCalledTimes(0);
     act(() => {

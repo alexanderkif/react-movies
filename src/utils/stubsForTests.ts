@@ -1,6 +1,6 @@
 import { IMovieItem, IMovieState } from "../types"
 
-export const movie1: IMovieItem = {
+export const stubMovie1: IMovieItem = {
   id: 962,
   title: "The Gold Rush",
   tagline: "The World's Greatest Laughing Picture!",
@@ -15,7 +15,7 @@ export const movie1: IMovieItem = {
   runtime: 95,
 }
 
-export const movie2: IMovieItem = {
+export const stubMovie2: IMovieItem = {
   id: 872,
   title: "Singin' in the Rain",
   tagline: "What a Glorious Feeling!",
@@ -30,39 +30,10 @@ export const movie2: IMovieItem = {
   runtime: 103,
 }
 
-export const movieEmpty: IMovieItem = {
-  title: "",
-  tagline: "tag",
-  vote_average: 0,
-  vote_count: 0,
-  release_date: "",
-  poster_path: "",
-  overview: "",
-  budget: 0,
-  revenue: 0,
-  genres: [],
-  runtime: 0,
-}
-
-export const moviesStateTest: IMovieState = {
-  movies: [movie1, movie2],
-  movie: movie1,
-  editMovie: movie2,
-  searchBy: 'title',
-  sortBy: { key: 'release_date', name: 'release date' },
-  searchInput: '',
-  sortOrder: 'asc',
-  moviesByGenre: [],
-  activeGenreDetails: 'Adventure',
-  filter: '',
-  dialogOpened: false,
-  deleteMovie: false
-}
-
-export const moviesStateTestEmptyEditMovie: IMovieState = {
-  movies: [],
-  movie: undefined,
-  editMovie: undefined,
+export const stubMoviesState: IMovieState = {
+  movies: [stubMovie1, stubMovie2],
+  movie: stubMovie1,
+  editMovie: stubMovie2,
   searchBy: 'title',
   sortBy: { key: 'release_date', name: 'release date' },
   searchInput: '',

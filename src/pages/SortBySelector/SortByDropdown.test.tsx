@@ -5,7 +5,7 @@ import React from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
 import { render, screen } from '@testing-library/react';
 import { renderHook } from "@testing-library/react-hooks";
-import { moviesStateTest } from '../../utils/constantsTest';
+import { stubMoviesState } from '../../utils/stubsForTests';
 import { Provider } from 'react-redux';
 import { store } from '../../App';
 import userEvent from '@testing-library/user-event';
@@ -13,7 +13,7 @@ import useSortByDropdown from './hook/useSortByDropdown';
 import { SortByDropdownView } from './view/SortByDropdownView';
 
 const dispatch = jest.fn();
-const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: moviesStateTest }));
+const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: stubMoviesState }));
 
 const setRender = (hook) => render(
   <Provider store={store}>
@@ -30,7 +30,7 @@ describe('useSortByDropdown test', () => {
   });
 
   it('return values test', () => {
-    expect(result.current.sortBy).toBe(moviesStateTest.sortBy);
+    expect(result.current.sortBy).toBe(stubMoviesState.sortBy);
     expect(typeof result.current.sortHandler).toBe('function');
   });
 
@@ -49,8 +49,8 @@ describe('useSortByDropdown test', () => {
   });
 
   it('toggle desc test', () => {
-    moviesStateTest.sortOrder = 'desc';
-    const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: moviesStateTest }));
+    stubMoviesState.sortOrder = 'desc';
+    const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: stubMoviesState }));
     setRender(result.current);
     userEvent.click(screen.getAllByText('release date')[1]);
     expect(dispatch).toHaveBeenCalledTimes(1);

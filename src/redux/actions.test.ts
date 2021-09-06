@@ -18,7 +18,7 @@ import {
   updateMovie
 } from "./actions";
 import moviesState from "./moviesState";
-import { movie1, movie2, moviesStateTest } from "../utils/constantsTest";
+import { stubMovie1, stubMovie2 } from "../utils/stubsForTests";
 import { SortByType, SortOrderType } from "../types";
 import axios from "axios";
 import { act } from "react-dom/test-utils";
@@ -35,12 +35,11 @@ describe('acions test', () => {
   })
 
   it('ADD_MOVIES_TO_STORE test', () => {
-    if (moviesStateTest.movies)
-      expect(moviesState({}, getMoviesSuccess(moviesStateTest.movies)).movies).toBe(moviesStateTest.movies);
+    expect(moviesState({}, getMoviesSuccess([stubMovie1, stubMovie2])).movies).toStrictEqual([stubMovie1, stubMovie2]);
   });
 
   it('getMovies test', async () => {
-    const moviesResponse = [movie1];
+    const moviesResponse = [stubMovie1];
     mockedAxios.get.mockResolvedValueOnce({ data: { data: moviesResponse } });
     await act(async () => {
       (getMovies({ searchInput: 'gold' }))(dispatch);
@@ -63,7 +62,7 @@ describe('acions test', () => {
   });
 
   it('getMoviesByGenre test', async () => {
-    const moviesResponse = [movie1, movie2];
+    const moviesResponse = [stubMovie1, stubMovie2];
     mockedAxios.get.mockResolvedValueOnce({ data: { data: moviesResponse } });
     await act(async () => {
       (getMoviesByGenre({}))(dispatch);
@@ -84,7 +83,7 @@ describe('acions test', () => {
   });
 
   it('getMovieById test', async () => {
-    const moviesResponse = movie2;
+    const moviesResponse = stubMovie2;
     mockedAxios.get.mockResolvedValueOnce({ data: moviesResponse });
     await act(async () => {
       (getMovieById(872))(dispatch);
@@ -106,8 +105,8 @@ describe('acions test', () => {
   });
 
   it('createMovie test', async () => {
-    const moviesResponse = movie2;
-    const movieToCreate = movie2;
+    const moviesResponse = stubMovie2;
+    const movieToCreate = stubMovie2;
     delete movieToCreate.id;
     movieToCreate.tagline = '';
     mockedAxios.post.mockResolvedValueOnce({ data: moviesResponse });
@@ -121,7 +120,7 @@ describe('acions test', () => {
   });
 
   it('createMovie error test', async () => {
-    const movieToCreate = movie2;
+    const movieToCreate = stubMovie2;
     delete movieToCreate.id;
     mockedAxios.post.mockRejectedValueOnce({ err: { message: 'something went wrong' } });
     await act(async () => {
@@ -133,9 +132,9 @@ describe('acions test', () => {
   });
 
   it('updateMovie test', async () => {
-    const movieToUpdate = movie2;
+    const movieToUpdate = stubMovie2;
     movieToUpdate.tagline = '';
-    const moviesResponse = movie2;
+    const moviesResponse = stubMovie2;
     mockedAxios.put.mockResolvedValueOnce({ data: moviesResponse });
     await act(async () => {
       updateMovie(movieToUpdate)(dispatch);
@@ -149,11 +148,11 @@ describe('acions test', () => {
   it('updateMovie error test', async () => {
     mockedAxios.put.mockRejectedValueOnce({ err: { message: 'something went wrong' } });
     await act(async () => {
-      updateMovie(movie2)(dispatch);
+      updateMovie(stubMovie2)(dispatch);
     });
     expect(dispatch).toBeCalledTimes(0);
     expect(mockedAxios.put)
-      .toHaveBeenCalledWith(`${MOVIES_URL}`, movie2);
+      .toHaveBeenCalledWith(`${MOVIES_URL}`, stubMovie2);
   });
 
   it('deleteMovieById test', async () => {
@@ -175,8 +174,7 @@ describe('acions test', () => {
   });
 
   it('GET_MOVIE_BY_ID test', () => {
-    if (moviesStateTest.movie)
-      expect(moviesState({}, getMovieByIdSuccess(moviesStateTest.movie)).movie).toBe(moviesStateTest.movie);
+    expect(moviesState({}, getMovieByIdSuccess(stubMovie2)).movie).toStrictEqual(stubMovie2);
   });
 
   it('SET_SEARCH_BY test', () => {
@@ -200,8 +198,7 @@ describe('acions test', () => {
   });
 
   it('SET_MOVIES_BY_GENRE test', () => {
-    if (moviesStateTest.movies)
-      expect(moviesState({}, getMoviesByGenreSuccess(moviesStateTest.movies)).moviesByGenre).toBe(moviesStateTest.movies);
+    expect(moviesState({}, getMoviesByGenreSuccess([stubMovie1, stubMovie2])).moviesByGenre).toStrictEqual([stubMovie1, stubMovie2]);
   });
 
   it('SET_FILTER test', () => {
@@ -216,6 +213,6 @@ describe('acions test', () => {
 
   it('SET_DIALOG_OPEN test', () => {
     const dialogOpened = false;
-    expect(moviesState({}, setDialogOpened(dialogOpened)).dialogOpened).toBe(dialogOpened);
+    expect(moviesState({}, setDialogOpened(dialogOpened)).dialogOpened).toBeFalsy();
   });
 });
