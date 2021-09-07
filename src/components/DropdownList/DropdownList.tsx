@@ -9,24 +9,27 @@ import { isOptionInOptionsString } from "../../utils/isOptionInOptionsString";
 export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdownParams) => {
   const { options, value, dropdownHandler, position, closeDropdown } = props;
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isClosed, setIsClosed] = useState(true);
 
   const popupHandler = (e: MouseEvent) => {
-    if (!isOpen) e.stopPropagation();
-    setIsOpen(!isOpen);
+    if (isClosed) {
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+    }
+    setIsClosed(!isClosed);
   };
 
   useEffect(() => {
-    setIsOpen(false);
+    setIsClosed(true);
   }, [closeDropdown]);
 
-  const setIsOpenFalse = useCallback(() => {
-    setIsOpen(false);
+  const setIsClosedTrue = useCallback(() => {
+    setIsClosed(true);
   }, []);
 
   useEffect(() => {
-    document.addEventListener('click', setIsOpenFalse);
-    return () => document.removeEventListener('click', setIsOpenFalse);
+    window.addEventListener('click', setIsClosedTrue);
+    return () => window.removeEventListener('click', setIsClosedTrue);
   }, []);
 
   return (
@@ -34,7 +37,7 @@ export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdow
       <div className={styles.main}>
         <div className={styles.input}>
           {value}
-          <div className={cn(styles.arrow_down, { [styles.arrow_up]: isOpen })} >
+          <div className={cn(styles.arrow_down, { [styles.arrow_up]: !isClosed })} >
             <ArrowDropDownIcon />
           </div>
         </div>
@@ -42,7 +45,7 @@ export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdow
           {options?.map((option) => (
             <div
               key={option}
-              className={cn(styles.genre_opened, { [styles.genre_closed]: !isOpen })}
+              className={cn(styles.genre_opened, { [styles.genre_closed]: isClosed })}
             >
               <div className={cn(styles.genre, { [styles.genre_active]: isOptionInOptionsString(option, value || '') })}>
                 {option}

@@ -17,7 +17,7 @@ export const DetailsView: FunctionComponent<IDetailViewParams> = (
   const { dialogOpened, movie, moviesByGenre, activeGenreDetails, setActiveMovieHandler } = props;
 
   return (
-    <div className={styles.Details}>
+    <div className={styles.details}>
       <div className={styles.backgrounded}>
         <div className={styles.bgDark}>
           <div className={styles.topBar}>

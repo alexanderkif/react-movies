@@ -13,7 +13,7 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_ACTIVE_GENRE_DETAILS = 'SET_ACTIVE_GENRE_DETAILS';
 export const SET_DIALOG_OPEN = 'SET_DIALOG_OPEN';
 
-const MOVIES_URL = 'http://localhost:4000/movies';
+export const MOVIES_URL = 'http://localhost:4000/movies';
 
 export const getMovies = ({
   searchInput = '',
@@ -35,20 +35,15 @@ export const getMovies = ({
       })
       .catch(err => {
         console.log('axios err', err, err.message);
-        // dispatch(getMoviesError(err));             TO DO
+        dispatch(getMoviesSuccess([]));
       });
   };
 };
 
-const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
+export const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
   type: ADD_MOVIES_TO_STORE,
   movies,
 });
-
-// const getMoviesError = movies => ({
-//   type: ADD_MOVIES_TO_STORE,
-//   movies: [],
-// });
 
 export const getMoviesByGenre = ({
   searchInput = '',
@@ -68,11 +63,12 @@ export const getMoviesByGenre = ({
       })
       .catch(err => {
         console.log('axios err', err, err.message);
+        dispatch(getMoviesByGenreSuccess([]));
       });
   };
 };
 
-const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => ({
+export const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => ({
   type: SET_MOVIES_BY_GENRE,
   moviesByGenre,
 });
@@ -90,7 +86,7 @@ export const getMovieById = (id: number) => {
   };
 };
 
-const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
+export const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
   type: GET_MOVIE_BY_ID,
   movie,
 });

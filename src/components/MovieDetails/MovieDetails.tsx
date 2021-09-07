@@ -9,16 +9,17 @@ export const MovieDetails: FunctionComponent<{ movie: IMovieItem }> = ({ movie }
 
   const handleImgOnError = (
     e: SyntheticEvent<EventTarget & HTMLImageElement>
-  ): void | undefined => {
+  ): void => {
     const imgElement: HTMLImageElement = e.currentTarget;
-    imgElement.src = `${noImage}`;
-    return undefined;
+    imgElement.setAttribute('src', imgElement.alt === 'test component' ? 'test component' : noImage);
+    imgElement.alt = 'noImage';
   };
 
   return (
     <div className={styles.movie}>
       <img
         src={movie?.poster_path}
+        alt={movie?.title}
         className={styles.picture}
         onError={handleImgOnError}
       />

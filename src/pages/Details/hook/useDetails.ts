@@ -1,12 +1,14 @@
-import { useEffect, MouseEvent, useCallback } from "react";
-import { IDetailViewParams, IUseDetailsParams } from "../../../types";
+import { useEffect, MouseEvent, useCallback, Dispatch } from "react";
+import { IDetailViewParams, IMovieState } from "../../../types";
 import { ALL_GENRES } from "../../../utils/constants";
 import { getMovieById, getMoviesByGenre } from "../../../redux/actions";
 import { setActiveGenreDetails } from "../../../redux/actions";
 
-const useDetails = (props: IUseDetailsParams): IDetailViewParams => {
-
-  const { id, dispatch, moviesState } = props;
+const useDetails = (
+  id: number,
+  // eslint-disable-next-line
+  dispatch: Dispatch<any>,
+  moviesState: IMovieState): IDetailViewParams => {
 
   const { dialogOpened, movie, moviesByGenre, activeGenreDetails, sortBy, sortOrder, filter } = moviesState;
 

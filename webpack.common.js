@@ -39,8 +39,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       // HtmlWebpackPlugin simplifies creation of HTML files to serve your webpack bundles
-      title: "React TS App",
+      title: "Netflix Roulette",
       template: "./public/index.html",
+      favicon: "./src/assets/favicon.ico"
     }),
     // DefinePlugin allows you to create global constants which can be configured at compile time
     new DefinePlugin({
