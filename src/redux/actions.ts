@@ -13,7 +13,7 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_ACTIVE_GENRE_DETAILS = 'SET_ACTIVE_GENRE_DETAILS';
 export const SET_DIALOG_OPEN = 'SET_DIALOG_OPEN';
 
-const MOVIES_URL = 'http://localhost:4000/movies';
+export const MOVIES_URL = 'http://localhost:4000/movies';
 
 export const getMovies = ({
   searchInput = '',
@@ -35,7 +35,7 @@ export const getMovies = ({
       })
       .catch(err => {
         console.log('axios err', err, err.message);
-        // dispatch(getMoviesError(err));             TO DO
+        dispatch(getMoviesSuccess([]));
       });
   };
 };
@@ -44,11 +44,6 @@ export const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
   type: ADD_MOVIES_TO_STORE,
   movies,
 });
-
-// const getMoviesError = movies => ({
-//   type: ADD_MOVIES_TO_STORE,
-//   movies: [],
-// });
 
 export const getMoviesByGenre = ({
   searchInput = '',
@@ -68,6 +63,7 @@ export const getMoviesByGenre = ({
       })
       .catch(err => {
         console.log('axios err', err, err.message);
+        dispatch(getMoviesByGenreSuccess([]));
       });
   };
 };

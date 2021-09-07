@@ -5,7 +5,7 @@ import React from "react";
 import { mount } from 'enzyme';
 import useDetails from "./useDetails";
 import { IMovieState } from "../../../types";
-import { movie2, moviesStateTest } from "../../../utils/constantsTest";
+import { stubMovie2, stubMoviesState } from "../../../utils/stubsForTests";
 import { createMock } from "ts-auto-mock";
 
 const MockComponent = () => null;
@@ -29,13 +29,13 @@ describe('useDetails test', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockMovieState = createMock<IMovieState>(moviesStateTest);
+    mockMovieState = createMock<IMovieState>(stubMoviesState);
   });
 
   it('should return all props', () => {
     const wrapper = mount(
       <HookWrapper hook={() => useDetails(
-        moviesStateTest.movie?.id || 1,
+        stubMoviesState.movie?.id || 1,
         mockDispatch,
         mockMovieState
       )}
@@ -48,10 +48,21 @@ describe('useDetails test', () => {
       activeGenreDetails,
       setActiveMovieHandler } = wrapper.find(MockComponent).props();
     expect(dialogOpened).toBeFalsy();
-    expect(movie).toStrictEqual(moviesStateTest.movie);
-    expect(moviesByGenre).toStrictEqual(moviesStateTest.moviesByGenre);
-    expect(activeGenreDetails).toStrictEqual(moviesStateTest.activeGenreDetails);
+    expect(movie).toStrictEqual(stubMoviesState.movie);
+    expect(moviesByGenre).toStrictEqual(stubMoviesState.moviesByGenre);
+    expect(activeGenreDetails).toStrictEqual(stubMoviesState.activeGenreDetails);
     expect(typeof setActiveMovieHandler).toBe('function');
+  });
+
+  it('should run once on init', () => {
+    mount(
+      <HookWrapper hook={() => useDetails(
+        stubMoviesState.movie?.id || 1,
+        mockDispatch,
+        mockMovieState
+      )}
+      />
+    );
     expect(mockGetMovieById).toBeCalledTimes(1);
     expect(mockGetMoviesByGenre).toBeCalledTimes(1);
     expect(mockSetActiveGenreDetails).toBeCalledTimes(1);
@@ -65,10 +76,10 @@ describe('useDetails test', () => {
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     expect(mockSetActiveGenreDetails).toBeCalledTimes(1);
-    expect(mockSetActiveGenreDetails).toBeCalledWith(moviesStateTest.movie?.genres[0]);
+    expect(mockSetActiveGenreDetails).toBeCalledWith(stubMoviesState.movie?.genres[0]);
     expect(mockGetMoviesByGenre).toBeCalledTimes(1);
     expect(mockGetMoviesByGenre).toBeCalledWith({
-      searchInput: moviesStateTest.movie?.genres[0],
+      searchInput: stubMoviesState.movie?.genres[0],
       filter: "",
       sortBy: {
         key: "release_date",
@@ -81,14 +92,14 @@ describe('useDetails test', () => {
     currentHook = () => useDetails(
       123,
       mockDispatch,
-      { ...mockMovieState, movie: movie2 }
+      { ...mockMovieState, movie: stubMovie2 }
     );
     wrapper.setProps({ hook: currentHook });
     expect(mockSetActiveGenreDetails).toBeCalledTimes(1);
-    expect(mockSetActiveGenreDetails).toBeCalledWith(movie2?.genres[0]);
+    expect(mockSetActiveGenreDetails).toBeCalledWith(stubMovie2?.genres[0]);
     expect(mockGetMoviesByGenre).toBeCalledTimes(1);
     expect(mockGetMoviesByGenre).toBeCalledWith({
-      searchInput: movie2?.genres[0],
+      searchInput: stubMovie2?.genres[0],
       filter: "",
       sortBy: {
         key: "release_date",

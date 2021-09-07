@@ -10,23 +10,13 @@ import Details from '.';
 import useDetails from './hook/useDetails';
 import { DetailsView } from './view/DetailsView';
 import { renderHook } from '@testing-library/react-hooks'
-import { movie1, moviesStateTest } from '../../utils/constantsTest';
+import { stubMovie1, stubMoviesState } from '../../utils/stubsForTests';
 
 window.scrollTo = jest.fn();
 const dispatch = jest.fn();
-const { result } = renderHook(() => useDetails(movie1.id || 0, dispatch, moviesStateTest));
+const { result } = renderHook(() => useDetails(stubMovie1.id || 0, dispatch, stubMoviesState));
 
-describe('useDetails test', () => {
-  it('useDetails start test', () => {
-    expect(result.current.dialogOpened).toBeFalsy();
-    expect(result.current.movie).toBe(movie1);
-    expect(result.current.moviesByGenre?.length).toBeDefined();
-    expect(result.current.activeGenreDetails).toBe(moviesStateTest.activeGenreDetails);
-    expect(typeof result.current.setActiveMovieHandler).toBe('function');
-  });
-});
-
-describe('DetailsView test', () => {
+describe('Details test', () => {
   it('DetailsView mount test', () => {
     const component = mount(
       <Provider store={store}>
@@ -35,13 +25,11 @@ describe('DetailsView test', () => {
         </Router>
       </Provider>
     );
-    expect(component.find('button.button_active').text().includes(moviesStateTest.activeGenreDetails)).toBeTruthy();
+    expect(component.find('button.button_active').text().includes(stubMoviesState.activeGenreDetails)).toBeTruthy();
     component.find('button.button').at(1).simulate('click', { target: { innerText: 'Comedy' } });
     expect(dispatch).toBeCalledTimes(2);
   });
-});
 
-describe('Details test', () => {
   it('Details render test', () => {
     const component = mount(
       <Provider store={store}>
