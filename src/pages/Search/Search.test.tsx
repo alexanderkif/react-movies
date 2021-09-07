@@ -14,23 +14,10 @@ import { SearchView } from './view/SearchView';
 import { setDialogOpened, setSearchInput } from '../../redux/actions';
 import userEvent from '@testing-library/user-event';
 
+const query = new URLSearchParams('searchInput=god&sortBy=release_date&searchBy=title&sortOrder=desc&filter=comedy');
+const history = { push: jest.fn() };
 const dispatch = jest.fn();
-const { result } = renderHook(() => useSearch({ dispatch, moviesState: stubMoviesState }));
-
-describe('useSearch test', () => {
-  it('useSearch start test', () => {
-    expect(result.current.movies?.length).toBeDefined();
-    expect(result.current.searchBy).toBe(stubMoviesState.searchBy);
-    expect(result.current.sortBy).toBe(stubMoviesState.sortBy);
-    expect(result.current.searchInput).toBe(stubMoviesState.searchInput);
-    expect(result.current.filter).toBe(stubMoviesState.filter);
-    expect(result.current.dialogOpened).toBeFalsy();
-    expect(typeof result.current.searchInputHandler).toBe('function');
-    expect(typeof result.current.searchEnterHandler).toBe('function');
-    expect(typeof result.current.searchByHandler).toBe('function');
-    expect(typeof result.current.setActiveMovieHandler).toBe('function');
-  });
-});
+const { result } = renderHook(() => useSearch(query, history, { dispatch, moviesState: stubMoviesState }));
 
 const setUp = () => mount(
   <Provider store={store}>

@@ -55,6 +55,14 @@ export interface IMovieRequestParams {
   offset?: number;
 }
 
+export interface IMovieRequestParamsURL {
+  searchBy?: string;
+  sortBy?: string;
+  searchInput?: string;
+  sortOrder?: string;
+  filter?: string;
+}
+
 export interface ISearchProps {
   searchViewProps?: ISearchViewProps
 }
