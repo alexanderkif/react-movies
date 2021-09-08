@@ -163,7 +163,7 @@ paths:
           description: Movie not found
 
 servers:
-  - url: http://localhost:4000/
+  - url: https://react-movies-kappa.vercel.app:4000/
 components:
   schemas:
     MoviesResponse:
