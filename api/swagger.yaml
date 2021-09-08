@@ -142,7 +142,7 @@ paths:
                 $ref: "#/components/schemas/Movie"
         "404":
           description: Movie not found
-  
+
     delete:
       description: Remove movie by id
       summary: Remove movie by id
@@ -161,9 +161,9 @@ paths:
           description: No response
         "404":
           description: Movie not found
-      
+
 servers:
-  - url: http://localhost:4000/
+  - url: http://localhost/
 components:
   schemas:
     MoviesResponse:
