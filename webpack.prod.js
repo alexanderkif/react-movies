@@ -9,7 +9,16 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.s?css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],   // сделает main.css отдельно
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: { localIdentName: "[name]__[local]--[hash:base64:5]" },
+            },
+          },
+          "sass-loader"
+        ],   // сделает main.css отдельно
       },
     ],
   },

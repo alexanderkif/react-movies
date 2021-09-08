@@ -13,7 +13,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, "/build"),
-    publicPath: '/',
+    publicPath: '',
     filename: "build.js",
     clean: true,
   },

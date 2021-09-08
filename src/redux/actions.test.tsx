@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import {
   createMovie,
   deleteMovieById,
@@ -7,7 +10,6 @@ import {
   getMoviesByGenre,
   getMoviesByGenreSuccess,
   getMoviesSuccess,
-  MOVIES_URL,
   setActiveGenreDetails,
   setDialogOpened,
   setFilter,
@@ -15,7 +17,8 @@ import {
   setSearchInput,
   setSortBy,
   setSortOrder,
-  updateMovie
+  updateMovie,
+  MOVIES_URL
 } from "./actions";
 import moviesState from "./moviesState";
 import { stubMovie1, stubMovie2 } from "../utils/stubsForTests";
