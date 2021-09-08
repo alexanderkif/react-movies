@@ -13,7 +13,8 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_ACTIVE_GENRE_DETAILS = 'SET_ACTIVE_GENRE_DETAILS';
 export const SET_DIALOG_OPEN = 'SET_DIALOG_OPEN';
 
-export const MOVIES_URL = `${window.location.protocol}//${window.location.hostname}:4000/movies`;
+// export const MOVIES_URL = `${window.location.protocol}//${window.location.hostname}:4000/movies`;
+export const MOVIES_URL = `https://reactjs-cdp.herokuapp.com/movies`;
 
 export const getMovies = ({
   searchInput = '',
