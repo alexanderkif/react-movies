@@ -18,9 +18,36 @@ export interface IMovieItem {
 }
 
 export interface IMovieButtonProps {
+  /**
+   * Button label text
+   */
   text: string;
+  /**
+   * Switch button to active color
+   */
   active?: boolean;
+  /**
+   * Switch button size
+   */
   small?: boolean;
+  /**
+   * Button click handler
+   */
+  clickHandler?: MouseEventHandler<HTMLButtonElement>;
+}
+
+export interface IMovieTextButtonProps {
+  /**
+   * Button label text
+   */
+  text: string;
+  /**
+   * Switch button to active color
+   */
+  active?: boolean;
+  /**
+   * Button click handler
+   */
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -183,11 +210,20 @@ export interface IUseSortByDropdownParams {
 }
 
 export interface IDropdownParams {
+  /**
+   * Dropdown options
+   */
   options?: string[];
+  /**
+   * Dropdown value
+   */
   value?: string;
   dropdownHandler?: MouseEventHandler<HTMLDivElement>;
   id?: string;
   name?: string;
+  /**
+   * Dropdown position
+   */
   position?: { [key: string]: string };
   closeDropdown?: boolean;
 }

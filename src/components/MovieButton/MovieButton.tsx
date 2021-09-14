@@ -2,6 +2,9 @@ import React, { FunctionComponent } from "react";
 import { IMovieButtonProps } from "../../types";
 import styles from "./MovieButton.scss";
 
+/**
+ * Primary UI button component with active and small properties
+ */
 export const MovieButton: FunctionComponent<IMovieButtonProps> = (
   props: IMovieButtonProps
 ) => {
