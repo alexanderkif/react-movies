@@ -8,15 +8,14 @@ Object {
       <div
         class="panel"
       >
-        <a
+        <div
           class="link"
-          href="/"
         >
           <b>
             netflix
           </b>
           roulette
-        </a>
+        </div>
       </div>
     </div>
   </body>,
@@ -24,15 +23,14 @@ Object {
     <div
       class="panel"
     >
-      <a
+      <div
         class="link"
-        href="/"
       >
         <b>
           netflix
         </b>
         roulette
-      </a>
+      </div>
     </div>
   </div>,
   "debug": [Function],

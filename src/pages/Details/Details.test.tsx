@@ -39,6 +39,6 @@ describe('Details test', () => {
       </Provider>
     );
     // console.log(component.debug());
-    expect(component.find({ href: '/' })).toHaveLength(4);
+    expect(component.find({ href: '/' })).toHaveLength(2);
   });
 });

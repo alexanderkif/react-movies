@@ -12,6 +12,7 @@ import { rootReducer } from "./redux/reducers";
 import Search from "./pages/Search";
 import Details from "./pages/Details";
 import Footer from "./components/Footer";
+import Page404 from "./pages/Page404";
 
 const composeEnhancers =
   // eslint-disable-next-line
@@ -30,9 +31,10 @@ export const App: FunctionComponent = () => {
             <Route path="/movies/:id">
               <Details />
             </Route>
-            <Route path="/">
+            <Route exact path="/">
               <Search />
             </Route>
+            <Route component={Page404} />
           </Switch>
           <Footer />
         </Router>

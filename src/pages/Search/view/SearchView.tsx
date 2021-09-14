@@ -69,13 +69,19 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
           <SortBySelector />
         </div>
       </div>
-      <div className={styles.sort}>
-        <div className={styles.moviesFound}>
-          <span>{movies && movies.length > LIMIT_MOVIES_IN_SEARCH - 1
-            ? `${LIMIT_MOVIES_IN_SEARCH} or more` : movies?.length}</span>&nbsp;movies found
+      {movies?.length ?
+        <div className={styles.sort}>
+          <div className={styles.moviesFound}>
+            <span>{movies && movies.length > LIMIT_MOVIES_IN_SEARCH - 1
+              ? `${LIMIT_MOVIES_IN_SEARCH} or more` : movies?.length}</span>&nbsp;movies found
+          </div>
+        </div> : ''}
+      {movies?.length ?
+        <ListMovies movies={movies} /> :
+        <div className={styles.noMovieFoundWrapper}>
+          <div className={styles.noMovieFound}>No Movie Found</div>
         </div>
-      </div>
-      <ListMovies movies={movies} />
+      }
       {dialogOpened && <MovieDialog />}
     </div>
   );

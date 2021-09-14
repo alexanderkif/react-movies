@@ -1,16 +1,25 @@
 import { useEffect, ChangeEvent, KeyboardEvent, MouseEvent } from "react";
-import { ISearchViewProps, IMovieState, SearchByType, IUseMovieStateWithDispatchParams } from "../../../types";
+import { ISearchViewProps, IMovieState, SearchByType, IUseMovieStateWithDispatchParams, SortOrderType } from "../../../types";
 import {
   getMovies,
+  getMoviesSuccess,
   setDialogOpened,
   setFilter,
   setSearchBy,
-  setSearchInput
+  setSearchInput,
+  setSortBy,
+  setSortOrder
 } from "../../../redux/actions";
+import { SORTS_BY } from "../../../utils/constants";
 
 const searches: SearchByType[] = ["title", "genres"];
 
-const useSearch = ({ dispatch, moviesState }: IUseMovieStateWithDispatchParams): ISearchViewProps => {
+const useSearch = (
+  query: URLSearchParams,
+  // eslint-disable-next-line
+  history: any,
+  { dispatch, moviesState }: IUseMovieStateWithDispatchParams
+): ISearchViewProps => {
 
   const {
     movies,
@@ -21,16 +30,34 @@ const useSearch = ({ dispatch, moviesState }: IUseMovieStateWithDispatchParams):
     filter,
     dialogOpened }: IMovieState = moviesState;
 
+  useEffect(() => {
+    const filter = query.get('filter')
+    if (filter) dispatch(setFilter(filter));
+    const searchInput = query.get('searchInput');
+    if (searchInput) dispatch(setSearchInput(searchInput));
+    const sortBy = query.get('sortBy');
+    if (sortBy) dispatch(setSortBy(SORTS_BY.filter(s => s.key === sortBy)[0]));
+    const searchBy = query.get('searchBy');
+    if (searchBy) dispatch(setSearchBy(searchBy as SearchByType));
+    const sortOrder = query.get('sortOrder');
+    if (sortOrder) dispatch(setSortOrder(sortOrder as SortOrderType));
+  }, []);
+
   const dispatchGetMovies = () => {
-    dispatch(
-      getMovies({
-        searchInput: searchInput,
-        sortBy: sortBy,
-        searchBy: searchBy,
-        sortOrder: sortOrder,
-        filter: filter
-      })
-    );
+    if (searchInput || filter !== 'all') {
+      dispatch(
+        getMovies({
+          searchInput: searchInput,
+          sortBy: sortBy,
+          searchBy: searchBy,
+          sortOrder: sortOrder,
+          filter: filter
+        })
+      );
+    } else {
+      dispatch(getMoviesSuccess([]));
+    }
+    history.push(`?searchInput=${searchInput}&sortBy=${sortBy?.key}&searchBy=${searchBy}&sortOrder=${sortOrder}&filter=${filter}`);
   };
 
   const openFormHandle = (e: MouseEvent) => {
