@@ -12,6 +12,7 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/*{js,ts,tsx}",
     "!src/types/**",
+    "!src/stories/**",
     "!src/index.tsx"
   ],
   setupFiles: [

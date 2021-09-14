@@ -1,11 +1,14 @@
 import React, { FunctionComponent } from "react";
-import { IMovieButtonProps } from "../../types";
+import { IMovieTextButtonProps } from "../../types";
 import styles from "./MovieTextButton.scss";
 
-export const MovieTextButton: FunctionComponent<IMovieButtonProps> = (
-  props: IMovieButtonProps
+/**
+ * Primary UI text button component with active properties
+ */
+export const MovieTextButton: FunctionComponent<IMovieTextButtonProps> = (
+  props: IMovieTextButtonProps
 ) => {
-  const { text, active }: IMovieButtonProps = props;
+  const { text, active }: IMovieTextButtonProps = props;
   const buttonStyles = [
     styles.button,
     active ? styles.button_active : "",

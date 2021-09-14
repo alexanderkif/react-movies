@@ -6,6 +6,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import cn from 'classnames';
 import { isOptionInOptionsString } from "../../utils/isOptionInOptionsString";
 
+/**
+ * Primary UI dropdown component with position properties
+ */
 export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdownParams) => {
   const { options, value, dropdownHandler, position, closeDropdown } = props;
 
