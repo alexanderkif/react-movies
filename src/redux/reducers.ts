@@ -3,4 +3,4 @@ import moviesState from './moviesState';
 
 export const rootReducer = combineReducers({ moviesState });
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

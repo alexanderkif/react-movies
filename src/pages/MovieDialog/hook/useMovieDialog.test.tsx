@@ -1,17 +1,17 @@
 /**
  * @jest-environment jsdom
  */
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
-import useMovieDialog from "./useMovieDialog";
-import { IMovieState } from "../../../types";
-import { stubMoviesState } from "../../../utils/stubsForTests";
-import { createMock } from "ts-auto-mock";
-import { act } from "react-dom/test-utils";
-import { MovieDialog } from "../MovieDialog";
-import { Provider } from "react-redux";
-import { store } from "../../../App";
+import { createMock } from 'ts-auto-mock';
+import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
+import useMovieDialog from './useMovieDialog';
+import { IMovieState } from '../../../types';
+import { stubMoviesState } from '../../../utils/stubsForTests';
+import { MovieDialog } from '../MovieDialog';
+import { store } from '../../../App';
 
 const MockComponent = (props: any) => (
   <Provider store={store}>
@@ -29,18 +29,17 @@ const mockSetDialogOpened = jest.fn();
 const mockDispatch = jest.fn();
 const mockHistory = {
   go: () => jest.fn(),
-  push: () => jest.fn()
+  push: () => jest.fn(),
 };
 
 jest.mock('../../../redux/actions', () => ({
   createMovie: (...p: any) => mockCreateMovie(...p),
   deleteMovieById: (...p: any) => mockDeleteMovieById(...p),
   updateMovie: (...p: any) => mockUpdateMovie(...p),
-  setDialogOpened: (...p: any) => mockSetDialogOpened(...p)
+  setDialogOpened: (...p: any) => mockSetDialogOpened(...p),
 }));
 
 describe('useMovieDialog test', () => {
-
   let mockMovieState: IMovieState;
 
   beforeEach(() => {
@@ -50,11 +49,12 @@ describe('useMovieDialog test', () => {
 
   it('should return all props', () => {
     const wrapper = mount(
-      <HookWrapper hook={() => useMovieDialog(
-        { dispatch: mockDispatch, moviesState: mockMovieState },
-        mockHistory
-      )}
-      />
+      <HookWrapper
+        hook={() => useMovieDialog(
+          { dispatch: mockDispatch, moviesState: mockMovieState },
+          mockHistory,
+        )}
+      />,
     );
     const {
       editMovie,
@@ -65,11 +65,14 @@ describe('useMovieDialog test', () => {
       setDialogOpenedHandler,
       dropdownHandler,
       clickFormHandler,
-      deleteMovieSubmit } = wrapper.find(MockComponent).props();
+      deleteMovieSubmit,
+    } = wrapper.find(MockComponent).props();
     expect(deleteMovie).toBeFalsy();
     expect(closeDropdown).toBeFalsy();
     expect(editMovie).toStrictEqual(stubMoviesState.editMovie);
-    expect(genres).toStrictEqual(stubMoviesState.editMovie?.genres.map(g => g.toLowerCase()));
+    expect(genres).toStrictEqual(
+      stubMoviesState.editMovie?.genres.map((g) => g.toLowerCase()),
+    );
     expect(typeof formik).toBe('object');
     expect(typeof setDialogOpenedHandler).toBe('function');
     expect(typeof dropdownHandler).toBe('function');
@@ -81,17 +84,19 @@ describe('useMovieDialog test', () => {
   it('useEffect should init genres', async () => {
     const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
-      mockHistory
+      mockHistory,
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { genres } = wrapper.find(MockComponent).props();
-    expect(genres).toStrictEqual(stubMoviesState.editMovie?.genres.map(g => g.toLowerCase()));
+    expect(genres).toStrictEqual(
+      stubMoviesState.editMovie?.genres.map((g) => g.toLowerCase()),
+    );
   });
 
   it('should delete movie by id ', async () => {
     const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
-      mockHistory
+      mockHistory,
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { deleteMovieSubmit } = wrapper.find(MockComponent).props();
@@ -105,11 +110,11 @@ describe('useMovieDialog test', () => {
   it('should delete movie by id (if this moviePage is open) ', async () => {
     mockMovieState = createMock<IMovieState>({
       ...stubMoviesState,
-      editMovie: stubMoviesState.movie
+      editMovie: stubMoviesState.movie,
     });
     const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
-      mockHistory
+      mockHistory,
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { deleteMovieSubmit } = wrapper.find(MockComponent).props();
@@ -121,15 +126,15 @@ describe('useMovieDialog test', () => {
   });
 
   it('test movie create', async () => {
-    const movieWithoutId = Object.assign({}, stubMoviesState.movie);
+    const movieWithoutId = { ...stubMoviesState.movie };
     delete movieWithoutId.id;
     mockMovieState = createMock<IMovieState>({
       ...stubMoviesState,
-      editMovie: movieWithoutId
+      editMovie: movieWithoutId,
     });
     const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
-      mockHistory
+      mockHistory,
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { formik } = wrapper.find(MockComponent).props();
@@ -139,7 +144,7 @@ describe('useMovieDialog test', () => {
     expect(mockCreateMovie).toBeCalledTimes(1);
     expect(mockCreateMovie).toBeCalledWith({
       ...movieWithoutId,
-      genres: movieWithoutId.genres.map(g => g.toLowerCase())
+      genres: movieWithoutId.genres?.map((g) => g.toLowerCase()),
     });
     expect(mockSetDialogOpened).toBeCalledTimes(1);
     expect(mockSetDialogOpened).toBeCalledWith(false);
@@ -148,7 +153,7 @@ describe('useMovieDialog test', () => {
   it('test movie update', async () => {
     const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
-      mockHistory
+      mockHistory,
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { formik } = wrapper.find(MockComponent).props();
@@ -158,7 +163,7 @@ describe('useMovieDialog test', () => {
     expect(mockUpdateMovie).toBeCalledTimes(1);
     expect(mockUpdateMovie).toBeCalledWith({
       ...stubMoviesState.editMovie,
-      genres: stubMoviesState.editMovie?.genres.map(g => g.toLowerCase())
+      genres: stubMoviesState.editMovie?.genres.map((g) => g.toLowerCase()),
     });
     expect(mockSetDialogOpened).toBeCalledTimes(1);
     expect(mockSetDialogOpened).toBeCalledWith(false);
@@ -169,18 +174,24 @@ describe('useMovieDialog test', () => {
       ...stubMoviesState,
       movies: [],
       movie: undefined,
-      editMovie: undefined
+      editMovie: undefined,
     });
     const currentHook = () => useMovieDialog(
       { dispatch: mockDispatch, moviesState: mockMovieState },
-      mockHistory
+      mockHistory,
     );
     const wrapper = mount(<HookWrapper hook={currentHook} />);
     const { formik } = wrapper.find(MockComponent).props();
     await act(async () => {
-      await wrapper.find('#title').simulate('change', { target: { name: 'title', value: 'ti' } });
-      await wrapper.find('#overview').simulate('change', { target: { name: 'overview', value: 'over' } });
-      await wrapper.find('#runtime').simulate('change', { target: { name: 'runtime', value: -1 } });
+      await wrapper
+        .find('#title')
+        .simulate('change', { target: { name: 'title', value: 'ti' } });
+      await wrapper
+        .find('#overview')
+        .simulate('change', { target: { name: 'overview', value: 'over' } });
+      await wrapper
+        .find('#runtime')
+        .simulate('change', { target: { name: 'runtime', value: -1 } });
       await formik.handleSubmit();
       await formik.validateForm();
       // currentHook = () => useMovieDialog(

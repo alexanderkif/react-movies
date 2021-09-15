@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from "react";
-import styles from "./ListMovies.scss";
-import Movie from "../../pages/Movie";
-import { IListMoviesProps } from "../../types";
+import React, { FunctionComponent } from 'react';
+import styles from './ListMovies.scss';
+import Movie from '../../pages/Movie';
+import { IListMoviesProps } from '../../types';
 
 export const ListMovies: FunctionComponent<IListMoviesProps> = (
-  props: IListMoviesProps
+  props: IListMoviesProps,
 ) => {
   const { movies } = props;
 

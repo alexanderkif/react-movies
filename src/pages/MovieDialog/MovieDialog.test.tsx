@@ -2,13 +2,13 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { act, renderHook } from "@testing-library/react-hooks";
-import { stubMoviesState } from '../../utils/stubsForTests';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
-import { store } from '../../App';
 import userEvent from '@testing-library/user-event';
+import { stubMoviesState } from '../../utils/stubsForTests';
+import { store } from '../../App';
 import useMovieDialog from './hook/useMovieDialog';
 import { MovieDialogView } from './view/MovieDialogView';
 import { IMovieDialogParams, IMovieState } from '../../types';
@@ -24,11 +24,10 @@ const setRender = (props: IMovieDialogParams) => render(
     <Router>
       <MovieDialogView {...props} />
     </Router>
-  </Provider>
+  </Provider>,
 );
 
 describe('MovieDialog test', () => {
-
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -39,7 +38,7 @@ describe('MovieDialog test', () => {
         <Router>
           <MovieDialog />
         </Router>
-      </Provider>
+      </Provider>,
     );
     expect(screen.getByText('Add movie')).toBeInTheDocument();
   });
@@ -61,7 +60,7 @@ describe('MovieDialog test', () => {
         <Router>
           <MovieDialogView {...result.current} />
         </Router>
-      </Provider>
+      </Provider>,
     );
     act(() => {
       userEvent.click(container.getElementsByClassName('dropdown')[0]);
@@ -73,7 +72,7 @@ describe('MovieDialog test', () => {
         <Router>
           <MovieDialogView {...result.current} />
         </Router>
-      </Provider>
+      </Provider>,
     );
     act(() => {
       userEvent.click(container.getElementsByClassName('dropdown')[0]);

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { CompanyLabel } from './CompanyLabel';
 
@@ -11,7 +11,7 @@ describe('CompanyLabel', () => {
     render(
       <Router>
         <CompanyLabel />
-      </Router>
+      </Router>,
     );
     const element = screen.getAllByText(/roulette/i)[0];
     expect(element).toBeInTheDocument();
@@ -24,7 +24,7 @@ describe('CompanyLabel', () => {
     const element = render(
       <Router>
         <CompanyLabel />
-      </Router>
+      </Router>,
     );
     expect(element).toMatchSnapshot();
   });

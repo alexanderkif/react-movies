@@ -10,11 +10,13 @@ export default {
   argTypes: {
     active: { control: 'boolean', defaultValue: false },
     small: { control: 'boolean', defaultValue: false },
-    text: { control: 'text', defaultValue: 'Search' }
-  }
+    text: { control: 'text', defaultValue: 'Search' },
+  },
 } as ComponentMeta<typeof MovieButton>;
 
-const Template: ComponentStory<typeof MovieButton> = (args) => <MovieButton {...args} />;
+const Template: ComponentStory<typeof MovieButton> = (args) => (
+  <MovieButton {...args} />
+);
 
 export const Active = Template.bind({});
 Active.args = {

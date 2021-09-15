@@ -1,9 +1,9 @@
 import React, { CSSProperties } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
+import { action } from '@storybook/addon-actions';
 import DropdownList from '.';
 import { ALL_GENRES, SORTS_BY } from '../../utils/constants';
-import { action } from '@storybook/addon-actions';
 
 const dropdown: CSSProperties = {
   position: 'relative',
@@ -16,8 +16,8 @@ const dropdown: CSSProperties = {
   outline: 'none',
   fontSize: '.9rem',
   textTransform: 'uppercase',
-  fontFamily: 'Montserrat,sans-serif'
-}
+  fontFamily: 'Montserrat,sans-serif',
+};
 
 export default {
   title: 'NetflixRoulette/DropdownList',
@@ -25,12 +25,14 @@ export default {
   argTypes: {
     value: { control: 'text', defaultValue: 'Fantasy' },
     options: { control: 'object', defaultValue: ['Fantasy'] },
-    position: { control: { top: 'text' }, defaultValue: {} }
+    position: { control: { top: 'text' }, defaultValue: {} },
   },
-  decorators: [story => <div style={dropdown}>{story()}</div>],
+  decorators: [(story) => <div style={dropdown}>{story()}</div>],
 } as ComponentMeta<typeof DropdownList>;
 
-const Template: ComponentStory<typeof DropdownList> = (args) => <DropdownList {...args} />;
+const Template: ComponentStory<typeof DropdownList> = (args) => (
+  <DropdownList {...args} />
+);
 
 export const Genres = Template.bind({});
 Genres.args = {

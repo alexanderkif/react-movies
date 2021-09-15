@@ -1,9 +1,11 @@
-import React, { FunctionComponent } from "react";
-import { IGenresPanelParams } from "../../types";
-import MovieTextButton from "../MovieTextButton";
-import styles from "./GenresPanel.scss";
+import React, { FunctionComponent } from 'react';
+import { IGenresPanelParams } from '../../types';
+import MovieTextButton from '../MovieTextButton';
+import styles from './GenresPanel.scss';
 
-export const GenresPanel: FunctionComponent<IGenresPanelParams> = (props: IGenresPanelParams) => {
+export const GenresPanel: FunctionComponent<IGenresPanelParams> = (
+  props: IGenresPanelParams,
+) => {
   const { genres, setActiveMovieHandler, activeGenre } = props;
   return (
     <div className={styles.filmsBy} onClick={setActiveMovieHandler}>

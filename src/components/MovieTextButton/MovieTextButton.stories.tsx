@@ -7,11 +7,13 @@ export default {
   component: MovieTextButton,
   argTypes: {
     active: { control: 'boolean', defaultValue: false },
-    text: { control: 'text', defaultValue: 'Search' }
-  }
+    text: { control: 'text', defaultValue: 'Search' },
+  },
 } as ComponentMeta<typeof MovieTextButton>;
 
-const Template: ComponentStory<typeof MovieTextButton> = (args) => <MovieTextButton {...args} />;
+const Template: ComponentStory<typeof MovieTextButton> = (args) => (
+  <MovieTextButton {...args} />
+);
 
 export const Active = Template.bind({});
 Active.args = {
