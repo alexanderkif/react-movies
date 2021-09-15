@@ -3,28 +3,34 @@
  */
 import React from 'react';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { renderHook } from "@testing-library/react-hooks";
-import useSearch from "./hook/useSearch";
-import { stubMoviesState } from '../../utils/stubsForTests';
+import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
+import userEvent from '@testing-library/user-event';
+import useSearch from './hook/useSearch';
+import { stubMoviesState } from '../../utils/stubsForTests';
 import { store } from '../../App';
 import { SearchView } from './view/SearchView';
 import { setDialogOpened, setSearchInput } from '../../redux/actions';
-import userEvent from '@testing-library/user-event';
 
-const query = new URLSearchParams('searchInput=god&sortBy=release_date&searchBy=title&sortOrder=desc&filter=comedy');
+const query = new URLSearchParams(
+  'searchInput=god&sortBy=release_date&searchBy=title&sortOrder=desc&filter=comedy',
+);
 const history = { push: jest.fn() };
 const dispatch = jest.fn();
-const { result } = renderHook(() => useSearch(query, history, { dispatch, moviesState: stubMoviesState }));
+const { result } = renderHook(() => useSearch(
+  query,
+  history,
+  { dispatch, moviesState: stubMoviesState },
+));
 
 const setUp = () => mount(
   <Provider store={store}>
     <Router>
       <SearchView {...result.current} />
     </Router>
-  </Provider>
+  </Provider>,
 );
 
 const setRender = () => render(
@@ -32,14 +38,13 @@ const setRender = () => render(
     <Router>
       <SearchView {...result.current} />
     </Router>
-  </Provider>
+  </Provider>,
 );
 
 describe('SearchView test', () => {
-
   beforeEach(() => {
     dispatch.mockClear();
-  })
+  });
 
   it('openDialogBtn click', () => {
     const component = setUp();
@@ -63,7 +68,10 @@ describe('SearchView test', () => {
 
   it('searchInput change', () => {
     const component = setUp();
-    component.find('.input').at(0).simulate('change', { target: { value: 'comedy' } });
+    component
+      .find('.input')
+      .at(0)
+      .simulate('change', { target: { value: 'comedy' } });
     expect(dispatch).toBeCalledWith(setSearchInput('comedy'));
     expect(dispatch).toHaveBeenCalledTimes(1);
   });

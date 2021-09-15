@@ -1,16 +1,16 @@
-import React, { FunctionComponent } from "react";
-import styles from "./Search.scss";
-import CompanyLabel from "../../../components/CompanyLabel";
-import MovieButton from "../../../components/MovieButton";
-import ListMovies from "../../../components/ListMovies";
-import { ISearchViewProps } from "../../../types";
-import GenresPanel from "../../../components/GenresPanel";
-import SortBySelector from "../../SortBySelector";
-import MovieDialog from "../../MovieDialog";
-import { LIMIT_MOVIES_IN_SEARCH } from "../../../utils/constants";
+import React, { FunctionComponent } from 'react';
+import styles from './Search.scss';
+import CompanyLabel from '../../../components/CompanyLabel';
+import MovieButton from '../../../components/MovieButton';
+import ListMovies from '../../../components/ListMovies';
+import { ISearchViewProps } from '../../../types';
+import GenresPanel from '../../../components/GenresPanel';
+import SortBySelector from '../../SortBySelector';
+import MovieDialog from '../../MovieDialog';
+import { LIMIT_MOVIES_IN_SEARCH } from '../../../utils/constants';
 
 export const SearchView: FunctionComponent<ISearchViewProps> = (
-  props: ISearchViewProps
+  props: ISearchViewProps,
 ) => {
   const {
     movies,
@@ -32,7 +32,9 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
       <div className={styles.controls}>
         <div className={styles.topPanel}>
           <CompanyLabel />
-          <button className={styles.openDialogBtn} onClick={openFormHandle}>+ ADD MOVIE</button>
+          <button type="button" className={styles.openDialogBtn} onClick={openFormHandle}>
+            + ADD MOVIE
+          </button>
         </div>
         <div className={styles.label}>Find your movie</div>
         <div className={styles.buttonsPanel}>
@@ -44,7 +46,7 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
             onChange={searchInputHandler}
             onKeyPress={searchEnterHandler}
           />
-          <MovieButton text="Search" active={true} clickHandler={dispatchGetMovies} />
+          <MovieButton text="Search" active clickHandler={dispatchGetMovies} />
         </div>
         <div className={styles.params}>
           search by
@@ -53,7 +55,7 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
               key={searchType}
               text={searchType}
               active={searchType === searchBy}
-              small={true}
+              small
               clickHandler={searchByHandler}
             />
           ))}
@@ -69,19 +71,27 @@ export const SearchView: FunctionComponent<ISearchViewProps> = (
           <SortBySelector />
         </div>
       </div>
-      {movies?.length ?
+      {movies?.length ? (
         <div className={styles.sort}>
           <div className={styles.moviesFound}>
-            <span>{movies && movies.length > LIMIT_MOVIES_IN_SEARCH - 1
-              ? `${LIMIT_MOVIES_IN_SEARCH} or more` : movies?.length}</span>&nbsp;movies found
+            <span>
+              {movies && movies.length > LIMIT_MOVIES_IN_SEARCH - 1
+                ? `${LIMIT_MOVIES_IN_SEARCH} or more`
+                : movies?.length}
+            </span>
+            &nbsp;movies found
           </div>
-        </div> : ''}
-      {movies?.length ?
-        <ListMovies movies={movies} /> :
+        </div>
+      ) : (
+        ''
+      )}
+      {movies?.length ? (
+        <ListMovies movies={movies} />
+      ) : (
         <div className={styles.noMovieFoundWrapper}>
           <div className={styles.noMovieFound}>No Movie Found</div>
         </div>
-      }
+      )}
       {dialogOpened && <MovieDialog />}
     </div>
   );

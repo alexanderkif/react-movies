@@ -1,7 +1,6 @@
-import getColors from "./getColors";
+import getColors from './getColors';
 
 describe('DetailsView test', () => {
-
   it('color with vote = 0', () => {
     const vote = 0;
     expect(getColors(vote).borderColor).toBe('rgba(200,80,0,1)');
@@ -19,5 +18,4 @@ describe('DetailsView test', () => {
     expect(getColors(vote).borderColor).toBe('rgba(80,200,0,1)');
     expect(getColors(vote).color).toBe('rgba(80,200,0,1)');
   });
-
 });

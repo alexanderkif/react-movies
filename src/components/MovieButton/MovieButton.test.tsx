@@ -1,10 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import React from "react";
-import { render, screen } from "@testing-library/react";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import MovieButton from ".";
+import MovieButton from '.';
 
 describe('MovieButton test', () => {
   const BTN_TEXT = 'button text';
@@ -12,8 +12,8 @@ describe('MovieButton test', () => {
     text: BTN_TEXT,
     active: false,
     small: false,
-    clickHandler: jest.fn()
-  }
+    clickHandler: jest.fn(),
+  };
 
   it('click MovieButton', () => {
     render(<MovieButton {...props} />);

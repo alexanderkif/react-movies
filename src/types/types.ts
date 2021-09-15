@@ -1,6 +1,20 @@
-import { Action } from "@reduxjs/toolkit";
-import { FormikProps } from "formik";
-import { ChangeEventHandler, MouseEventHandler, KeyboardEventHandler, SyntheticEvent, Dispatch } from "react";
+import { Action } from '@reduxjs/toolkit';
+import { FormikProps } from 'formik';
+import {
+  ChangeEventHandler,
+  MouseEventHandler,
+  KeyboardEventHandler,
+  SyntheticEvent,
+  Dispatch,
+} from 'react';
+
+export type SearchByType = 'title' | 'genres';
+export type SortByType =
+  | { key: 'vote_average'; name: 'rating' }
+  | { key: 'release_date'; name: 'release date' }
+  | { key: 'budget'; name: 'budget' }
+  | { key: 'revenue'; name: 'revenue' };
+export type SortOrderType = 'asc' | 'desc';
 
 export interface IMovieItem {
   id?: number;
@@ -18,17 +32,42 @@ export interface IMovieItem {
 }
 
 export interface IMovieButtonProps {
+  /**
+   * Button label text
+   */
   text: string;
+  /**
+   * Switch button to active color
+   */
   active?: boolean;
+  /**
+   * Switch button size
+   */
   small?: boolean;
+  /**
+   * Button click handler
+   */
+  clickHandler?: MouseEventHandler<HTMLButtonElement>;
+}
+
+export interface IMovieTextButtonProps {
+  /**
+   * Button label text
+   */
+  text: string;
+  /**
+   * Switch button to active color
+   */
+  active?: boolean;
+  /**
+   * Button click handler
+   */
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export interface IListMoviesProps {
   movies?: IMovieItem[];
 }
-
-export interface IMovieActions extends Action, IMovieState { }
 
 export interface IMovieState {
   movies?: IMovieItem[];
@@ -44,6 +83,8 @@ export interface IMovieState {
   dialogOpened?: boolean;
   deleteMovie?: boolean;
 }
+
+export interface IMovieActions extends Action, IMovieState {}
 
 export interface IMovieRequestParams {
   searchBy?: SearchByType;
@@ -64,7 +105,7 @@ export interface IMovieRequestParamsURL {
 }
 
 export interface ISearchProps {
-  searchViewProps?: ISearchViewProps
+  searchViewProps?: ISearchViewProps;
 }
 export interface ISearchViewProps {
   movies?: IMovieItem[];
@@ -138,7 +179,11 @@ export interface IMovieDialogParams {
   editMovie?: IMovieItem | null;
   genres?: string[];
   dropdownHandler?: MouseEventHandler<HTMLDivElement>;
-  setDialogOpenedHandler: (isOpen: boolean, movie?: IMovieItem, isDelete?: boolean) => void;
+  setDialogOpenedHandler: (
+    isOpen: boolean,
+    movie?: IMovieItem,
+    isDelete?: boolean
+  ) => void;
   deleteMovie?: boolean;
   closeDropdown: boolean;
   formik: FormikProps<IMovieFormikProps>;
@@ -183,19 +228,20 @@ export interface IUseSortByDropdownParams {
 }
 
 export interface IDropdownParams {
+  /**
+   * Dropdown options
+   */
   options?: string[];
+  /**
+   * Dropdown value
+   */
   value?: string;
   dropdownHandler?: MouseEventHandler<HTMLDivElement>;
   id?: string;
   name?: string;
+  /**
+   * Dropdown position
+   */
   position?: { [key: string]: string };
   closeDropdown?: boolean;
 }
-
-export type SearchByType = 'title' | 'genres';
-export type SortByType =
-  { key: 'vote_average', name: 'rating' }
-  | { key: 'release_date', name: 'release date' }
-  | { key: 'budget', name: 'budget' }
-  | { key: 'revenue', name: 'revenue' };
-export type SortOrderType = 'asc' | 'desc';

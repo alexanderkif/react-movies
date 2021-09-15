@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from "react";
-import styles from "./Page404.scss";
-import notFoundImage from "../../assets/404.png";
-import CompanyLabel from "../../components/CompanyLabel";
-import { Link } from "react-router-dom";
+import React, { FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
+import styles from './Page404.scss';
+import notFoundImage from '../../assets/404.png';
+import CompanyLabel from '../../components/CompanyLabel';
 
 export const Page404: FunctionComponent = () => {
   const imgElement = document.querySelector('#notFoundImage');

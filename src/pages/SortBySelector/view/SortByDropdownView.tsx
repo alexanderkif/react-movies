@@ -1,10 +1,12 @@
-import React, { FunctionComponent } from "react";
-import { ISortByDropdownParams } from "../../../types";
-import styles from "./SortByDropdown.scss";
-import DropdownList from "../../../components/DropdownList";
-import { SORTS_BY } from "../../../utils/constants";
+import React, { FunctionComponent } from 'react';
+import { ISortByDropdownParams } from '../../../types';
+import styles from './SortByDropdown.scss';
+import DropdownList from '../../../components/DropdownList';
+import { SORTS_BY } from '../../../utils/constants';
 
-export const SortByDropdownView: FunctionComponent<ISortByDropdownParams> = (props: ISortByDropdownParams) => {
+export const SortByDropdownView: FunctionComponent<ISortByDropdownParams> = (
+  props: ISortByDropdownParams,
+) => {
   const { sortBy, sortHandler } = props;
 
   return (

@@ -1,13 +1,20 @@
-import React, { FunctionComponent, MouseEvent, useCallback, useEffect } from "react";
-import { useState } from "react";
-import { IDropdownParams } from "../../types";
-import styles from "./DropdownList.scss";
+import React, {
+  FunctionComponent, MouseEvent, useCallback, useEffect,
+  useState,
+} from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import cn from 'classnames';
-import { isOptionInOptionsString } from "../../utils/isOptionInOptionsString";
+import { IDropdownParams } from '../../types';
+import styles from './DropdownList.scss';
+import { isOptionInOptionsString } from '../../utils/isOptionInOptionsString';
 
+/**
+ * Primary UI dropdown component with position properties
+ */
 export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdownParams) => {
-  const { options, value, dropdownHandler, position, closeDropdown } = props;
+  const {
+    options, value, dropdownHandler, position, closeDropdown,
+  } = props;
 
   const [isClosed, setIsClosed] = useState(true);
 
@@ -37,7 +44,7 @@ export const DropdownList: FunctionComponent<IDropdownParams> = (props: IDropdow
       <div className={styles.main}>
         <div className={styles.input}>
           {value}
-          <div className={cn(styles.arrow_down, { [styles.arrow_up]: !isClosed })} >
+          <div className={cn(styles.arrow_down, { [styles.arrow_up]: !isClosed })}>
             <ArrowDropDownIcon />
           </div>
         </div>

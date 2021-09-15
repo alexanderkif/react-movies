@@ -1,2 +1,1 @@
-
-export default (releaseDate: string): string => releaseDate?.split("-")[0];
+export default (releaseDate: string): string => releaseDate?.split('-')[0];

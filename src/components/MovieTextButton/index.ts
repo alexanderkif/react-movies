@@ -1,3 +1,3 @@
-import { MovieTextButton } from "./MovieTextButton";
+import { MovieTextButton } from './MovieTextButton';
 
 export default MovieTextButton;

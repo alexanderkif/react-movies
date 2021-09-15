@@ -3,15 +3,12 @@
  */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import DropdownList from '.';
 import userEvent from '@testing-library/user-event';
+import DropdownList from '.';
 
 describe('DropdownList', () => {
   it('open-close DropdownList', () => {
-    render(<DropdownList
-      options={['one', 'two', 'three']}
-      value={'one'}
-    />);
+    render(<DropdownList options={['one', 'two', 'three']} value="one" />);
     const valueElement = screen.getAllByText(/one/i)[0];
     expect(valueElement).toBeInTheDocument();
     const optionTwo = screen.queryByText(/two/i)?.parentElement;
@@ -25,9 +22,7 @@ describe('DropdownList', () => {
   });
 
   it('empty value DropdownList', () => {
-    render(<DropdownList
-      options={['one', 'two', 'three']}
-    />);
+    render(<DropdownList options={['one', 'two', 'three']} />);
     expect(screen.getByText(/one/i)).toBeInTheDocument();
   });
 });

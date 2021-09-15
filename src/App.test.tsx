@@ -9,15 +9,17 @@ import { IMovieItem } from './types';
 export const movie2: IMovieItem = {
   id: 872,
   title: "Singin' in the Rain",
-  tagline: "What a Glorious Feeling!",
+  tagline: 'What a Glorious Feeling!',
   vote_average: 8,
   vote_count: 959,
-  release_date: "1952-04-10",
-  poster_path: "https://image.tmdb.org/t/p/w500/iQpOyAgbUzbO6Coh9OiHRxXjx2Y.jpg",
-  overview: "In 1927 Hollywood, a silent film production company and cast make a difficult transition to sound.",
+  release_date: '1952-04-10',
+  poster_path:
+    'https://image.tmdb.org/t/p/w500/iQpOyAgbUzbO6Coh9OiHRxXjx2Y.jpg',
+  overview:
+    'In 1927 Hollywood, a silent film production company and cast make a difficult transition to sound.',
   budget: 2540800,
   revenue: 7200000,
-  genres: ["Comedy", "Music", "Romance"],
+  genres: ['Comedy', 'Music', 'Romance'],
   runtime: 103,
 };
 

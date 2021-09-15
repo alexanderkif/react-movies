@@ -1,3 +1,3 @@
-import { MovieDialog } from "./MovieDialog";
+import { MovieDialog } from './MovieDialog';
 
 export default MovieDialog;

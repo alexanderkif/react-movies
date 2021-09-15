@@ -1,3 +1,3 @@
-import { GenresPanel } from "./GenresPanel";
+import { GenresPanel } from './GenresPanel';
 
 export default GenresPanel;

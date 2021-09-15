@@ -1,6 +1,13 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IMovieActions, IMovieItem, IMovieRequestParams, SearchByType, SortByType, SortOrderType } from '../types';
+import {
+  IMovieActions,
+  IMovieItem,
+  IMovieRequestParams,
+  SearchByType,
+  SortByType,
+  SortOrderType,
+} from '../types';
 
 export const GET_MOVIE_BY_ID = 'GET_MOVIE_BY_ID';
 export const ADD_MOVIES_TO_STORE = 'ADD_MOVIES_TO_STORE';
@@ -23,21 +30,19 @@ export const getMovies = ({
   filter = '',
   limit = 50,
   offset = 0,
-}: IMovieRequestParams) => {
-  return (dispatch: Dispatch): void => {
-    filter = filter.toLowerCase() === 'all' ? '' : filter;
-    axios
-      .get(
-        `${MOVIES_URL}?sortBy=${sortBy.key}&sortOrder=${sortOrder}&search=${searchInput}&searchBy=${searchBy}&filter=${filter}&limit=${limit}&&offset=${offset}`
-      )
-      .then(res => {
-        dispatch(getMoviesSuccess(res.data.data));
-      })
-      .catch(err => {
-        console.log('axios err', err, err.message);
-        dispatch(getMoviesSuccess([]));
-      });
-  };
+}: IMovieRequestParams) => (dispatch: Dispatch): void => {
+  filter = filter.toLowerCase() === 'all' ? '' : filter;
+  axios
+    .get(
+      `${MOVIES_URL}?sortBy=${sortBy.key}&sortOrder=${sortOrder}&search=${searchInput}&searchBy=${searchBy}&filter=${filter}&limit=${limit}&&offset=${offset}`,
+    )
+    .then((res) => {
+      dispatch(getMoviesSuccess(res.data.data));
+    })
+    .catch((err) => {
+      console.log('axios err', err, err.message);
+      dispatch(getMoviesSuccess([]));
+    });
 };
 
 export const getMoviesSuccess = (movies: IMovieItem[]): IMovieActions => ({
@@ -52,38 +57,36 @@ export const getMoviesByGenre = ({
   searchBy = 'genres',
   limit = 25,
   offset = 0,
-}: IMovieRequestParams) => {
-  return (dispatch: Dispatch): void => {
-    axios
-      .get(
-        `${MOVIES_URL}?sortBy=${sortBy.key}&sortOrder=${sortOrder}&search=${searchInput}&searchBy=${searchBy}&limit=${limit}&&offset=${offset}`
-      )
-      .then(res => {
-        dispatch(getMoviesByGenreSuccess(res.data.data));
-      })
-      .catch(err => {
-        console.log('axios err', err, err.message);
-        dispatch(getMoviesByGenreSuccess([]));
-      });
-  };
+}: IMovieRequestParams) => (dispatch: Dispatch): void => {
+  axios
+    .get(
+      `${MOVIES_URL}?sortBy=${sortBy.key}&sortOrder=${sortOrder}&search=${searchInput}&searchBy=${searchBy}&limit=${limit}&&offset=${offset}`,
+    )
+    .then((res) => {
+      dispatch(getMoviesByGenreSuccess(res.data.data));
+    })
+    .catch((err) => {
+      console.log('axios err', err, err.message);
+      dispatch(getMoviesByGenreSuccess([]));
+    });
 };
 
-export const getMoviesByGenreSuccess = (moviesByGenre: IMovieItem[]): IMovieActions => ({
+export const getMoviesByGenreSuccess = (
+  moviesByGenre: IMovieItem[],
+): IMovieActions => ({
   type: SET_MOVIES_BY_GENRE,
   moviesByGenre,
 });
 
-export const getMovieById = (id: number) => {
-  return (dispatch: Dispatch): void => {
-    axios
-      .get(`${MOVIES_URL}/${id}`)
-      .then(res => {
-        dispatch(getMovieByIdSuccess(res.data));
-      })
-      .catch(err => {
-        console.log('axios err', err, err.message);
-      });
-  };
+export const getMovieById = (id: number) => (dispatch: Dispatch): void => {
+  axios
+    .get(`${MOVIES_URL}/${id}`)
+    .then((res) => {
+      dispatch(getMovieByIdSuccess(res.data));
+    })
+    .catch((err) => {
+      console.log('axios err', err, err.message);
+    });
 };
 
 export const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
@@ -91,47 +94,41 @@ export const getMovieByIdSuccess = (movie: IMovieItem): IMovieActions => ({
   movie,
 });
 
-export const createMovie = (movie: IMovieItem) => {
-  return (dispatch: Dispatch): void => {
-    if (!movie.tagline) movie.tagline = movie.title;
-    axios
-      .post(`${MOVIES_URL}`, movie)
-      .then(res => {
-        dispatch(getMovieByIdSuccess(res.data));
-        console.log('createMovie', res.data);
-      })
-      .catch(err => {
-        console.log('axios err', err, err.message);
-      });
-  };
+export const createMovie = (movie: IMovieItem) => (dispatch: Dispatch): void => {
+  if (!movie.tagline) movie.tagline = movie.title;
+  axios
+    .post(`${MOVIES_URL}`, movie)
+    .then((res) => {
+      dispatch(getMovieByIdSuccess(res.data));
+      console.log('createMovie', res.data);
+    })
+    .catch((err) => {
+      console.log('axios err', err, err.message);
+    });
 };
 
-export const updateMovie = (movie: IMovieItem) => {
-  return (dispatch: Dispatch): void => {
-    if (!movie.tagline) movie.tagline = movie.title;
-    axios
-      .put(`${MOVIES_URL}`, movie)
-      .then(res => {
-        dispatch(getMovieByIdSuccess(res.data));
-        console.log('updateMovie', res.data);
-      })
-      .catch(err => {
-        console.log('axios err', err, err.message);
-      });
-  };
+export const updateMovie = (movie: IMovieItem) => (dispatch: Dispatch): void => {
+  if (!movie.tagline) movie.tagline = movie.title;
+  axios
+    .put(`${MOVIES_URL}`, movie)
+    .then((res) => {
+      dispatch(getMovieByIdSuccess(res.data));
+      console.log('updateMovie', res.data);
+    })
+    .catch((err) => {
+      console.log('axios err', err, err.message);
+    });
 };
 
-export const deleteMovieById = (id: number) => {
-  return (): void => {
-    axios
-      .delete(`${MOVIES_URL}/${id}`)
-      .then(res => {
-        console.log('deleteMovieById', res.data);
-      })
-      .catch(err => {
-        console.log('axios err', err, err.message);
-      });
-  };
+export const deleteMovieById = (id: number) => (): void => {
+  axios
+    .delete(`${MOVIES_URL}/${id}`)
+    .then((res) => {
+      console.log('deleteMovieById', res.data);
+    })
+    .catch((err) => {
+      console.log('axios err', err, err.message);
+    });
 };
 
 export const setSearchBy = (searchBy: SearchByType): IMovieActions => ({
@@ -159,12 +156,18 @@ export const setFilter = (filter: string): IMovieActions => ({
   filter,
 });
 
-export const setActiveGenreDetails = (activeGenreDetails: string): IMovieActions => ({
+export const setActiveGenreDetails = (
+  activeGenreDetails: string,
+): IMovieActions => ({
   type: SET_ACTIVE_GENRE_DETAILS,
   activeGenreDetails,
 });
 
-export const setDialogOpened = (dialogOpened: boolean, editMovie?: IMovieItem, deleteMovie?: boolean): IMovieActions => ({
+export const setDialogOpened = (
+  dialogOpened: boolean,
+  editMovie?: IMovieItem,
+  deleteMovie?: boolean,
+): IMovieActions => ({
   type: SET_DIALOG_OPEN,
   dialogOpened,
   editMovie,

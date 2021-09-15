@@ -2,13 +2,13 @@
  * @jest-environment jsdom
  */
 import React from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
-import { renderHook } from "@testing-library/react-hooks";
-import { stubMoviesState } from '../../utils/stubsForTests';
+import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
-import { store } from '../../App';
 import userEvent from '@testing-library/user-event';
+import { stubMoviesState } from '../../utils/stubsForTests';
+import { store } from '../../App';
 import useSortByDropdown from './hook/useSortByDropdown';
 import { SortByDropdownView } from './view/SortByDropdownView';
 
@@ -20,11 +20,10 @@ const setRender = (hook) => render(
     <Router>
       <SortByDropdownView {...hook} />
     </Router>
-  </Provider>
+  </Provider>,
 );
 
 describe('useSortByDropdown test', () => {
-
   beforeEach(() => {
     dispatch.mockClear();
   });
@@ -36,7 +35,9 @@ describe('useSortByDropdown test', () => {
 
   it('dropdown open test', () => {
     const { container } = setRender(result.current);
-    expect(container.querySelectorAll('.genre_closed').length).toBeGreaterThan(0);
+    expect(container.querySelectorAll('.genre_closed').length).toBeGreaterThan(
+      0,
+    );
     userEvent.click(screen.getAllByText('release date')[0]);
     expect(dispatch).toHaveBeenCalledTimes(0);
     expect(container.querySelectorAll('.genre_closed').length).toBe(0);
@@ -50,7 +51,9 @@ describe('useSortByDropdown test', () => {
 
   it('toggle desc test', () => {
     stubMoviesState.sortOrder = 'desc';
-    const { result } = renderHook(() => useSortByDropdown({ dispatch, moviesState: stubMoviesState }));
+    const { result } = renderHook(() => useSortByDropdown(
+      { dispatch, moviesState: stubMoviesState },
+    ));
     setRender(result.current);
     userEvent.click(screen.getAllByText('release date')[1]);
     expect(dispatch).toHaveBeenCalledTimes(1);
